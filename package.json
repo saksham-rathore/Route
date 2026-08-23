@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@prisma/client": "^6.4.1",
     "better-auth": "^1.7.1",
     "next": "16.3.2",
     "pg": "^8.23.0",
@@ -16,7 +17,9 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "prisma": "^6.4.1",
     "@tailwindcss/postcss": "^4",
+    "@types/lodash": "^4.17.25",
     "@types/node": "^20",
     "@types/pg": "^8.23.1",
     "@types/react": "^19",
