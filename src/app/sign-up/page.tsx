@@ -17,7 +17,8 @@ export default function SignUpPage() {
             Create your account
           </h1>
           <p className="text-[14px] text-slate-500 font-body mt-2 leading-[1.5]">
-            Start monitoring your app with the same clean workflow as onboarding.
+            Start monitoring your app with the same clean workflow as
+            onboarding.
           </p>
         </div>
 
@@ -27,7 +28,11 @@ export default function SignUpPage() {
             type="button"
             className="w-full bg-[#f8fafc] hover:bg-[#f1f5f9] border border-slate-200/80 text-[#334155] font-semibold rounded-lg py-2.5 text-[14px] flex items-center justify-center gap-2.5 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.02)] cursor-pointer"
           >
-            <svg className="w-[18px] h-[18px] text-[#0f172a]" fill="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="w-[18px] h-[18px] text-[#0f172a]"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
             </svg>
             Continue with GitHub
@@ -39,7 +44,7 @@ export default function SignUpPage() {
           >
             <svg className="w-[16px] h-[16px]" viewBox="0 0 24 24">
               <path
-                fill="#EA4335"
+                fill="#000000ff"
                 d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.859-3.579-7.859-7.989 0-4.41 3.529-7.989 7.859-7.989 2.464 0 4.12 1.018 5.059 1.914l3.39-3.26C18.36 1.47 15.54 0 12.24 0 5.48 0 0 5.37 0 12s5.48 12 12.24 12c7.06 0 11.75-4.84 11.75-11.72 0-.78-.08-1.395-.18-1.995H12.24z"
               />
             </svg>
@@ -63,8 +68,18 @@ export default function SignUpPage() {
             </label>
             <div className="relative">
               <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
                 </svg>
               </span>
               <input
@@ -93,9 +108,15 @@ export default function SignUpPage() {
               id="terms"
               className="w-4.5 h-4.5 border-slate-300 rounded text-blue-600 focus:ring-blue-500/30 cursor-pointer"
             />
-            <label htmlFor="terms" className="text-[13px] text-slate-500 font-body select-none cursor-pointer">
+            <label
+              htmlFor="terms"
+              className="text-[13px] text-slate-500 font-body select-none cursor-pointer"
+            >
               I agree to the{" "}
-              <a href="#" className="text-blue-600 font-semibold hover:text-blue-700 transition-colors">
+              <a
+                href="#"
+                className="text-blue-600 font-semibold hover:text-blue-700 transition-colors"
+              >
                 Terms and Conditions
               </a>
             </label>
@@ -107,8 +128,18 @@ export default function SignUpPage() {
             className="w-full bg-[#9bb3e3] hover:bg-[#88a4db] text-white font-semibold rounded-lg py-3 text-[14px] transition-all flex items-center justify-center gap-1.5 cursor-pointer mt-6"
           >
             Create Account
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+              />
             </svg>
           </button>
         </div>
