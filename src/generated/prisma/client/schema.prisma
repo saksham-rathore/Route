@@ -67,3 +67,42 @@ model Verification {
   @@unique([identifier, value])
   @@map("verification")
 }
+
+model Project {
+  id                String          @id @default(cuid())
+  projectId         String          @unique @default(cuid()) // optional public project ID
+  domain            String          @unique
+  ownerId           String
+  name              String
+  status            ProjectStatus   @default(ACTIVE)
+  timeZone          String          @default("UTC")
+  dataRetentionDays Int             @default(30)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  projectDomains    ProjectDomain[]
+
+  @@index([ownerId])
+}
+
+enum ProjectStatus {
+  ACTIVE
+  PAUSED
+}
+
+model ProjectDomain {
+  id         String   @id @default(cuid())
+  projectId  String
+  domain     String
+  isVerified Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, domain])
+  @@index([domain])
+}
+
+model sessions {
+  id        String @id @default(cuid())
+  projectId String
+}

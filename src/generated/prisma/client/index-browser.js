@@ -167,6 +167,32 @@ exports.Prisma.VerificationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ProjectScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  domain: 'domain',
+  ownerId: 'ownerId',
+  name: 'name',
+  status: 'status',
+  timeZone: 'timeZone',
+  dataRetentionDays: 'dataRetentionDays',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProjectDomainScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  domain: 'domain',
+  isVerified: 'isVerified',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.SessionsScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -181,13 +207,19 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.ProjectStatus = exports.$Enums.ProjectStatus = {
+  ACTIVE: 'ACTIVE',
+  PAUSED: 'PAUSED'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  Project: 'Project',
+  ProjectDomain: 'ProjectDomain',
+  sessions: 'sessions'
 };
 
 /**
