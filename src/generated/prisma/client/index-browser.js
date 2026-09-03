@@ -190,12 +190,58 @@ exports.Prisma.ProjectDomainScalarFieldEnum = {
 
 exports.Prisma.SessionsScalarFieldEnum = {
   id: 'id',
-  projectId: 'projectId'
+  projectId: 'projectId',
+  anonymousVisitorId: 'anonymousVisitorId',
+  started_at: 'started_at',
+  ended_at: 'ended_at',
+  lastActivityAt: 'lastActivityAt',
+  country: 'country',
+  city: 'city',
+  device_type: 'device_type',
+  browser: 'browser'
+};
+
+exports.Prisma.EventScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  sessionId: 'sessionId',
+  eventType: 'eventType',
+  eventTime: 'eventTime',
+  pagePath: 'pagePath',
+  pageUrl: 'pageUrl',
+  referrer: 'referrer',
+  browser: 'browser',
+  deviceType: 'deviceType',
+  country: 'country',
+  durationMs: 'durationMs',
+  statusCode: 'statusCode',
+  metadata: 'metadata',
+  errorMessage: 'errorMessage',
+  sessionsId: 'sessionsId'
+};
+
+exports.Prisma.DailyMetricScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  date: 'date',
+  pageviews: 'pageviews',
+  sessions: 'sessions',
+  uniqueVisitors: 'uniqueVisitors',
+  errorCount: 'errorCount',
+  avgApiDurationMs: 'avgApiDurationMs',
+  p95ApiDurationMs: 'p95ApiDurationMs',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -207,9 +253,22 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
 exports.ProjectStatus = exports.$Enums.ProjectStatus = {
   ACTIVE: 'ACTIVE',
   PAUSED: 'PAUSED'
+};
+
+exports.EventType = exports.$Enums.EventType = {
+  PAGEVIEW: 'PAGEVIEW',
+  WEB_VITAL: 'WEB_VITAL',
+  API_REQUEST: 'API_REQUEST',
+  JAVASCRIPT_ERROR: 'JAVASCRIPT_ERROR'
 };
 
 exports.Prisma.ModelName = {
@@ -219,7 +278,9 @@ exports.Prisma.ModelName = {
   Verification: 'Verification',
   Project: 'Project',
   ProjectDomain: 'ProjectDomain',
-  sessions: 'sessions'
+  sessions: 'sessions',
+  Event: 'Event',
+  DailyMetric: 'DailyMetric'
 };
 
 /**
