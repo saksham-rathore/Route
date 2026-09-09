@@ -1,19 +1,46 @@
-import { Prisma } from "@prisma/client";
-import { ProjectDomain } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
+import { CreateProjectSchema } from "@/lib/validator/project";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
-// CREATE Project
-export async function POST() {
+// Create project
+export async function POST(req: NextRequest) {
   try {
-    const createProject = await prisma.project.create({
+    const session = await auth.api.getSession({
+      headers: req.headers,
+    });
+
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // user is authenticated
+    const body = await req.json();
+
+    const validator = CreateProjectSchema.safeParse(body);
+
+    if (!validator.success) {
+      return NextResponse.json(
+        {
+          error: "Invalid Project data",
+          details: validator.error.flatten().fieldErrors,
+        },
+        { status: 400 },
+      );
+    }
+
+    const { name, Domain } = validator.data;
+
+    const project = await prisma.project.create({
       data: {
-        name: "route",
-        domain: "route.com",
-        ownerId: "Add userId",
+        name,
+        domain: Domain,
+        ownerId: session.user.id,
       },
     });
-    return NextResponse.json(createProject);
+
+    return NextResponse.json({ project }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
       {
@@ -24,31 +51,57 @@ export async function POST() {
   }
 }
 
-// GET project
-export async function GET() {
+// Get projects
+export async function GET(req: NextRequest) {
   try {
-    const getProjects = await prisma.project.findMany();
-    return NextResponse.json(getProjects);
-  } catch (error) {
-    return NextResponse.json(
-      {
-        error: "Failed to fetch Projects",
+    const session = await auth.api.getSession({
+      headers: req.headers,
+    });
+
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const projects = await prisma.project.findMany({
+      where: {
+        ownerId: session.user.id,
       },
+    });
+
+    return NextResponse.json({ projects });
+  } catch (error) {
+    console.error("Failed to fetch projects:", error);
+
+    return NextResponse.json(
+      { error: "Failed to fetch projects" },
       { status: 500 },
     );
   }
 }
 
-// DELETE project
-export async function DELETE() {
+// Delete projects
+export async function DELETE(req: NextRequest) {
   try {
-    const deleteProject = await prisma.project.deleteMany();
-    return NextResponse.json(deleteProject);
-  } catch (error) {
-    return NextResponse.json(
-      {
-        error: "Failed to fetch delete",
+    const session = await auth.api.getSession({
+      headers: req.headers,
+    });
+
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const projects = await prisma.project.deleteMany({
+      where: {
+        ownerId: session.user.id,
       },
+    });
+
+    return NextResponse.json({ projects });
+  } catch (error) {
+    console.error("Failed to delete project:", error);
+
+    return NextResponse.json(
+      { error: "Failed to delete project" },
       { status: 500 },
     );
   }

@@ -1,17 +1,33 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { signIn, useSession } from "@/lib/auth-client";
+import { SignIn } from "@/lib/actions/auth-actions";
 
 export default function SignInPage() {
-  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
+
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMessage("");
+    setIsLoading(true);
+
+    try {
+      const result = await SignIn(email, password);
+      if (result) {
+        router.push("/dashboard");
+      }
+    } catch (err: any) {
+      setErrorMessage(err?.message || "Invalid email or password. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-[#f4f6f9] p-6 font-body antialiased">
@@ -68,8 +84,15 @@ export default function SignInPage() {
           </span>
         </div>
 
+        {/* Error message */}
+        {errorMessage && (
+          <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-[13px]">
+            {errorMessage}
+          </div>
+        )}
+
         {/* Input Form */}
-        <div className="space-y-5">
+        <form onSubmit={handleSignIn} className="space-y-5">
           <div>
             <label className="block text-[10px] font-bold text-slate-400 tracking-wider uppercase font-display mb-2">
               Email
@@ -92,7 +115,10 @@ export default function SignInPage() {
               </span>
               <input
                 type="email"
-                defaultValue="you@example.com"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
                 className="w-full bg-white border border-slate-200 focus:border-slate-400 focus:ring-0 rounded-lg pl-11 pr-4 py-2.5 text-[14px] text-slate-800 placeholder-slate-400 outline-none transition-all"
               />
             </div>
@@ -112,32 +138,38 @@ export default function SignInPage() {
             </div>
             <input
               type="password"
-              defaultValue="password"
-              className="w-full bg-white border border-slate-200 focus:border-slate-400 focus:ring-0 rounded-lg px-4 py-2.5 text-[14px] text-slate-800 placeholder-slate-400 outline-none transition-all tracking-[0.2em]"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="w-full bg-white border border-slate-200 focus:border-slate-400 focus:ring-0 rounded-lg px-4 py-2.5 text-[14px] text-slate-800 placeholder-slate-400 outline-none transition-all"
             />
           </div>
 
           {/* Submit Button */}
           <button
-            type="button"
-            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-lg py-3 text-[14px] transition-all shadow-[0_4px_15px_rgba(37,99,235,0.25)] active:scale-[0.99] flex items-center justify-center gap-1.5 cursor-pointer mt-6"
+            type="submit"
+            disabled={isLoading}
+            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-lg py-3 text-[14px] transition-all shadow-[0_4px_15px_rgba(37,99,235,0.25)] active:scale-[0.99] flex items-center justify-center gap-1.5 cursor-pointer mt-6 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Sign In
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              />
-            </svg>
+            {isLoading ? "Signing In..." : "Sign In"}
+            {!isLoading && (
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            )}
           </button>
-        </div>
+        </form>
 
         {/* Footer Link */}
         <p className="text-center text-[14px] text-slate-500 mt-8 font-body">
@@ -153,3 +185,4 @@ export default function SignInPage() {
     </main>
   );
 }
+

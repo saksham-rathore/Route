@@ -1660,13 +1660,13 @@ export namespace Prisma {
    */
 
   export type ProjectCountOutputType = {
-    projectDomains: number
+    projectDomain: number
     session: number
     events: number
   }
 
   export type ProjectCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    projectDomains?: boolean | ProjectCountOutputTypeCountProjectDomainsArgs
+    projectDomain?: boolean | ProjectCountOutputTypeCountProjectDomainArgs
     session?: boolean | ProjectCountOutputTypeCountSessionArgs
     events?: boolean | ProjectCountOutputTypeCountEventsArgs
   }
@@ -1685,7 +1685,7 @@ export namespace Prisma {
   /**
    * ProjectCountOutputType without action
    */
-  export type ProjectCountOutputTypeCountProjectDomainsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProjectCountOutputTypeCountProjectDomainArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProjectDomainWhereInput
   }
 
@@ -6368,7 +6368,7 @@ export namespace Prisma {
     dataRetentionDays?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    projectDomains?: boolean | Project$projectDomainsArgs<ExtArgs>
+    projectDomain?: boolean | Project$projectDomainArgs<ExtArgs>
     session?: boolean | Project$sessionArgs<ExtArgs>
     events?: boolean | Project$eventsArgs<ExtArgs>
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
@@ -6415,7 +6415,7 @@ export namespace Prisma {
 
   export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "projectId" | "domain" | "ownerId" | "name" | "status" | "timeZone" | "dataRetentionDays" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
   export type ProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    projectDomains?: boolean | Project$projectDomainsArgs<ExtArgs>
+    projectDomain?: boolean | Project$projectDomainArgs<ExtArgs>
     session?: boolean | Project$sessionArgs<ExtArgs>
     events?: boolean | Project$eventsArgs<ExtArgs>
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
@@ -6426,7 +6426,7 @@ export namespace Prisma {
   export type $ProjectPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Project"
     objects: {
-      projectDomains: Prisma.$ProjectDomainPayload<ExtArgs>[]
+      projectDomain: Prisma.$ProjectDomainPayload<ExtArgs>[]
       session: Prisma.$sessionsPayload<ExtArgs>[]
       events: Prisma.$EventPayload<ExtArgs>[]
     }
@@ -6835,7 +6835,7 @@ export namespace Prisma {
    */
   export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    projectDomains<T extends Project$projectDomainsArgs<ExtArgs> = {}>(args?: Subset<T, Project$projectDomainsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectDomainPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    projectDomain<T extends Project$projectDomainArgs<ExtArgs> = {}>(args?: Subset<T, Project$projectDomainArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectDomainPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     session<T extends Project$sessionArgs<ExtArgs> = {}>(args?: Subset<T, Project$sessionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$sessionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     events<T extends Project$eventsArgs<ExtArgs> = {}>(args?: Subset<T, Project$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -7265,9 +7265,9 @@ export namespace Prisma {
   }
 
   /**
-   * Project.projectDomains
+   * Project.projectDomain
    */
-  export type Project$projectDomainsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Project$projectDomainArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the ProjectDomain
      */
@@ -12569,7 +12569,7 @@ export namespace Prisma {
     dataRetentionDays?: IntFilter<"Project"> | number
     createdAt?: DateTimeFilter<"Project"> | Date | string
     updatedAt?: DateTimeFilter<"Project"> | Date | string
-    projectDomains?: ProjectDomainListRelationFilter
+    projectDomain?: ProjectDomainListRelationFilter
     session?: SessionsListRelationFilter
     events?: EventListRelationFilter
   }
@@ -12585,7 +12585,7 @@ export namespace Prisma {
     dataRetentionDays?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    projectDomains?: ProjectDomainOrderByRelationAggregateInput
+    projectDomain?: ProjectDomainOrderByRelationAggregateInput
     session?: sessionsOrderByRelationAggregateInput
     events?: EventOrderByRelationAggregateInput
   }
@@ -12604,7 +12604,7 @@ export namespace Prisma {
     dataRetentionDays?: IntFilter<"Project"> | number
     createdAt?: DateTimeFilter<"Project"> | Date | string
     updatedAt?: DateTimeFilter<"Project"> | Date | string
-    projectDomains?: ProjectDomainListRelationFilter
+    projectDomain?: ProjectDomainListRelationFilter
     session?: SessionsListRelationFilter
     events?: EventListRelationFilter
   }, "id" | "projectId" | "domain">
@@ -13321,7 +13321,7 @@ export namespace Prisma {
     dataRetentionDays?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    projectDomains?: ProjectDomainCreateNestedManyWithoutProjectInput
+    projectDomain?: ProjectDomainCreateNestedManyWithoutProjectInput
     session?: sessionsCreateNestedManyWithoutProjectInput
     events?: EventCreateNestedManyWithoutProjectInput
   }
@@ -13337,7 +13337,7 @@ export namespace Prisma {
     dataRetentionDays?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    projectDomains?: ProjectDomainUncheckedCreateNestedManyWithoutProjectInput
+    projectDomain?: ProjectDomainUncheckedCreateNestedManyWithoutProjectInput
     session?: sessionsUncheckedCreateNestedManyWithoutProjectInput
     events?: EventUncheckedCreateNestedManyWithoutProjectInput
   }
@@ -13353,7 +13353,7 @@ export namespace Prisma {
     dataRetentionDays?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    projectDomains?: ProjectDomainUpdateManyWithoutProjectNestedInput
+    projectDomain?: ProjectDomainUpdateManyWithoutProjectNestedInput
     session?: sessionsUpdateManyWithoutProjectNestedInput
     events?: EventUpdateManyWithoutProjectNestedInput
   }
@@ -13369,7 +13369,7 @@ export namespace Prisma {
     dataRetentionDays?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    projectDomains?: ProjectDomainUncheckedUpdateManyWithoutProjectNestedInput
+    projectDomain?: ProjectDomainUncheckedUpdateManyWithoutProjectNestedInput
     session?: sessionsUncheckedUpdateManyWithoutProjectNestedInput
     events?: EventUncheckedUpdateManyWithoutProjectNestedInput
   }
@@ -13418,7 +13418,7 @@ export namespace Prisma {
     domain: string
     isVerified?: boolean
     createdAt?: Date | string
-    project: ProjectCreateNestedOneWithoutProjectDomainsInput
+    project: ProjectCreateNestedOneWithoutProjectDomainInput
   }
 
   export type ProjectDomainUncheckedCreateInput = {
@@ -13434,7 +13434,7 @@ export namespace Prisma {
     domain?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    project?: ProjectUpdateOneRequiredWithoutProjectDomainsNestedInput
+    project?: ProjectUpdateOneRequiredWithoutProjectDomainNestedInput
   }
 
   export type ProjectDomainUncheckedUpdateInput = {
@@ -14790,18 +14790,18 @@ export namespace Prisma {
     deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
   }
 
-  export type ProjectCreateNestedOneWithoutProjectDomainsInput = {
-    create?: XOR<ProjectCreateWithoutProjectDomainsInput, ProjectUncheckedCreateWithoutProjectDomainsInput>
-    connectOrCreate?: ProjectCreateOrConnectWithoutProjectDomainsInput
+  export type ProjectCreateNestedOneWithoutProjectDomainInput = {
+    create?: XOR<ProjectCreateWithoutProjectDomainInput, ProjectUncheckedCreateWithoutProjectDomainInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutProjectDomainInput
     connect?: ProjectWhereUniqueInput
   }
 
-  export type ProjectUpdateOneRequiredWithoutProjectDomainsNestedInput = {
-    create?: XOR<ProjectCreateWithoutProjectDomainsInput, ProjectUncheckedCreateWithoutProjectDomainsInput>
-    connectOrCreate?: ProjectCreateOrConnectWithoutProjectDomainsInput
-    upsert?: ProjectUpsertWithoutProjectDomainsInput
+  export type ProjectUpdateOneRequiredWithoutProjectDomainNestedInput = {
+    create?: XOR<ProjectCreateWithoutProjectDomainInput, ProjectUncheckedCreateWithoutProjectDomainInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutProjectDomainInput
+    upsert?: ProjectUpsertWithoutProjectDomainInput
     connect?: ProjectWhereUniqueInput
-    update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutProjectDomainsInput, ProjectUpdateWithoutProjectDomainsInput>, ProjectUncheckedUpdateWithoutProjectDomainsInput>
+    update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutProjectDomainInput, ProjectUpdateWithoutProjectDomainInput>, ProjectUncheckedUpdateWithoutProjectDomainInput>
   }
 
   export type ProjectCreateNestedOneWithoutSessionInput = {
@@ -15618,7 +15618,7 @@ export namespace Prisma {
     sessionsId?: StringNullableFilter<"Event"> | string | null
   }
 
-  export type ProjectCreateWithoutProjectDomainsInput = {
+  export type ProjectCreateWithoutProjectDomainInput = {
     id?: string
     projectId?: string
     domain: string
@@ -15633,7 +15633,7 @@ export namespace Prisma {
     events?: EventCreateNestedManyWithoutProjectInput
   }
 
-  export type ProjectUncheckedCreateWithoutProjectDomainsInput = {
+  export type ProjectUncheckedCreateWithoutProjectDomainInput = {
     id?: string
     projectId?: string
     domain: string
@@ -15648,23 +15648,23 @@ export namespace Prisma {
     events?: EventUncheckedCreateNestedManyWithoutProjectInput
   }
 
-  export type ProjectCreateOrConnectWithoutProjectDomainsInput = {
+  export type ProjectCreateOrConnectWithoutProjectDomainInput = {
     where: ProjectWhereUniqueInput
-    create: XOR<ProjectCreateWithoutProjectDomainsInput, ProjectUncheckedCreateWithoutProjectDomainsInput>
+    create: XOR<ProjectCreateWithoutProjectDomainInput, ProjectUncheckedCreateWithoutProjectDomainInput>
   }
 
-  export type ProjectUpsertWithoutProjectDomainsInput = {
-    update: XOR<ProjectUpdateWithoutProjectDomainsInput, ProjectUncheckedUpdateWithoutProjectDomainsInput>
-    create: XOR<ProjectCreateWithoutProjectDomainsInput, ProjectUncheckedCreateWithoutProjectDomainsInput>
+  export type ProjectUpsertWithoutProjectDomainInput = {
+    update: XOR<ProjectUpdateWithoutProjectDomainInput, ProjectUncheckedUpdateWithoutProjectDomainInput>
+    create: XOR<ProjectCreateWithoutProjectDomainInput, ProjectUncheckedCreateWithoutProjectDomainInput>
     where?: ProjectWhereInput
   }
 
-  export type ProjectUpdateToOneWithWhereWithoutProjectDomainsInput = {
+  export type ProjectUpdateToOneWithWhereWithoutProjectDomainInput = {
     where?: ProjectWhereInput
-    data: XOR<ProjectUpdateWithoutProjectDomainsInput, ProjectUncheckedUpdateWithoutProjectDomainsInput>
+    data: XOR<ProjectUpdateWithoutProjectDomainInput, ProjectUncheckedUpdateWithoutProjectDomainInput>
   }
 
-  export type ProjectUpdateWithoutProjectDomainsInput = {
+  export type ProjectUpdateWithoutProjectDomainInput = {
     id?: StringFieldUpdateOperationsInput | string
     projectId?: StringFieldUpdateOperationsInput | string
     domain?: StringFieldUpdateOperationsInput | string
@@ -15679,7 +15679,7 @@ export namespace Prisma {
     events?: EventUpdateManyWithoutProjectNestedInput
   }
 
-  export type ProjectUncheckedUpdateWithoutProjectDomainsInput = {
+  export type ProjectUncheckedUpdateWithoutProjectDomainInput = {
     id?: StringFieldUpdateOperationsInput | string
     projectId?: StringFieldUpdateOperationsInput | string
     domain?: StringFieldUpdateOperationsInput | string
@@ -15705,7 +15705,7 @@ export namespace Prisma {
     dataRetentionDays?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    projectDomains?: ProjectDomainCreateNestedManyWithoutProjectInput
+    projectDomain?: ProjectDomainCreateNestedManyWithoutProjectInput
     events?: EventCreateNestedManyWithoutProjectInput
   }
 
@@ -15720,7 +15720,7 @@ export namespace Prisma {
     dataRetentionDays?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    projectDomains?: ProjectDomainUncheckedCreateNestedManyWithoutProjectInput
+    projectDomain?: ProjectDomainUncheckedCreateNestedManyWithoutProjectInput
     events?: EventUncheckedCreateNestedManyWithoutProjectInput
   }
 
@@ -15797,7 +15797,7 @@ export namespace Prisma {
     dataRetentionDays?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    projectDomains?: ProjectDomainUpdateManyWithoutProjectNestedInput
+    projectDomain?: ProjectDomainUpdateManyWithoutProjectNestedInput
     events?: EventUpdateManyWithoutProjectNestedInput
   }
 
@@ -15812,7 +15812,7 @@ export namespace Prisma {
     dataRetentionDays?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    projectDomains?: ProjectDomainUncheckedUpdateManyWithoutProjectNestedInput
+    projectDomain?: ProjectDomainUncheckedUpdateManyWithoutProjectNestedInput
     events?: EventUncheckedUpdateManyWithoutProjectNestedInput
   }
 
@@ -15843,7 +15843,7 @@ export namespace Prisma {
     dataRetentionDays?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    projectDomains?: ProjectDomainCreateNestedManyWithoutProjectInput
+    projectDomain?: ProjectDomainCreateNestedManyWithoutProjectInput
     session?: sessionsCreateNestedManyWithoutProjectInput
   }
 
@@ -15858,7 +15858,7 @@ export namespace Prisma {
     dataRetentionDays?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    projectDomains?: ProjectDomainUncheckedCreateNestedManyWithoutProjectInput
+    projectDomain?: ProjectDomainUncheckedCreateNestedManyWithoutProjectInput
     session?: sessionsUncheckedCreateNestedManyWithoutProjectInput
   }
 
@@ -15920,7 +15920,7 @@ export namespace Prisma {
     dataRetentionDays?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    projectDomains?: ProjectDomainUpdateManyWithoutProjectNestedInput
+    projectDomain?: ProjectDomainUpdateManyWithoutProjectNestedInput
     session?: sessionsUpdateManyWithoutProjectNestedInput
   }
 
@@ -15935,7 +15935,7 @@ export namespace Prisma {
     dataRetentionDays?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    projectDomains?: ProjectDomainUncheckedUpdateManyWithoutProjectNestedInput
+    projectDomain?: ProjectDomainUncheckedUpdateManyWithoutProjectNestedInput
     session?: sessionsUncheckedUpdateManyWithoutProjectNestedInput
   }
 

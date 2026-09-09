@@ -1,9 +1,35 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { SignUp } from "@/lib/actions/auth-actions";
 
 export default function SignUpPage() {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
+
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMessage("");
+    setIsLoading(true);
+
+    try {
+      const result = await SignUp(username, email, password);
+      if (result) {
+        router.push("/dashboard");
+      }
+    } catch (err: any) {
+      setErrorMessage(err?.message || "Failed to create account. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <main className="min-h-screen flex items-center justify-center bg-[#f4f6f9] p-6 font-body antialiased">
       {/* Container Card */}
@@ -60,8 +86,48 @@ export default function SignUpPage() {
           </span>
         </div>
 
+        {/* Error message */}
+        {errorMessage && (
+          <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-[13px]">
+            {errorMessage}
+          </div>
+        )}
+
         {/* Input Form */}
-        <div className="space-y-5">
+        <form onSubmit={handleSignUp} className="space-y-4">
+          {/* Username Section */}
+          <div>
+            <label className="block text-[10px] font-bold text-slate-400 tracking-wider uppercase font-display mb-2">
+              Username
+            </label>
+            <div className="relative">
+              <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+              </span>
+              <input
+                type="text"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="yourusername"
+                className="w-full bg-white border border-slate-200 focus:border-slate-400 focus:ring-0 rounded-lg pl-11 pr-4 py-2.5 text-[14px] text-slate-800 placeholder-slate-400 outline-none transition-all"
+              />
+            </div>
+          </div>
+
+          {/* Email Section */}
           <div>
             <label className="block text-[10px] font-bold text-slate-400 tracking-wider uppercase font-display mb-2">
               Email
@@ -84,20 +150,27 @@ export default function SignUpPage() {
               </span>
               <input
                 type="email"
-                defaultValue="you@example.com"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
                 className="w-full bg-white border border-slate-200 focus:border-slate-400 focus:ring-0 rounded-lg pl-11 pr-4 py-2.5 text-[14px] text-slate-800 placeholder-slate-400 outline-none transition-all"
               />
             </div>
           </div>
 
+          {/* Password Section */}
           <div>
             <label className="block text-[10px] font-bold text-slate-400 tracking-wider uppercase font-display mb-2">
               Password
             </label>
             <input
               type="password"
-              defaultValue="password"
-              className="w-full bg-white border border-slate-200 focus:border-slate-400 focus:ring-0 rounded-lg px-4 py-2.5 text-[14px] text-slate-800 placeholder-slate-400 outline-none transition-all tracking-[0.2em]"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="w-full bg-white border border-slate-200 focus:border-slate-400 focus:ring-0 rounded-lg px-4 py-2.5 text-[14px] text-slate-800 placeholder-slate-400 outline-none transition-all"
             />
           </div>
 
@@ -106,6 +179,7 @@ export default function SignUpPage() {
             <input
               type="checkbox"
               id="terms"
+              required
               className="w-4.5 h-4.5 border-slate-300 rounded text-blue-600 focus:ring-blue-500/30 cursor-pointer"
             />
             <label
@@ -124,25 +198,28 @@ export default function SignUpPage() {
 
           {/* Submit Button */}
           <button
-            type="button"
-            className="w-full bg-[#9bb3e3] hover:bg-[#88a4db] text-white font-semibold rounded-lg py-3 text-[14px] transition-all flex items-center justify-center gap-1.5 cursor-pointer mt-6"
+            type="submit"
+            disabled={isLoading}
+            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-lg py-3 text-[14px] transition-all shadow-[0_4px_15px_rgba(37,99,235,0.25)] active:scale-[0.99] flex items-center justify-center gap-1.5 cursor-pointer mt-6 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Create Account
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              />
-            </svg>
+            {isLoading ? "Creating Account..." : "Create Account"}
+            {!isLoading && (
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            )}
           </button>
-        </div>
+        </form>
 
         {/* Footer Link */}
         <p className="text-center text-[14px] text-slate-500 mt-8 font-body">
@@ -158,3 +235,4 @@ export default function SignUpPage() {
     </main>
   );
 }
+
