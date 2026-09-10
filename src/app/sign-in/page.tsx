@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SignIn } from "@/lib/actions/auth-actions";
+import { signIn } from "@/lib/auth-client";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
@@ -18,16 +18,20 @@ export default function SignInPage() {
     setIsLoading(true);
 
     try {
-      console.log(email, password);
-      const result = await SignIn(email, password);
-      if (result) {
+      const { data, error } = await signIn.email({
+        email,
+        password,
+        callbackURL: "/dashboard",
+      });
+
+      if (error) {
+        setErrorMessage(error.message || "Invalid email or password.");
+        setIsLoading(false);
+      } else {
         router.push("/dashboard");
       }
     } catch (err: any) {
-      setErrorMessage(
-        err?.message || "Invalid email or password. Please try again.",
-      );
-    } finally {
+      setErrorMessage(err?.message || "Something went wrong.");
       setIsLoading(false);
     }
   };

@@ -8,26 +8,42 @@ export const SignUp = async (
   email: string,
   password: string,
 ) => {
-  const result = await auth.api.signUpEmail({
-    body: {
-      name: username,
-      email,
-      password,
-      callbackURL: "/dashboard",
-    },
-  });
-  return result;
+  try {
+    const result = await auth.api.signUpEmail({
+      body: {
+        name: username,
+        email,
+        password,
+        callbackURL: "/dashboard",
+      },
+      headers: await headers(),
+    });
+    return { success: true, data: result };
+  } catch (err: any) {
+    return {
+      success: false,
+      error: err?.message || "Failed to create account",
+    };
+  }
 };
 
 export const SignIn = async (email: string, password: string) => {
-  const result = await auth.api.signInEmail({
-    body: {
-      email,
-      password,
-      callbackURL: "/dashboard",
-    },
-  });
-  return result;
+  try {
+    const result = await auth.api.signInEmail({
+      body: {
+        email,
+        password,
+        callbackURL: "/dashboard",
+      },
+      headers: await headers(),
+    });
+    return { success: true, data: result };
+  } catch (err: any) {
+    return {
+      success: false,
+      error: err?.message || "Invalid email or password",
+    };
+  }
 };
 
 export const SignOut = async () => {

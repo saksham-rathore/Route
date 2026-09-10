@@ -17,15 +17,21 @@ export default function SignUpPage() {
     e.preventDefault();
     setErrorMessage("");
     setIsLoading(true);
-    console.log(email,password)
+    console.log(email, password);
 
     try {
       const result = await SignUp(username, email, password);
-      if (result) {
+      if (result.success) {
         router.push("/dashboard");
+      } else {
+        setErrorMessage(
+          result.error || "Failed to create account. Please try again.",
+        );
       }
     } catch (err: any) {
-      setErrorMessage(err?.message || "Failed to create account. Please try again.");
+      setErrorMessage(
+        err?.message || "Failed to create account. Please try again.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -236,4 +242,3 @@ export default function SignUpPage() {
     </main>
   );
 }
-

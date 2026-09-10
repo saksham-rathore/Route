@@ -1,11 +1,18 @@
 "use client";
 
+import { useEffect } from "react";
 import { useSession, signOut } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
 export default function DashboardPage() {
   const { data: session, isPending } = useSession();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!isPending && !session?.user) {
+      router.push("/sign-in");
+    }
+  }, [isPending, session, router]);
 
   if (isPending) {
     return (
@@ -16,8 +23,6 @@ export default function DashboardPage() {
   }
 
   if (!session?.user) {
-    router.push("/sign-in");
-
     return (
       <main className="flex min-h-screen items-center justify-center">
         <p>Redirecting...</p>
