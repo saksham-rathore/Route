@@ -18,12 +18,15 @@ export default function SignInPage() {
     setIsLoading(true);
 
     try {
+      console.log(email, password);
       const result = await SignIn(email, password);
       if (result) {
         router.push("/dashboard");
       }
     } catch (err: any) {
-      setErrorMessage(err?.message || "Invalid email or password. Please try again.");
+      setErrorMessage(
+        err?.message || "Invalid email or password. Please try again.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -185,4 +188,3 @@ export default function SignInPage() {
     </main>
   );
 }
-

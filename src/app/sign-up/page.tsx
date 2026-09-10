@@ -17,6 +17,7 @@ export default function SignUpPage() {
     e.preventDefault();
     setErrorMessage("");
     setIsLoading(true);
+    console.log(email,password)
 
     try {
       const result = await SignUp(username, email, password);
