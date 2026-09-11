@@ -1,0 +1,179 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma/client"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("Session")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@unique([providerId, accountId])
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  @@unique([identifier, value])
+  @@map("verification")
+}
+
+model Project {
+  id                String          @id @default(cuid())
+  projectId         String          @unique @default(cuid())
+  domain            String          @unique
+  ownerId           String
+  name              String
+  status            ProjectStatus   @default(ACTIVE)
+  timeZone          String          @default("UTC")
+  dataRetentionDays Int             @default(30)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  projectDomain     ProjectDomain[]
+  session           sessions[]
+  events            Event[]
+
+  @@index([ownerId])
+}
+
+enum ProjectStatus {
+  ACTIVE
+  PAUSED
+}
+
+model ProjectDomain {
+  id         String   @id @default(cuid())
+  projectId  String
+  domain     String
+  isVerified Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, domain])
+  @@index([domain])
+}
+
+model sessions {
+  id                 String    @id @default(cuid())
+  projectId          String
+  anonymousVisitorId String
+  started_at         DateTime  @default(now())
+  ended_at           DateTime?
+  lastActivityAt     DateTime  @default(now())
+
+  country     String?
+  city        String?
+  device_type String?
+  browser     String?
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  event   Event[]
+
+  @@index([projectId, started_at])
+  @@index([projectId, anonymousVisitorId])
+}
+
+model Event {
+  id        String    @id @default(cuid())
+  projectId String
+  sessionId String?
+  eventType EventType
+  eventTime DateTime  @default(now())
+
+  pagePath String?
+  pageUrl  String?
+  referrer String?
+
+  browser    String?
+  deviceType String?
+  country    String?
+
+  durationMs   Int?
+  statusCode   Int?
+  metadata     Json?
+  errorMessage String?
+
+  project Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  session sessions? @relation(fields: [sessionId], references: [id], onDelete: SetNull)
+
+  sessionsId String?
+
+  @@index([projectId, eventTime])
+  @@index([sessionId])
+  @@index([projectId, eventType, eventTime])
+}
+
+enum EventType {
+  PAGEVIEW
+  WEB_VITAL
+  API_REQUEST
+  JAVASCRIPT_ERROR
+}
+
+model DailyMetric {
+  id               String   @id @default(cuid())
+  projectId        String
+  date             DateTime
+  pageviews        Int      @default(0)
+  sessions         Int      @default(0)
+  uniqueVisitors   Int      @default(0)
+  errorCount       Int      @default(0)
+  avgApiDurationMs Int?
+  p95ApiDurationMs Int?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([projectId, date])
+  @@index([projectId, date])
+}
