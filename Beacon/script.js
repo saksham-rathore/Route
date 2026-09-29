@@ -16,4 +16,4 @@
   };
 
   console.log("Beacon data:", data);
-})();
+})();   
