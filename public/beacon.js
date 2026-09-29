@@ -190,8 +190,8 @@
     flush();
   }
 
-
   // Expose public API
+
   window.route = window.route || {};
 
   window.route.track = track;
@@ -865,7 +865,7 @@
 
 
   // 20. DEBUG MODE
-  
+
   if (
     script.getAttribute("data-debug") ===
     "true"

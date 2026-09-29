@@ -1,9 +1,7 @@
-import { Prisma } from "@/generated/prisma/client";
 import { NextResponse, NextRequest } from "next/server";
 import { CreateProjectSchema } from "../../../../../lib/validator/project";
 import { auth } from "../../../../../lib/auth";
 import { prisma } from "../../../../../lib/prisma";
-import { headers } from "next/headers";
 
 // Create project
 export async function POST(req: NextRequest) {
