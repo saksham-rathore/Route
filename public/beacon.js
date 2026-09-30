@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  // 1. INITIALIZATION
+  // initialazation
 
   var script =
     document.currentScript ||
@@ -20,7 +20,7 @@
     script.getAttribute("data-beacon") ||
     window.location.origin + "/api/collect";
 
-  // 2. BASIC INFORMATION
+  // basic information
 
   var PAGE = window.location.pathname;
   var HOST = window.location.hostname;
@@ -34,7 +34,7 @@
 
   var DEVICE = getDeviceInfo();
 
-  // 3. LOCAL VISITOR ID
+  // local visitor Id
 
   function getVisitorId() {
     var key = "route_visitor_id";
@@ -62,7 +62,7 @@
     }
   }
 
-  // 4. DEVICE INFORMATION
+  // Device Information 
 
   function getDeviceInfo() {
     var ua = navigator.userAgent;
@@ -96,7 +96,7 @@
     };
   }
 
-  // 5. EVENT STORAGE
+  // Event Storage
 
   var events = [];
 
@@ -106,7 +106,7 @@
 
   var measurements = [];
 
-  // 6. COMMON EVENT CREATOR
+  // Common Event Creator
 
   function createEvent(type, name, properties) {
     return {
@@ -125,7 +125,7 @@
     };
   }
 
-  // 7. PAGE VIEW
+  // Page View
 
   events.push(
     createEvent("page_view", "page_view", {
@@ -133,7 +133,7 @@
     })
   );
 
-  // 8. SESSION START
+  // Session start
 
   events.push(
     createEvent("session_start", "session_start", {
@@ -141,7 +141,7 @@
     })
   );
 
-  // 9. CUSTOM EVENTS
+  // Custom events
 
   function track(name, properties) {
     if (!name || typeof name !== "string") {
@@ -159,13 +159,13 @@
     flush();
   }
 
-  // Expose public API
+  // expose public API
 
   window.route = window.route || {};
 
   window.route.track = track;
 
-  // 10. FETCH MONITORING
+  // Fetch monitoring
 
   var originalFetch = window.fetch;
 
@@ -239,7 +239,7 @@
     };
   }
 
-  // 11. API PERFORMANCE
+  // API performance
 
   function recordApiRequest(
     url,
@@ -267,7 +267,7 @@
     });
   }
 
-  // 12. URL SANITIZATION
+  // URL sanitization
 
   function sanitizeUrl(url) {
 
@@ -291,7 +291,7 @@
     }
   }
 
-  // 13. WEB VITALS
+  // Web vitals
 
   function addVital(
     name,
@@ -314,7 +314,6 @@
     });
   }
 
-
   function rateLCP(value) {
 
     if (value <= 2500) {
@@ -327,7 +326,6 @@
 
     return "poor";
   }
-
 
   function rateCLS(value) {
 
@@ -342,7 +340,6 @@
     return "poor";
   }
 
-
   function rateINP(value) {
 
     if (value <= 200) {
@@ -355,7 +352,6 @@
 
     return "poor";
   }
-
 
   function rateFCP(value) {
 
@@ -370,7 +366,6 @@
     return "poor";
   }
 
-
   function rateTTFB(value) {
 
     if (value <= 800) {
@@ -384,8 +379,7 @@
     return "poor";
   }
 
-
-  // 14. PERFORMANCE OBSERVER
+  // Performance observer
 
   if (
     typeof PerformanceObserver !==
@@ -424,7 +418,6 @@
 
     } catch (error) {}
 
-
     // CLS
 
     var clsValue = 0;
@@ -461,7 +454,6 @@
       });
 
     } catch (error) {}
-
 
     // INP
 
@@ -542,8 +534,7 @@
 
     } catch (error) {}
 
-
-    // FINAL VITALS
+    // final vitals
 
     var vitalsFlushed = false;
 
@@ -555,14 +546,12 @@
 
       vitalsFlushed = true;
 
-
       // CLS
       addVital(
         "CLS",
         clsValue * 1000,
         rateCLS(clsValue)
       );
-
 
       // INP
       if (inpMax > 0) {
@@ -573,7 +562,6 @@
           rateINP(inpMax)
         );
       }
-
 
       // TTFB
       try {
@@ -602,7 +590,6 @@
       } catch (error) {}
     }
 
-
     window.addEventListener(
       "pagehide",
       flushVitals
@@ -623,7 +610,7 @@
     );
   }
 
-  // 15. JAVASCRIPT ERRORS
+  // javascript errors
 
   window.addEventListener(
     "error",
@@ -659,7 +646,7 @@
     }
   );
 
-  // 16. UNHANDLED PROMISE ERRORS
+  // unhandled promise errors 
 
   window.addEventListener(
     "unhandledrejection",
@@ -694,7 +681,7 @@
     }
   );
 
-  // 17. BUILD PAYLOAD
+  // build payload 
 
   function buildPayload() {
 
@@ -722,7 +709,7 @@
     });
   }
 
-  // 18. SEND DATA
+  // send data
 
   function flush() {
 
@@ -735,10 +722,8 @@
       return;
     }
 
-
     var body =
       buildPayload();
-
 
     // Clear queues before sending
     events = [];
@@ -773,7 +758,6 @@
 
     } catch (error) {}
 
-
     // fetch fallback
 
     try {
@@ -795,14 +779,12 @@
     } catch (error) {}
   }
 
-
-  // 19. AUTOMATIC FLUSH
+  // automatic flush
 
   window.addEventListener(
     "pagehide",
     flush
   );
-
 
   document.addEventListener(
     "visibilitychange",
@@ -818,13 +800,11 @@
     }
   );
 
-
   // Send every 10 seconds
   setInterval(
     flush,
     10000
   );
-
 
   // Initial flush after 15 seconds
   setTimeout(
@@ -832,8 +812,7 @@
     15000
   );
 
-
-  // 20. DEBUG MODE
+  // debugging
 
   if (
     script.getAttribute("data-debug") ===

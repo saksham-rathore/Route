@@ -126,7 +126,7 @@ model Visitor {
   firstSeenAt     DateTime @default(now())
   lastSeenAt      DateTime @default(now())
   sessionCount    Int      @default(0)
-  lastHost        String?
+  lastHost        String? 
   lastDevice      String?
   lastBrowser     String?
   language        String?
