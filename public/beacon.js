@@ -1,34 +1,3 @@
-/**
- * Route Beacon
- *
- * Lightweight web analytics + performance SDK.
- *
- * Tracks:
- * - Page views
- * - Sessions
- * - Visitors
- * - Custom events
- * - API performance through fetch()
- * - Web Vitals
- * - JavaScript errors
- * - Basic device/browser information
- *
- * Usage:
- *
- * <script
- *   defer
- *   src="https://YOUR-APP.com/beacon.js"
- *   data-pid="my-project"
- *   data-beacon="https://YOUR-APP.com/api/collect">
- * </script>
- *
- * Custom event:
- *
- * Route.track("signup_completed", {
- *   plan: "pro"
- * });
- */
-
 (function () {
   "use strict";
 

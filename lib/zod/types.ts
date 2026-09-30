@@ -50,7 +50,6 @@ export const ErrorSchema = z.object({
 });
 
 export const CollectSchema = z.object({
-  // beacon sends snake_case; accept camelCase too for backwards compat
   project_id: z.string().min(1).max(128).optional(),
   projectId: z.string().min(1).max(128).optional(),
   session_id: z.string().min(1).max(128),

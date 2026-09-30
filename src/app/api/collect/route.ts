@@ -3,15 +3,11 @@ import { prisma } from "../../../../lib/prisma";
 import { z } from "zod";
 import { CollectSchema } from "../../../../lib/zod/types";
 
-// ─── Beacon payload shapes (must match public/beacon.js buildPayload()) ───
-// {
 //   project_id, session_id, visitor_id, host, page,
 //   events: [{ type: page_view|session_start|custom, name, properties, page, timestamp, session_id, visitor_id }],
 //   measurements: [{ type: api_request, url, method, status, duration, page, timestamp }],
 //   vitals: [{ type: web_vital, name: LCP|CLS|INP|FCP|TTFB, value, rating, page, timestamp }],
 //   errors: [{ type: javascript_error|promise_error, message, filename?, line?, column?, page, timestamp }]
-// }
-
 
 type CollectInput = z.infer<typeof CollectSchema>;
 
@@ -139,7 +135,9 @@ export async function POST(req: NextRequest) {
         },
         select: { id: true },
       });
-      // new session for an existing visitor -> bump count
+
+      // new session for an existing visitor
+      
       await prisma.visitor.update({
         where: { id: visitor.id },
         data: { sessionCount: { increment: 1 } },
@@ -176,7 +174,6 @@ export async function POST(req: NextRequest) {
       errorFilename: string | null;
       errorLine: number | null;
       errorColumn: number | null;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       metadata: any;
     }[] = [];
 
@@ -304,7 +301,6 @@ export async function POST(req: NextRequest) {
     }
 
     if (rows.length > 0) {
-      // createMany is faster than N creates and matches beacon's batched flush model
       await prisma.event.createMany({ data: rows });
     }
 
