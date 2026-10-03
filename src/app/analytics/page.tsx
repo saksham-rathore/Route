@@ -1,4 +1,4 @@
-import { GeographyHeatmap } from "@/components/components/analytics/GeographyHeatmap";
+import { GeographyHeatmap } from "@/components/analytics/GeographyHeatmap";
 
 export default function AnalyticsPage() {
   return (
