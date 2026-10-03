@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../lib/prisma";
 import { z } from "zod";
-import { CollectSchema } from "../../../../lib/zod/types";
-
-//   project_id, session_id, visitor_id, host, page,
-//   events: [{ type: page_view|session_start|custom, name, properties, page, timestamp, session_id, visitor_id }],
-//   measurements: [{ type: api_request, url, method, status, duration, page, timestamp }],
-//   vitals: [{ type: web_vital, name: LCP|CLS|INP|FCP|TTFB, value, rating, page, timestamp }],
-//   errors: [{ type: javascript_error|promise_error, message, filename?, line?, column?, page, timestamp }]
+import { CollectSchema } from "../../../../lib/zod/types"; 
 
 type CollectInput = z.infer<typeof CollectSchema>;
 

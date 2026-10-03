@@ -2,14 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "./auth";
 import { prisma } from "./prisma";
 
-// ─── Auth ───
+// Auth
 
 export async function requireUser(req: NextRequest) {
   const session = await auth.api.getSession({ headers: req.headers });
   return session?.user ?? null;
 }
 
-// ─── Project ownership ───
+// Project ownership
 // `key` accepts either the internal id or the public projectId (beacon data-pid).
 export async function requireProject(userId: string, key: string | null) {
   if (!key) return null;
@@ -23,7 +23,7 @@ export async function findProjectByPublicId(publicId: string) {
   return prisma.project.findUnique({ where: { projectId: publicId } });
 }
 
-// ─── Standard JSON envelope ───
+// Standard JSON envelope
 
 export function ok<T extends Record<string, unknown>>(
   data: T,
@@ -39,7 +39,7 @@ export function fail(error: string, status = 400, details?: unknown) {
   );
 }
 
-// ─── Query helpers ───
+// Query helpers
 
 const DEFAULT_RANGE_DAYS = 7;
 const MAX_LIMIT = 100;

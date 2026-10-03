@@ -67,30 +67,17 @@ model Verification {
   @@map("verification")
 }
 
-// ─── Analytics (matches public/beacon.js payload) ───
-//
-// Beacon sends per flush:
-// {
-//   project_id, session_id ("s_..."), visitor_id ("v_..."),
-//   host, page,
-//   device: { device, browser, screen_width, screen_height, language },
-//   events: [{ type: page_view|session_start|custom, name, properties, page, timestamp, session_id, visitor_id }],
-//   measurements: [{ type: api_request, url, method, status, duration, page, timestamp }],
-//   vitals: [{ type: web_vital, name: LCP|CLS|INP|FCP|TTFB, value, rating, page, timestamp }],
-//   errors: [{ type: javascript_error|promise_error, message, filename?, line?, column?, page, timestamp }]
-// }
-
 model Project {
-  id                String          @id @default(cuid())
-  projectId         String          @unique @default(cuid()) // public PID, matches beacon `project_id` (data-pid)
-  domain            String          @unique
+  id                String             @id @default(cuid())
+  projectId         String             @unique @default(cuid())
+  domain            String             @unique
   ownerId           String
   name              String
-  status            ProjectStatus   @default(ACTIVE)
-  timeZone          String          @default("UTC")
-  dataRetentionDays Int             @default(30)
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
+  status            ProjectStatus      @default(ACTIVE)
+  timeZone          String             @default("UTC")
+  dataRetentionDays Int                @default(30)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
   domains           ProjectDomain[]
   visitors          Visitor[]
   analyticsSessions AnalyticsSession[]
@@ -118,15 +105,14 @@ model ProjectDomain {
   @@index([domain])
 }
 
-// One row per beacon visitor_id ("v_..."), scoped to a project.
 model Visitor {
   id              String   @id @default(cuid())
   projectId       String
-  beaconVisitorId String // beacon `visitor_id`
+  beaconVisitorId String
   firstSeenAt     DateTime @default(now())
   lastSeenAt      DateTime @default(now())
   sessionCount    Int      @default(0)
-  lastHost        String? 
+  lastHost        String?
   lastDevice      String?
   lastBrowser     String?
   language        String?
@@ -138,26 +124,25 @@ model Visitor {
   @@index([projectId, lastSeenAt])
 }
 
-// One row per beacon session_id ("s_..."). Upserted on every flush.
 model AnalyticsSession {
-  id               String    @id @default(cuid())
-  projectId        String
-  beaconSessionId  String    @unique // beacon `session_id`
-  visitorId        String // FK -> Visitor.id
-  beaconVisitorId  String // denormalized beacon `visitor_id` for fast filtering
-  startedAt        DateTime  @default(now())
-  lastActivityAt   DateTime  @default(now())
-  endedAt          DateTime?
+  id              String    @id @default(cuid())
+  projectId       String
+  beaconSessionId String    @unique
+  visitorId       String
+  beaconVisitorId String
+  startedAt       DateTime  @default(now())
+  lastActivityAt  DateTime  @default(now())
+  endedAt         DateTime?
 
-  host        String?
-  landingPage String?
-  device      String?
-  browser     String?
-  screenWidth Int?
+  host         String?
+  landingPage  String?
+  device       String?
+  browser      String?
+  screenWidth  Int?
   screenHeight Int?
-  language    String?
-  country     String?
-  city        String?
+  language     String?
+  country      String?
+  city         String?
 
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   visitor Visitor @relation(fields: [visitorId], references: [id], onDelete: Cascade)
@@ -169,48 +154,37 @@ model AnalyticsSession {
   @@map("sessions")
 }
 
-// Unified table for everything beacon sends: page views, custom events,
-// API measurements, web vitals, JS / promise errors.
 model Event {
-  id              String    @id @default(cuid())
+  id              String       @id @default(cuid())
   projectId       String
   sessionId       String?
-  beaconSessionId String? // raw beacon `session_id` (kept even if session was pruned)
-  beaconVisitorId String? // raw beacon `visitor_id`
+  beaconSessionId String?
+  beaconVisitorId String?
   eventType       EventType
-  eventName       String? // custom event name, or vital name (LCP/CLS/...), or "page_view"/"session_start"
+  eventName       String?
   pagePath        String?
   host            String?
-  eventTime       DateTime  @default(now())
+  eventTime       DateTime     @default(now())
+  browser         String?
+  deviceType      String?
+  language        String?
+  screenWidth     Int?
+  screenHeight    Int?
+  country         String?
+  city            String?
+  url             String?
+  method          String?
+  statusCode      Int?
+  durationMs      Int?
+  valueMs         Float?
+  rating          VitalRating?
 
-  // context (denormalized from beacon `device`)
-  browser      String?
-  deviceType   String?
-  language     String?
-  screenWidth  Int?
-  screenHeight Int?
-  country      String?
-  city         String?
-
-  // API_REQUEST measurements
-  url        String?
-  method     String?
-  statusCode Int?
-  durationMs Int?
-
-  // WEB_VITAL fields
-  // NOTE: beacon sends CLS as clsValue * 1000, so valueMs is ms for LCP/INP/FCP/TTFB
-  // and CLS*1000 for CLS.
-  valueMs Float?
-  rating  VitalRating?
-
-  // JAVASCRIPT_ERROR / PROMISE_ERROR fields
   errorMessage  String?
   errorFilename String?
   errorLine     Int?
   errorColumn   Int?
 
-  metadata Json? // custom event `properties`
+  metadata Json?
 
   project Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
   session AnalyticsSession? @relation(fields: [sessionId], references: [id], onDelete: SetNull)
@@ -238,24 +212,24 @@ enum VitalRating {
 }
 
 model DailyMetric {
-  id             String   @id @default(cuid())
-  projectId      String
-  date           DateTime
-  pageviews      Int      @default(0)
-  sessions       Int      @default(0)
-  uniqueVisitors Int      @default(0)
-  customEvents   Int      @default(0)
-  apiRequests    Int      @default(0)
-  errorCount     Int      @default(0)
+  id               String   @id @default(cuid())
+  projectId        String
+  date             DateTime
+  pageviews        Int      @default(0)
+  sessions         Int      @default(0)
+  uniqueVisitors   Int      @default(0)
+  customEvents     Int      @default(0)
+  apiRequests      Int      @default(0)
+  errorCount       Int      @default(0)
   avgApiDurationMs Int?
   p95ApiDurationMs Int?
-  lcpP75Ms       Float?
-  clsP75         Float?
-  inpP75Ms       Float?
-  fcpP75Ms       Float?
-  ttfbP75Ms      Float?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  lcpP75Ms         Float?
+  clsP75           Float?
+  inpP75Ms         Float?
+  fcpP75Ms         Float?
+  ttfbP75Ms        Float?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
