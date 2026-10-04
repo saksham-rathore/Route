@@ -1,9 +1,10 @@
-"use client";
-
+import React, { useState } from "react";
 import {
   ArrowRight,
   BarChart3,
+  Check,
   ChevronDown,
+  Copy,
   Globe2,
   MousePointer2,
   ShieldCheck,
@@ -13,8 +14,9 @@ import {
 } from "lucide-react";
 import Navbar from "../Navbar";
 import RouteBento from "../RouteBento";
-import Svg1 from "../svg1";
+import { SnippetCopyButton } from "../SnippetCopyButton";
 import { div } from "framer-motion/client";
+import { HowItWorks } from "../HowItWorks";
 
 const trafficSources = [
   { name: "Google", value: 48, visitors: "12,842" },
@@ -30,41 +32,6 @@ const events = [
   ["Page view", "/features", "14s ago"],
   ["Signup", "New account", "21s ago"],
 ];
-
-// function Logo() {
-//   return (
-//     <div className="flex items-center gap-2">
-//       <img src="/logo.svg" alt="Route" className="h-[32px] w-[32px] shrink-0 object-contain" />
-//       <a
-//         className="font-lastik text-[22px] leading-none tracking-[-0.02em] snip-4f4f-0"
-//         style={{
-//           color: "inherit",
-//           outlineOffset: "2px",
-//           background:
-//             "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
-//           fontSize: "22px",
-//           fontWeight: 400,
-//           fontFamily:
-//             '"Lastik Regular", Caslon, "EB Garamond", "Times New Roman", Times, serif',
-//           lineHeight: "22px",
-//           letterSpacing: "-0.44px",
-//           textAlign: "start",
-//           border: "0px solid rgb(8, 8, 8)",
-//           borderTop: "0px solid rgb(8, 8, 8)",
-//           borderRight: "0px solid rgb(8, 8, 8)",
-//           borderBottom: "0px solid rgb(8, 8, 8)",
-//           borderLeft: "0px solid rgb(8, 8, 8)",
-//           borderColor: "rgb(8, 8, 8)",
-//           opacity: 1,
-//           zIndex: "auto",
-//         }}
-//         href=""
-//       >
-//         Route
-//       </a>
-//     </div>
-//   );
-// }
 
 function BrowserWindow() {
   return (
@@ -506,6 +473,8 @@ function Nav() {
   );
 }
 
+<SnippetCopyButton />
+
 export default function Home() {
   return (
     <main className="overflow-hidden bg-white text-[#24231f]">
@@ -560,283 +529,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* INTRO */}
-      <section id="product" className="border-y border-[#d8d3c8] bg-[#fbfaf7]">
-        <div className="mx-auto max-w-[1180px] px-5 py-28 lg:px-8">
-          <div className="grid gap-12 md:grid-cols-2 md:items-end">
-            <h2 className="font-lastik text-[46px] leading-[1.03] tracking-[-0.04em] md:text-[64px]">
-              Less dashboard.
-              <br />
-              More understanding.
-            </h2>
-
-            <div>
-              <p className="max-w-[480px] text-[17px] font-medium leading-7 text-[#77736c]">
-                Analytics should help you make decisions, not make you stare at
-                charts. Route gives you the context behind every number.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FEATURES */}
-      <section id="features" className="mx-auto max-w-[1180px] px-5 lg:px-8">
-        {/* <Feature
-          number="01"
-          eyebrow="Acquisition"
-          title="Know exactly where your visitors come from."
-          description="See which channels, campaigns, search terms, and referrers are bringing people to your website."
-        >
-          <SourcePanel />
-        </Feature> */}
-
-        <Feature
-          number="02"
-          eyebrow="Behavior"
-          title="See what people actually do after they arrive."
-          description="Understand pages, clicks, sessions, and events without building a complicated analytics setup."
-        >
-          <EventPanel />
-        </Feature>
-
-        <Feature
-          number="03"
-          eyebrow="Conversion"
-          title="Find the point where interest becomes action."
-          description="Follow the journey from the first page view to signup and discover where visitors drop off."
-        >
-          <FunnelPanel />
-        </Feature>
-
-        <Feature
-          number="04"
-          eyebrow="Revenue"
-          title="Connect attention to the value it creates."
-          description="Bring revenue into the same picture so you can understand which traffic and behaviors actually matter."
-        >
-          <RevenuePanel />
-        </Feature>
-      </section>
-
-      {/* PRIVACY */}
-      <section id="privacy" className="bg-[#24231f] text-[#f7f4ed]">
-        <div className="mx-auto max-w-[1180px] px-5 py-28 lg:px-8">
-          <div className="grid gap-16 lg:grid-cols-[1.1fr_0.9fr]">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-[#aaa59b]">
-                Privacy by default
-              </p>
-
-              <h2 className="font-lastik mt-7 max-w-[720px] text-[48px] leading-[1.02] tracking-[-0.04em] md:text-[70px]">
-                Useful data shouldn&apos;t require knowing everything about a
-                person.
-              </h2>
-            </div>
-
-            <div className="grid content-end">
-              {[
-                [
-                  ShieldCheck,
-                  "No invasive tracking",
-                  "Collect the information you need without building profiles around people.",
-                ],
-                [
-                  Users,
-                  "Anonymized visitors",
-                  "Understand behavior without turning analytics into surveillance.",
-                ],
-                [
-                  Globe2,
-                  "Open source",
-                  "Keep your analytics transparent, inspectable, and under your control.",
-                ],
-                [
-                  MousePointer2,
-                  "Own your data",
-                  "Your website data should belong to your product, not an ad network.",
-                ],
-              ].map(([Icon, title, description]) => {
-                const IconComponent = Icon as typeof ShieldCheck;
-
-                return (
-                  <div
-                    key={title as string}
-                    className="border-t border-[#4b4943] py-6"
-                  >
-                    <div className="flex gap-4">
-                      <IconComponent
-                        size={18}
-                        strokeWidth={1.5}
-                        className="mt-1 shrink-0 text-[#c4bfb5]"
-                      />
-
-                      <div>
-                        <h3 className="text-[14px] font-semibold">
-                          {title as string}
-                        </h3>
-
-                        <p className="mt-2 text-[13px] leading-6 text-[#aaa59b]">
-                          {description as string}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* OPEN SOURCE */}
-      <section className="bg-[#fbfaf7]">
-        <div className="mx-auto max-w-[1180px] px-5 py-28 lg:px-8">
-          <div className="rounded-[28px] border border-[#d8d3c8] bg-[#f1eee6] p-8 md:p-14">
-            <div className="grid gap-12 md:grid-cols-2 md:items-end">
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.18em] text-[#8c887f]">
-                  Built in the open
-                </p>
-
-                <h2 className="font-lastik mt-6 text-[45px] leading-[1.03] tracking-[-0.04em] md:text-[60px]">
-                  Your analytics shouldn&apos;t be a black box.
-                </h2>
-              </div>
-
-              <div>
-                <p className="text-[16px] font-medium leading-7 text-[#77736c]">
-                  Route is designed around transparency. Understand how your
-                  analytics work, inspect the system, and keep control of your
-                  data.
-                </p>
-
-                <a
-                  href="#"
-                  className="mt-7 inline-flex items-center gap-2 text-[13px] font-semibold"
-                >
-                  Explore the project
-                  <ArrowRight size={15} />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PRICING */}
-      <section id="pricing" className="border-t border-[#d8d3c8]">
-        <div className="mx-auto max-w-[1180px] px-5 py-28 lg:px-8">
-          <div className="mb-16 max-w-[600px]">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-[#8c887f]">
-              Pricing
-            </p>
-
-            <h2 className="font-lastik mt-5 text-[48px] leading-[1.02] tracking-[-0.04em] md:text-[64px]">
-              Simple enough to understand.
-            </h2>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            {[
-              {
-                name: "Starter",
-                price: "$0",
-                description:
-                  "For small websites getting started with analytics.",
-                featured: false,
-              },
-              {
-                name: "Growth",
-                price: "$19",
-                description:
-                  "For teams that want deeper insight into their growth.",
-                featured: true,
-              },
-              {
-                name: "Scale",
-                price: "$49",
-                description: "For businesses connecting analytics to revenue.",
-                featured: false,
-              },
-            ].map((plan) => (
-              <div
-                key={plan.name}
-                className={`rounded-[22px] border p-7 ${
-                  plan.featured
-                    ? "border-[#24231f] bg-[#24231f] text-[#f7f4ed]"
-                    : "border-[#d8d3c8] bg-[#fbfaf7]"
-                }`}
-              >
-                <p
-                  className={`text-[12px] font-semibold ${
-                    plan.featured ? "text-[#aaa59b]" : "text-[#77736c]"
-                  }`}
-                >
-                  {plan.name}
-                </p>
-
-                <div className="mt-7 flex items-end gap-1">
-                  <span className="text-[42px] font-semibold tracking-[-0.06em]">
-                    {plan.price}
-                  </span>
-
-                  <span
-                    className={`mb-2 text-[11px] ${
-                      plan.featured ? "text-[#aaa59b]" : "text-[#8c887f]"
-                    }`}
-                  >
-                    / month
-                  </span>
-                </div>
-
-                <p
-                  className={`mt-4 min-h-[52px] text-[13px] leading-6 ${
-                    plan.featured ? "text-[#aaa59b]" : "text-[#77736c]"
-                  }`}
-                >
-                  {plan.description}
-                </p>
-
-                <a
-                  href="#"
-                  className={`mt-8 flex items-center justify-center rounded-full py-3 text-[12px] font-semibold ${
-                    plan.featured
-                      ? "bg-[#f7f4ed] text-[#24231f]"
-                      : "border border-[#cbc5ba]"
-                  }`}
-                >
-                  Get started
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="bg-[#24231f] px-5 py-32 text-center text-[#f7f4ed]">
-        <p className="text-[11px] uppercase tracking-[0.2em] text-[#aaa59b]">
-          Start with Route
-        </p>
-
-        <h2 className="font-lastik mx-auto mt-7 max-w-[850px] text-[52px] leading-[0.98] tracking-[-0.045em] md:text-[80px]">
-          Make your analytics feel human again.
-        </h2>
-
-        <p className="mx-auto mt-7 max-w-[520px] text-[16px] leading-7 text-[#aaa59b]">
-          Know where people come from, what they do, and what actually moves
-          your business.
-        </p>
-
-        <a
-          href="#"
-          className="mt-9 inline-flex items-center gap-2 rounded-full bg-[#f7f4ed] px-7 py-3.5 text-[13px] font-semibold text-[#24231f]"
-        >
-          Start for free
-          <ArrowRight size={15} />
-        </a>
-      </section>
+      {/* INTRO: HOW IT WORKS */}
+      <div>
+        <HowItWorks />
+      </div>
 
       {/* FOOTER */}
       <footer className="bg-[#24231f] px-5 pb-10 text-[#f7f4ed]">
