@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Comparison from "@/components/Comparison/page";
+import Comparison from "@/components/Comparison";
 
 
 export default function RouteLandingPage() {

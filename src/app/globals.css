@@ -98,3 +98,21 @@ a {
 details > summary::-webkit-details-marker {
   display: none;
 }
+
+@keyframes border-line-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-border-line {
+  animation: border-line-spin 3.5s linear infinite;
+  will-change: transform;
+}
+
+.group:hover .animate-border-line {
+  animation-duration: 2s;
+}

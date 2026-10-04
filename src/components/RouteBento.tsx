@@ -2,6 +2,9 @@ import React from "react";
 import Svg1 from "./svg1";
 import Svg2 from "./svg2";
 import Svg3 from "./svg3";
+import Svg4 from "./svg4";
+import Svg5 from "./svg5";
+import Svg6 from "./svg6";
 
 const Card = ({
   children,
@@ -25,69 +28,9 @@ const Card = ({
 
 const RouteOverview = () => {
   return (
-    <Card className="bg-[#f7ecff]">
-      <div className="flex h-full flex-col justify-between">
-        {/* Mini dashboard */}
-        <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-[390px] rounded-2xl bg-white p-3 shadow-[0_12px_40px_rgba(80,40,120,0.08)]">
-            <div className="mb-3 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#17152A] text-xs font-bold text-white">
-                  R
-                </div>
-                <span className="text-[11px] font-semibold">
-                  Route Analytics
-                </span>
-              </div>
-
-              <span className="rounded-full bg-[#efe6ff] px-2 py-1 text-[9px] font-medium text-[#7B35F0]">
-                Live
-              </span>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2">
-              {[
-                ["12.4k", "Visitors"],
-                ["8.7k", "Sessions"],
-                ["32.8k", "Events"],
-              ].map(([value, label]) => (
-                <div key={label} className="rounded-xl bg-[#faf9fc] p-2.5">
-                  <p className="text-[15px] font-semibold tracking-tight">
-                    {value}
-                  </p>
-                  <p className="mt-0.5 text-[9px] text-black/45">{label}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-3 h-[70px] rounded-xl bg-[#faf9fc] p-2">
-              <svg viewBox="0 0 320 70" className="h-full w-full" fill="none">
-                <path
-                  d="M5 56 C40 51 42 42 70 45 C100 49 106 28 130 34 C160 41 164 23 190 29 C216 36 228 15 250 22 C273 28 280 10 315 14"
-                  stroke="#7B35F0"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <h3 className="font-instrument-sans text-[22px] font-medium leading-[1.08] tracking-[-0.04em] sm:text-[28px] sm:leading-[1.05] sm:tracking-[-0.045em]">
-            <span className="block text-[#7B35F0]">From visitors</span>
-            <span className="block text-[#17152A]">
-              to meaningful insights.
-            </span>
-          </h3>
-
-          <p className="mt-3 max-w-[390px] text-[13.5px] font-medium leading-[1.42] tracking-[-0.02em] text-[#373737]/70 sm:text-[15px]">
-            Understand what is happening across your website with simple,
-            focused analytics for visitors, sessions, events, and pages.
-          </p>
-        </div>
-      </div>
-    </Card>
+    <div className="flex h-full w-full items-center justify-center">
+      <Svg4 className="h-auto w-full" />
+    </div>
   );
 };
 
@@ -97,71 +40,9 @@ const RouteOverview = () => {
 
 const UserActivity = () => {
   return (
-    <Card className="bg-[#f0f9ff]">
-      <div className="grid h-full gap-5 py-2 sm:gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
-        <div>
-          <h3 className="font-instrument-sans text-[22px] font-medium leading-[1.08] tracking-[-0.04em] sm:text-[28px] sm:leading-[1.05] sm:tracking-[-0.045em]">
-            <span className="block text-sky-600">See what your users</span>
-            <span className="block text-[#17152A]">are actually doing.</span>
-          </h3>
-
-          <p className="mt-3 max-w-[360px] text-[13.5px] font-medium leading-[1.42] tracking-[-0.02em] text-[#373737]/70 sm:text-[15px]">
-            Track important interactions across your website and understand how
-            visitors move through your product.
-          </p>
-        </div>
-
-        <div className="flex flex-col gap-3">
-          {/* Event message */}
-          <div className="flex justify-end">
-            <div className="rounded-xl bg-[#087fd1] px-4 py-3 text-[11px] font-medium text-white shadow-sm">
-              Track clicks on the pricing button
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-sm font-bold shadow-sm">
-              R
-            </div>
-
-            <div className="rounded-xl bg-white px-4 py-3 text-[11px] text-black/70 shadow-sm">
-              Event{" "}
-              <span className="font-semibold text-[#087fd1]">
-                pricing_click
-              </span>{" "}
-              is now being tracked.
-            </div>
-          </div>
-
-          {/* Metrics */}
-          <div className="rounded-2xl bg-white p-4 shadow-[0_10px_30px_rgba(30,100,150,0.08)]">
-            <div className="mb-3 flex items-center justify-between">
-              <span className="text-[12px] font-semibold">
-                Website activity
-              </span>
-
-              <span className="text-[9px] text-black/40">Last 7 days</span>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2">
-              {[
-                ["12.4k", "Visitors", "+12%"],
-                ["8.7k", "Sessions", "+18%"],
-                ["32.8k", "Events", "+24%"],
-              ].map(([value, label, change]) => (
-                <div key={label}>
-                  <p className="text-[16px] font-semibold">{value}</p>
-                  <p className="text-[9px] text-black/40">{label}</p>
-                  <p className="mt-1 text-[9px] font-semibold text-green-600">
-                    ↑ {change}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </Card>
+    <div className="flex h-full w-full items-center justify-center">
+      <Svg5 className="h-auto w-full" />
+    </div>
   );
 };
 
@@ -227,6 +108,18 @@ const Everything = () => {
 };
 
 /* -------------------------------------------------
+   MIDDLE MIDDLE
+------------------------------------------------- */
+
+export const Insights = () => {
+  return (
+    <Card className="bg-[#eeffe8]">
+      <Svg6 />
+    </Card>
+  );
+};
+
+/* -------------------------------------------------
    BOTTOM LEFT
 ------------------------------------------------- */
 
@@ -236,13 +129,13 @@ const LiveActivity = () => {
       <div className="grid h-full gap-5 md:grid-cols-[0.9fr_1.1fr] md:items-center">
         <div>
           <h3 className="font-instrument-sans text-[22px] font-medium leading-[1.08] tracking-[-0.04em] sm:text-[28px]">
-            <span className="block text-[#0E7CFF]">Understand your users,</span>
-            <span className="block text-[#17152A]">without the noise.</span>
+            <span className="block text-[#0E7CFF]">Share, export,</span>
+            <span className="block text-[#17152A]">and keep moving.</span>
           </h3>
 
-          <p className="mt-4 max-w-[320px] text-[13.5px] font-medium leading-[1.42] text-[#373737]/70 sm:text-[15px]">
-            Get a clear view of website activity with lightweight analytics
-            built around the events and metrics you actually care about.
+          <p className="mt-4 max-w-[340px] text-[13.5px] font-medium leading-[1.42] text-[#373737]/70 sm:text-[15px]">
+            Send a live preview, export clean assets, or keep iterating with
+            your team.
           </p>
         </div>
 
@@ -258,9 +151,9 @@ const LiveActivity = () => {
 
 const Lightweight = () => {
   return (
-    <Card className="bg-[#f0ffd8]">
-      <div className="flex h-full flex-col">
-        <Svg3 />
+    <Card className="bg-[#effedb]">
+      <div className="flex h-full flex-col justify-start">
+        <Svg3 className="h-auto w-full" />
       </div>
     </Card>
   );
@@ -272,32 +165,36 @@ const Lightweight = () => {
 
 const RouteBento = () => {
   return (
-    <section className="mx-auto w-full max-w-[1200px] p-4 sm:p-6">
-      <div className="grid auto-rows-[minmax(190px,auto)] grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-6">
+    <section className="mx-auto w-full max-w-[1380px] p-2 sm:p-4 lg:p-6">
+      <div className="grid auto-rows-[minmax(190px,auto)] grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-12">
         {/* Top row */}
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-5">
           <RouteOverview />
         </div>
 
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-7">
           <UserActivity />
         </div>
 
         {/* Middle row */}
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-4">
           <TrackEvents />
         </div>
 
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-4">
+          <Insights />
+        </div>
+
+        <div className="lg:col-span-4">
           <Everything />
         </div>
 
         {/* Bottom row */}
-        <div className="lg:col-span-4">
+        <div className="lg:col-span-8">
           <LiveActivity />
         </div>
 
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-4">
           <Lightweight />
         </div>
       </div>

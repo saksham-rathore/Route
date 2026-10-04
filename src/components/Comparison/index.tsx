@@ -14,6 +14,7 @@ import {
 import Navbar from "../Navbar";
 import RouteBento from "../RouteBento";
 import Svg1 from "../svg1";
+import { div } from "framer-motion/client";
 
 const trafficSources = [
   { name: "Google", value: 48, visitors: "12,842" },
@@ -30,37 +31,40 @@ const events = [
   ["Signup", "New account", "21s ago"],
 ];
 
-function Logo() {
-  return (
-    <a
-      className="font-lastik text-[22px] leading-none tracking-[-0.02em] snip-4f4f-0"
-      style={{
-        color: "rgb(8, 8, 8)",
-        outlineOffset: "2px",
-        background:
-          "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
-        fontSize: "22px",
-        fontWeight: 400,
-        fontFamily:
-          '"Lastik Regular", Caslon, "EB Garamond", "Times New Roman", Times, serif',
-        lineHeight: "22px",
-        letterSpacing: "-0.44px",
-        textAlign: "start",
-        border: "0px solid rgb(8, 8, 8)",
-        borderTop: "0px solid rgb(8, 8, 8)",
-        borderRight: "0px solid rgb(8, 8, 8)",
-        borderBottom: "0px solid rgb(8, 8, 8)",
-        borderLeft: "0px solid rgb(8, 8, 8)",
-        borderColor: "rgb(8, 8, 8)",
-        opacity: 1,
-        zIndex: "auto",
-      }}
-      href=""
-    >
-      Route
-    </a>
-  );
-}
+// function Logo() {
+//   return (
+//     <div className="flex items-center gap-2">
+//       <img src="/logo.svg" alt="Route" className="h-[32px] w-[32px] shrink-0 object-contain" />
+//       <a
+//         className="font-lastik text-[22px] leading-none tracking-[-0.02em] snip-4f4f-0"
+//         style={{
+//           color: "inherit",
+//           outlineOffset: "2px",
+//           background:
+//             "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+//           fontSize: "22px",
+//           fontWeight: 400,
+//           fontFamily:
+//             '"Lastik Regular", Caslon, "EB Garamond", "Times New Roman", Times, serif',
+//           lineHeight: "22px",
+//           letterSpacing: "-0.44px",
+//           textAlign: "start",
+//           border: "0px solid rgb(8, 8, 8)",
+//           borderTop: "0px solid rgb(8, 8, 8)",
+//           borderRight: "0px solid rgb(8, 8, 8)",
+//           borderBottom: "0px solid rgb(8, 8, 8)",
+//           borderLeft: "0px solid rgb(8, 8, 8)",
+//           borderColor: "rgb(8, 8, 8)",
+//           opacity: 1,
+//           zIndex: "auto",
+//         }}
+//         href=""
+//       >
+//         Route
+//       </a>
+//     </div>
+//   );
+// }
 
 function BrowserWindow() {
   return (
@@ -369,7 +373,7 @@ function EventPanel() {
 
 function FunnelPanel() {
   return (
-    <div className="rounded-[20px] border border-[#d8d3c8] bg-[#fbfaf7] p-6">
+    <div className="rounded-[20px] border border-[#d8d3c8] bg-white p-6">
       <div className="mb-7">
         <p className="text-[11px] text-[#8b877e]">Signup funnel</p>
         <p className="mt-1 text-[20px] font-semibold tracking-[-0.04em]">
@@ -409,7 +413,7 @@ function FunnelPanel() {
 
 function RevenuePanel() {
   return (
-    <div className="rounded-[20px] border border-[#d8d3c8] bg-[#fbfaf7] p-6">
+    <div className="rounded-[20px] border border-[#d8d3c8] bg-white p-6">
       <div className="flex items-start justify-between">
         <div>
           <p className="text-[11px] text-[#8b877e]">Revenue</p>
@@ -504,39 +508,31 @@ function Nav() {
 
 export default function Home() {
   return (
-    <main className="overflow-hidden bg-[#f7f4ed] text-[#24231f]">
+    <main className="overflow-hidden bg-white text-[#24231f]">
       <Nav />
 
       {/* HERO */}
-      <section className="mx-auto max-w-[1180px] px-5 pb-24 pt-24 text-center md:pb-32 md:pt-32 lg:px-8">
-        <div className="mx-auto font-instrument-sans relative flex flex w-fit items-center gap-2 rounded-full border border-[#d8d3c8] bg-[#fbfaf7] px-4 py-2 text-[11px] font-medium text-[#77736c]">
-          <Sparkles size={13} />
-          <span
-            className="font-instrument-sans snip-c36c-0"
-            style={{
-              color: "rgb(80, 80, 80)",
-              outlineOffset: "2px",
-              background:
-                "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
-              fontSize: "13px",
-              fontWeight: 400,
-              fontFamily:
-                '"Instrument Sans", "Instrument Sans Fallback", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-              lineHeight: "19.5px",
-              letterSpacing: "normal",
-              textAlign: "center",
-              border: "0px solid rgb(80, 80, 80)",
-              borderTop: "0px solid rgb(80, 80, 80)",
-              borderRight: "0px solid rgb(80, 80, 80)",
-              borderBottom: "0px solid rgb(80, 80, 80)",
-              borderLeft: "0px solid rgb(80, 80, 80)",
-              borderColor: "rgb(80, 80, 80)",
-              opacity: 1,
-              zIndex: "auto",
-            }}
-          >
-            Privacy-first website analytics
-          </span>
+      <section className="mx-auto max-w-[1400px] px-4 pb-24 pt-24 text-center md:pb-32 md:pt-32 sm:px-6 lg:px-8">
+        <div className="group relative mx-auto flex w-fit cursor-pointer items-center justify-center overflow-hidden rounded-full p-[1.5px] shadow-[0_2px_10px_rgba(0,0,0,0.03)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_-4px_rgba(154,115,248,0.28)] active:translate-y-0 active:scale-[0.98]">
+          {/* Base border background */}
+          <div className="absolute inset-0 rounded-full bg-[#d8d3c8]/80 transition-colors duration-300 group-hover:bg-[#c4bed3]" />
+
+          {/* Animated line tracing around the border (border beam) */}
+          <div className="absolute inset-[-1000%] animate-border-line bg-[conic-gradient(from_0deg,transparent_0_300deg,#9a73f8_340deg,#d8b4fe_355deg,transparent_360deg)] opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
+
+          {/* Badge inner pill */}
+          <div className="relative z-10 flex items-center gap-2 rounded-full bg-[#fbfaf7] px-4 py-2 font-instrument-sans transition-colors duration-300 group-hover:bg-white">
+            <div className="pointer-events-none absolute inset-0 -translate-x-full rounded-full bg-gradient-to-r from-transparent via-white/80 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
+            <img
+              src="/svg_35.svg"
+              alt=""
+              className="relative z-10 h-[19px] w-[19px] transition-transform duration-500 ease-out group-hover:scale-125 group-hover:rotate-12"
+            />
+            <span className="relative z-10 font-instrument-sans text-[13px] font-medium leading-[19.5px] text-[#505050] transition-colors duration-300 group-hover:text-[#18161b]">
+              Privacy-first website analytics
+              <span className="absolute -bottom-0.5 left-0 h-[1.5px] w-0 rounded-full bg-gradient-to-r from-[#9a73f8] to-[#60a5fa] transition-all duration-300 ease-out group-hover:w-full" />
+            </span>
+          </div>
         </div>
 
         <h1
@@ -548,7 +544,7 @@ export default function Home() {
           }}
         >
           Understand what your website is <br />
-          <span className="text-[#918d84]">really doing.</span>
+          <span className="text-sky-600">really doing.</span>
         </h1>
 
         <p className="mx-auto mb-3 mt-8 max-w-[720px] px-1 text-center text-[16px] font-medium leading-[1.42] tracking-[-0.02em] text-[#77736c] sm:mb-6 sm:px-5 sm:text-[20px]">
@@ -556,10 +552,11 @@ export default function Home() {
           picture — without invasive tracking or complicated dashboards.
         </p>
 
-        <RouteBento />
-
         <div className="mt-20 text-left">
           <BrowserWindow />
+        </div>
+        <div className="mt-50">
+          <RouteBento />
         </div>
       </section>
 
@@ -845,7 +842,7 @@ export default function Home() {
       <footer className="bg-[#24231f] px-5 pb-10 text-[#f7f4ed]">
         <div className="mx-auto max-w-[1180px] border-t border-[#4b4943] pt-8 lg:px-3">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
-            <Logo />
+            {/* <Logo /> */}
 
             <div className="flex flex-wrap gap-6 text-[12px] text-[#aaa59b]">
               <a href="#">Documentation</a>
