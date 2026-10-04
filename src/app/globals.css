@@ -1,76 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap");
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
 
-  /* Dashboard tokens */
-  --dash-bg: #ffffff;
-  --dash-bg-subtle: #f8fafc;
-  --dash-surface: #ffffff;
-  --dash-surface-hover: #f1f5f9;
-  --dash-input-bg: #f8fafc;
-  --dash-border: #e2e8f0;
-  --dash-text: #0f172a;
-  --dash-text-soft: #64748b;
-  --dash-text-muted: #94a3b8;
-  --dash-blue: #2563eb;
-  --dash-text-on-accent: #ffffff;
-  --dash-button-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --dash-control-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+
+:root {
+  --paper: #f7f4ed;
+  --paper-light: #fbfaf7;
+  --ink: #24231f;
+  --muted: #77736c;
+  --line: #d8d3c8;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
-  overflow-x: hidden;
+  margin: 0;
+  min-width: 320px;
+  background: var(--paper);
+  color: var(--ink);
+
+  font-family:
+    "Instrument Sans",
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-@keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+.font-instrument {
+  font-family:
+    "Instrument Sans",
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
 }
 
-@keyframes marquee-reverse {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
+/*
+  Put the licensed Lastik Regular font here:
+
+  /public/fonts/Lastik-Regular.woff2
+
+  Then uncomment @font-face below.
+*/
+
+/*
+@font-face {
+  font-family: "Lastik Regular";
+  src: url("/fonts/Lastik-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+
+.font-lastik {
+  font-family:
+    "Lastik Regular",
+    "Cormorant Garamond",
+    "EB Garamond",
+    "Caslon",
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-weight: 400;
 }
 
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 38s linear infinite;
+::selection {
+  background: #24231f;
+  color: #f7f4ed;
 }
 
-.animate-marquee-reverse {
-  display: flex;
-  width: max-content;
-  animation: marquee-reverse 38s linear infinite;
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
 }
 
-.animate-marquee:hover,
-.animate-marquee-reverse:hover {
-  animation-play-state: paused;
+a {
+  text-decoration: none;
 }
 
-.mask-fade-x {
-  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+details > summary::-webkit-details-marker {
+  display: none;
 }
-

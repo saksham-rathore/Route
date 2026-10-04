@@ -1,672 +1,921 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   ArrowRight,
-  Check,
+  BarChart3,
   ChevronDown,
   Globe2,
-  Lock,
-  Menu,
   MousePointer2,
-  Play,
   ShieldCheck,
   Sparkles,
   TrendingUp,
   Users,
-  X,
-  Zap,
 } from "lucide-react";
-import { useState } from "react";
+import Navbar from "../Navbar";
 
-const features = [
-  {
-    title: "Understand your audience",
-    description:
-      "See where your visitors come from, what they do, and what keeps them coming back.",
-    icon: Users,
-    stat: "24,892",
-    label: "Visitors",
-  },
-  {
-    title: "Track every interaction",
-    description:
-      "Understand how people move through your website with simple, privacy-friendly analytics.",
-    icon: MousePointer2,
-    stat: "68.4%",
-    label: "Engagement",
-  },
-  {
-    title: "Measure conversions",
-    description:
-      "Turn website activity into measurable goals and understand what drives your business.",
-    icon: TrendingUp,
-    stat: "12.8%",
-    label: "Conversion",
-  },
+const trafficSources = [
+  { name: "Google", value: 48, visitors: "12,842" },
+  { name: "Direct", value: 27, visitors: "7,231" },
+  { name: "Twitter / X", value: 14, visitors: "3,749" },
+  { name: "LinkedIn", value: 8, visitors: "2,143" },
+  { name: "Other", value: 3, visitors: "804" },
 ];
 
-const stats = [
-  ["12.4K", "Visitors"],
-  ["8.7K", "Sessions"],
-  ["42.8%", "Bounce rate"],
-  ["3m 24s", "Avg. session"],
+const events = [
+  ["Page view", "/pricing", "2s ago"],
+  ["Button click", "Start free", "8s ago"],
+  ["Page view", "/features", "14s ago"],
+  ["Signup", "New account", "21s ago"],
 ];
 
-function MiniChart() {
+function Logo() {
   return (
-    <div className="relative h-44 w-full overflow-hidden rounded-2xl border border-white/10 bg-[#111111] p-5">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,.035)_1px,transparent_1px)] bg-[size:40px_40px]" />
-
-      <svg
-        viewBox="0 0 600 180"
-        className="relative z-10 h-full w-full"
-        preserveAspectRatio="none"
-      >
-        <defs>
-          <linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="white" stopOpacity=".2" />
-            <stop offset="100%" stopColor="white" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-
-        <path
-          d="M0 145 C45 135 55 120 90 130 C125 140 145 95 175 110 C210 128 225 80 260 92 C300 105 320 65 350 78 C390 92 400 45 440 61 C480 76 500 35 540 52 C565 61 585 28 600 38 V180 H0Z"
-          fill="url(#chartFill)"
-        />
-
-        <path
-          d="M0 145 C45 135 55 120 90 130 C125 140 145 95 175 110 C210 128 225 80 260 92 C300 105 320 65 350 78 C390 92 400 45 440 61 C480 76 500 35 540 52 C565 61 585 28 600 38"
-          fill="none"
-          stroke="white"
-          strokeWidth="3"
-        />
-      </svg>
-
-      <div className="absolute left-5 top-5 z-20">
-        <p className="text-xs text-white/40">Visitors</p>
-        <p className="mt-1 text-xl font-semibold">24,892</p>
-      </div>
-    </div>
-  );
-}
-
-function Dashboard() {
-  return (
-    <div className="relative mx-auto mt-16 max-w-6xl">
-      <div className="absolute -inset-20 -z-10 rounded-full bg-white/[0.05] blur-3xl" />
-
-      <div className="overflow-hidden rounded-[28px] border border-white/10 bg-[#0d0d0d] shadow-2xl">
-        <div className="flex h-14 items-center border-b border-white/10 px-5">
-          <div className="flex gap-2">
-            <span className="h-3 w-3 rounded-full bg-white/20" />
-            <span className="h-3 w-3 rounded-full bg-white/20" />
-            <span className="h-3 w-3 rounded-full bg-white/20" />
-          </div>
-
-          <div className="mx-auto hidden rounded-lg border border-white/10 bg-white/[0.03] px-24 py-2 text-xs text-white/30 sm:block">
-            app.route.dev/dashboard
-          </div>
-        </div>
-
-        <div className="grid min-h-[470px] md:grid-cols-[210px_1fr]">
-          <aside className="hidden border-r border-white/10 p-5 md:block">
-            <div className="mb-10 flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white text-black">
-                <Sparkles size={14} />
-              </div>
-              <span className="font-semibold">route</span>
-            </div>
-
-            <div className="space-y-2 text-sm">
-              {["Overview", "Visitors", "Pages", "Events", "Goals"].map(
-                (item, i) => (
-                  <div
-                    key={item}
-                    className={`rounded-lg px-3 py-2 ${
-                      i === 0
-                        ? "bg-white text-black"
-                        : "text-white/40 hover:bg-white/5"
-                    }`}
-                  >
-                    {item}
-                  </div>
-                )
-              )}
-            </div>
-          </aside>
-
-          <main className="p-5 md:p-8">
-            <div className="mb-8">
-              <p className="text-sm text-white/40">Overview</p>
-              <h3 className="mt-1 text-2xl font-semibold">Website analytics</h3>
-            </div>
-
-            <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
-              {stats.map(([value, label]) => (
-                <div
-                  key={label}
-                  className="rounded-xl border border-white/10 bg-white/[0.025] p-4"
-                >
-                  <p className="text-xs text-white/35">{label}</p>
-                  <p className="mt-2 text-xl font-semibold">{value}</p>
-                </div>
-              ))}
-            </div>
-
-            <MiniChart />
-          </main>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function FeatureCard({
-  feature,
-  index,
-}: {
-  feature: (typeof features)[number];
-  index: number;
-}) {
-  const Icon = feature.icon;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group rounded-[28px] border border-black/10 bg-[#f7f7f5] p-7 transition hover:-translate-y-1 hover:shadow-xl"
+    <a
+      className="font-lastik text-[22px] leading-none tracking-[-0.02em] snip-4f4f-0"
+      style={{
+        color: "rgb(8, 8, 8)",
+        outlineOffset: "2px",
+        background:
+          "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+        fontSize: "22px",
+        fontWeight: 400,
+        fontFamily:
+          '"Lastik Regular", Caslon, "EB Garamond", "Times New Roman", Times, serif',
+        lineHeight: "22px",
+        letterSpacing: "-0.44px",
+        textAlign: "start",
+        border: "0px solid rgb(8, 8, 8)",
+        borderTop: "0px solid rgb(8, 8, 8)",
+        borderRight: "0px solid rgb(8, 8, 8)",
+        borderBottom: "0px solid rgb(8, 8, 8)",
+        borderLeft: "0px solid rgb(8, 8, 8)",
+        borderColor: "rgb(8, 8, 8)",
+        opacity: 1,
+        zIndex: "auto",
+      }}
+      href=""
     >
-      <div className="mb-14 flex h-11 w-11 items-center justify-center rounded-xl bg-black text-white">
-        <Icon size={19} />
-      </div>
-
-      <div className="mb-8">
-        <p className="text-5xl font-semibold tracking-tight">
-          {feature.stat}
-        </p>
-        <p className="mt-2 text-sm text-black/40">{feature.label}</p>
-      </div>
-
-      <h3 className="text-xl font-semibold">{feature.title}</h3>
-
-      <p className="mt-3 max-w-sm text-sm leading-6 text-black/50">
-        {feature.description}
-      </p>
-
-      <div className="mt-8 flex items-center gap-2 text-sm font-medium">
-        Explore feature
-        <ArrowRight
-          size={16}
-          className="transition-transform group-hover:translate-x-1"
-        />
-      </div>
-    </motion.div>
+      Route
+    </a>
   );
 }
 
-function Navbar() {
-  const [open, setOpen] = useState(false);
-
+function BrowserWindow() {
   return (
-    <header className="fixed left-0 right-0 top-0 z-50">
-      <div className="mx-auto max-w-7xl px-5 pt-5">
-        <nav className="flex items-center justify-between rounded-2xl border border-white/10 bg-black/70 px-5 py-3 backdrop-blur-xl">
-          <a href="#" className="flex items-center gap-2 font-semibold">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-black">
-              <Sparkles size={15} />
-            </span>
-            route
+    <div className="overflow-hidden rounded-[18px] border border-[#d5d0c5] bg-[#fbfaf7] shadow-[0_30px_80px_rgba(45,43,37,0.12)]">
+      {/* Browser bar */}
+      <div className="flex h-11 items-center gap-2 border-b border-[#ded9cf] px-4">
+        <div className="h-2.5 w-2.5 rounded-full bg-[#d2cec4]" />
+        <div className="h-2.5 w-2.5 rounded-full bg-[#d2cec4]" />
+        <div className="h-2.5 w-2.5 rounded-full bg-[#d2cec4]" />
+
+        <div className="mx-auto flex h-6 w-[42%] items-center justify-center rounded-md bg-[#f0ede6] text-[9px] text-[#969188]">
+          app.route.dev/overview
+        </div>
+      </div>
+
+      <div className="flex min-h-[520px]">
+        {/* Sidebar */}
+        <aside className="hidden w-[175px] border-r border-[#ded9cf] p-4 md:block">
+          <a
+            className="font-lastik text-[22px] leading-none tracking-[-0.02em] snip-4f4f-0"
+            style={{
+              color: "rgb(8, 8, 8)",
+              outlineOffset: "2px",
+              background:
+                "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+              fontSize: "22px",
+              fontWeight: 400,
+              fontFamily:
+                '"Lastik Regular", Caslon, "EB Garamond", "Times New Roman", Times, serif',
+              lineHeight: "22px",
+              letterSpacing: "-0.44px",
+              textAlign: "start",
+              border: "0px solid rgb(8, 8, 8)",
+              borderTop: "0px solid rgb(8, 8, 8)",
+              borderRight: "0px solid rgb(8, 8, 8)",
+              borderBottom: "0px solid rgb(8, 8, 8)",
+              borderLeft: "0px solid rgb(8, 8, 8)",
+              borderColor: "rgb(8, 8, 8)",
+              opacity: 1,
+              zIndex: "auto",
+            }}
+            href=""
+          >
+            Route
           </a>
 
-          <div className="hidden items-center gap-7 text-sm text-white/55 md:flex">
-            <a href="#features" className="transition hover:text-white">
-              Product
-            </a>
-            <a href="#privacy" className="transition hover:text-white">
-              Privacy
-            </a>
-            <a href="#pricing" className="transition hover:text-white">
-              Pricing
-            </a>
-            <a href="#resources" className="transition hover:text-white">
-              Resources
-            </a>
+          <div className="space-y-1 text-[10px]">
+            {[
+              "Overview",
+              "Realtime",
+              "Acquisition",
+              "Behavior",
+              "Conversion",
+            ].map((item, i) => (
+              <div
+                key={item}
+                className={`rounded-md px-3 py-2 ${
+                  i === 0
+                    ? "bg-[#ebe7de] font-semibold text-[#24231f]"
+                    : "text-[#8c887f]"
+                }`}
+              >
+                {item}
+              </div>
+            ))}
           </div>
 
-          <div className="hidden items-center gap-3 md:flex">
-            <button className="px-4 py-2 text-sm text-white/60">
-              Sign in
-            </button>
-            <button className="rounded-lg bg-white px-4 py-2 text-sm font-medium text-black transition hover:bg-white/85">
-              Get started
-            </button>
+          <div className="mt-10 border-t border-[#ded9cf] pt-4">
+            <p className="mb-3 px-3 text-[8px] uppercase tracking-[0.18em] text-[#aaa49a]">
+              Workspace
+            </p>
+
+            <div className="space-y-1 text-[10px] text-[#8c887f]">
+              <div className="px-3 py-2">Settings</div>
+              <div className="px-3 py-2">Tracking</div>
+            </div>
+          </div>
+        </aside>
+
+        {/* Dashboard */}
+        <div className="min-w-0 flex-1 p-5 md:p-7">
+          <div className="mb-7 flex items-end justify-between">
+            <div>
+              <p className="text-[9px] uppercase tracking-[0.18em] text-[#99948a]">
+                Website overview
+              </p>
+              <h3 className="mt-1 text-[22px] font-semibold tracking-[-0.04em]">
+                Good morning.
+              </h3>
+            </div>
+
+            <div className="rounded-md border border-[#dcd7cd] px-3 py-1.5 text-[9px] text-[#77736c]">
+              Last 30 days
+            </div>
           </div>
 
-          <button
-            onClick={() => setOpen(!open)}
-            className="md:hidden"
-            aria-label="Toggle menu"
-          >
-            {open ? <X /> : <Menu />}
-          </button>
-        </nav>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+            {[
+              ["Visitors", "26,769", "+18.4%"],
+              ["Sessions", "34,218", "+12.7%"],
+              ["Bounce rate", "31.2%", "-4.2%"],
+              ["Conversions", "2,841", "+24.8%"],
+            ].map(([label, value, change]) => (
+              <div
+                key={label}
+                className="rounded-xl border border-[#ded9cf] bg-white/50 p-4"
+              >
+                <p className="text-[9px] text-[#99948a]">{label}</p>
+                <p className="mt-2 text-[18px] font-semibold tracking-[-0.04em]">
+                  {value}
+                </p>
+                <p className="mt-1 text-[8px] text-[#77736c]">{change}</p>
+              </div>
+            ))}
+          </div>
 
-        {open && (
-          <div className="mt-2 rounded-2xl border border-white/10 bg-[#111]/95 p-5 backdrop-blur-xl md:hidden">
-            <div className="space-y-1">
-              {["Product", "Privacy", "Pricing", "Resources"].map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  onClick={() => setOpen(false)}
-                  className="block rounded-lg px-3 py-3 text-white/60 hover:bg-white/5 hover:text-white"
-                >
-                  {item}
-                </a>
+          {/* Chart */}
+          <div className="mt-4 rounded-xl border border-[#ded9cf] p-4">
+            <div className="mb-5 flex justify-between">
+              <div>
+                <p className="text-[9px] text-[#99948a]">Visitors</p>
+                <p className="mt-1 text-[16px] font-semibold">26,769</p>
+              </div>
+
+              <div className="text-[9px] text-[#99948a]">May 01 — May 30</div>
+            </div>
+
+            <div className="relative h-[175px]">
+              {[0, 1, 2, 3, 4].map((line) => (
+                <div
+                  key={line}
+                  className="absolute left-0 right-0 border-t border-[#e9e5dc]"
+                  style={{ top: `${line * 25}%` }}
+                />
               ))}
-            </div>
 
-            <div className="mt-4 flex gap-2 border-t border-white/10 pt-4">
-              <button className="flex-1 rounded-lg border border-white/10 py-3 text-sm">
-                Sign in
-              </button>
-              <button className="flex-1 rounded-lg bg-white py-3 text-sm font-medium text-black">
-                Get started
-              </button>
+              <svg
+                viewBox="0 0 700 170"
+                preserveAspectRatio="none"
+                className="absolute inset-0 h-full w-full"
+              >
+                <path
+                  d="M0 135 C45 128 60 105 105 112 S170 128 210 88 S275 94 315 73 S380 82 420 55 S485 74 525 48 S590 65 630 32 S670 38 700 20"
+                  fill="none"
+                  stroke="#24231f"
+                  strokeWidth="2.5"
+                />
+              </svg>
             </div>
           </div>
-        )}
+        </div>
       </div>
+    </div>
+  );
+}
+
+function SourcePanel() {
+  return (
+    <div className="rounded-[20px] border border-[#d8d3c8] bg-[#fbfaf7] p-6">
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <p className="text-[11px] text-[#8b877e]">Traffic sources</p>
+          <p className="mt-1 text-[20px] font-semibold tracking-[-0.04em]">
+            26,769 visitors
+          </p>
+        </div>
+
+        <BarChart3 size={18} strokeWidth={1.5} />
+      </div>
+
+      <div className="space-y-5">
+        {trafficSources.map((source) => (
+          <div key={source.name}>
+            <div className="mb-2 flex justify-between text-[11px]">
+              <span>{source.name}</span>
+              <span className="text-[#8b877e]">{source.visitors}</span>
+            </div>
+
+            <div className="h-1.5 overflow-hidden rounded-full bg-[#e8e4db]">
+              <div
+                className="h-full rounded-full bg-[#24231f]"
+                style={{ width: `${source.value}%` }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function EventPanel() {
+  return (
+    <div className="rounded-[20px] border border-[#d8d3c8] bg-[#fbfaf7] p-6">
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <p className="text-[11px] text-[#8b877e]">Live activity</p>
+          <p className="mt-1 text-[20px] font-semibold tracking-[-0.04em]">
+            What&apos;s happening now
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2 text-[9px] text-[#77736c]">
+          <span className="h-2 w-2 rounded-full bg-[#24231f]" />
+          Live
+        </div>
+      </div>
+
+      <div className="divide-y divide-[#e5e1d8]">
+        {events.map(([event, detail, time]) => (
+          <div
+            key={`${event}-${detail}`}
+            className="flex items-center justify-between py-4"
+          >
+            <div>
+              <p className="text-[11px] font-semibold">{event}</p>
+              <p className="mt-1 text-[10px] text-[#8b877e]">{detail}</p>
+            </div>
+
+            <span className="text-[9px] text-[#aaa49a]">{time}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FunnelPanel() {
+  return (
+    <div className="rounded-[20px] border border-[#d8d3c8] bg-[#fbfaf7] p-6">
+      <div className="mb-7">
+        <p className="text-[11px] text-[#8b877e]">Signup funnel</p>
+        <p className="mt-1 text-[20px] font-semibold tracking-[-0.04em]">
+          From visit to customer
+        </p>
+      </div>
+
+      <div className="space-y-3">
+        {[
+          ["Visitors", "26,769", "100%"],
+          ["Viewed pricing", "8,421", "31.5%"],
+          ["Started signup", "4,281", "16.0%"],
+          ["Created account", "2,841", "10.6%"],
+        ].map(([name, value, percentage], index) => (
+          <div key={name}>
+            <div className="mb-2 flex justify-between text-[10px]">
+              <span>{name}</span>
+              <span className="text-[#8b877e]">
+                {value} · {percentage}
+              </span>
+            </div>
+
+            <div className="h-9 overflow-hidden rounded-lg bg-[#e8e4db]">
+              <div
+                className="flex h-full items-center bg-[#24231f] px-3 text-[9px] text-white"
+                style={{ width: `${100 - index * 18}%` }}
+              >
+                {percentage}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function RevenuePanel() {
+  return (
+    <div className="rounded-[20px] border border-[#d8d3c8] bg-[#fbfaf7] p-6">
+      <div className="flex items-start justify-between">
+        <div>
+          <p className="text-[11px] text-[#8b877e]">Revenue</p>
+          <p className="mt-1 text-[28px] font-semibold tracking-[-0.05em]">
+            $84,420
+          </p>
+          <p className="mt-1 text-[10px] text-[#77736c]">
+            +18.8% compared to last month
+          </p>
+        </div>
+
+        <TrendingUp size={19} strokeWidth={1.5} />
+      </div>
+
+      <div className="mt-8 h-36">
+        <svg
+          viewBox="0 0 600 140"
+          preserveAspectRatio="none"
+          className="h-full w-full"
+        >
+          <path
+            d="M0 115 C60 108 70 95 120 98 S180 110 225 78 S280 88 325 62 S390 75 425 55 S490 68 530 30 S570 36 600 18"
+            fill="none"
+            stroke="#24231f"
+            strokeWidth="2"
+          />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+function Feature({
+  number,
+  eyebrow,
+  title,
+  description,
+  children,
+}: {
+  number: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="border-t border-[#d8d3c8] py-24">
+      <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+        <div>
+          <div className="mb-8 flex items-center gap-4">
+            <span className="text-[12px] font-medium text-[#8c887f]">
+              {number}
+            </span>
+
+            <span className="h-px w-10 bg-[#cfc9be]" />
+
+            <span className="text-[11px] uppercase tracking-[0.16em] text-[#8c887f]">
+              {eyebrow}
+            </span>
+          </div>
+
+          <h2 className="font-lastik text-[42px] leading-[1.05] tracking-[-0.035em] md:text-[54px]">
+            {title}
+          </h2>
+
+          <p className="mt-6 max-w-[470px] text-[16px] font-medium leading-7 text-[#77736c]">
+            {description}
+          </p>
+
+          <a
+            href="#"
+            className="mt-8 inline-flex items-center gap-2 text-[13px] font-semibold"
+          >
+            Explore {eyebrow.toLowerCase()}
+            <ArrowRight size={15} />
+          </a>
+        </div>
+
+        <div>{children}</div>
+      </div>
+    </section>
+  );
+}
+
+function Nav() {
+  return (
+    <header>
+      <Navbar />
     </header>
   );
 }
 
-export function Comparison() {
+export default function Home() {
   return (
-    <main className="min-h-screen bg-[#f5f5f2] text-[#111]">
+    <main className="overflow-hidden bg-[#f7f4ed] text-[#24231f]">
+      <Nav />
+
       {/* HERO */}
-      <section className="relative overflow-hidden bg-black text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,255,255,.12),transparent_35%)]" />
-
-        <Navbar />
-
-        <div className="relative mx-auto max-w-7xl px-5 pb-0 pt-40 text-center sm:pt-48">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+      <section className="mx-auto max-w-[1180px] px-5 pb-24 pt-24 text-center md:pb-32 md:pt-32 lg:px-8">
+        <div className="mx-auto font-instrument-sans relative flex flex w-fit items-center gap-2 rounded-full border border-[#d8d3c8] bg-[#fbfaf7] px-4 py-2 text-[11px] font-medium text-[#77736c]">
+          <Sparkles size={13} />
+          <span
+            className="font-instrument-sans snip-c36c-0"
+            style={{
+              color: "rgb(80, 80, 80)",
+              outlineOffset: "2px",
+              background:
+                "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+              fontSize: "13px",
+              fontWeight: 400,
+              fontFamily:
+                '"Instrument Sans", "Instrument Sans Fallback", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+              lineHeight: "19.5px",
+              letterSpacing: "normal",
+              textAlign: "center",
+              border: "0px solid rgb(80, 80, 80)",
+              borderTop: "0px solid rgb(80, 80, 80)",
+              borderRight: "0px solid rgb(80, 80, 80)",
+              borderBottom: "0px solid rgb(80, 80, 80)",
+              borderLeft: "0px solid rgb(80, 80, 80)",
+              borderColor: "rgb(80, 80, 80)",
+              opacity: 1,
+              zIndex: "auto",
+            }}
           >
-            <div className="mx-auto mb-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-xs text-white/60">
-              <span className="h-1.5 w-1.5 rounded-full bg-white" />
-              Privacy-first website analytics
-              <ArrowRight size={13} />
-            </div>
+            Privacy-first website analytics
+          </span>
+        </div>
 
-            <h1 className="mx-auto max-w-5xl text-[52px] font-semibold leading-[.95] tracking-[-0.055em] sm:text-7xl md:text-8xl">
-              Analytics that
-              <br />
-              <span className="text-white/35">actually make sense.</span>
-            </h1>
+        <h1
+          className="font-lastik mx-auto mt-8 max-w-[980px] text-center text-[#24231f]"
+          style={{
+            fontSize: "clamp(44px, 8vw, 70px)",
+            lineHeight: 1.05,
+            letterSpacing: "-0.07em",
+          }}
+        >
+          Understand what your website is <br />
+          <span className="text-[#918d84]">really doing.</span>
+        </h1>
 
-            <p className="mx-auto mt-8 max-w-xl text-base leading-7 text-white/45 sm:text-lg">
-              Understand your website, your visitors, and your business
-              without drowning in complicated analytics.
-            </p>
+        <p className="mx-auto mb-3 mt-8 max-w-[720px] px-1 text-center text-[16px] font-medium leading-[1.42] tracking-[-0.02em] text-[#77736c] sm:mb-6 sm:px-5 sm:text-[20px]">
+          Route turns traffic, behavior, conversion, and revenue into one clear
+          picture — without invasive tracking or complicated dashboards.
+        </p>
 
-            <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-              <button className="flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-medium text-black transition hover:bg-white/85">
-                Start for free
-                <ArrowRight size={16} />
-              </button>
+        <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <button
+            className="group font-instrument-sans relative flex h-[50px] w-[150px] cursor-pointer items-center justify-center text-[15px] font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_2px_rgba(17,17,20,0.06)] transition-[filter] duration-150 ease-out hover:brightness-[1.1] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:brightness-100 snip-bbc4-0"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgb(80, 81, 85) 0%, rgb(62, 63, 68) 52%, rgb(51, 52, 56) 100%)",
+              borderRadius: "40px",
+              filter: "blur(0px)",
+              transform: "none",
+              transformOrigin: "50% 50% 0px",
+              outlineOffset: "2px",
+              background:
+                "rgba(0, 0, 0, 0) linear-gradient(rgb(80, 81, 85) 0%, rgb(62, 63, 68) 52%, rgb(51, 52, 56) 100%) repeat scroll 0% 0% / auto padding-box border-box",
+              color: "rgb(255, 255, 255)",
+              fontSize: "15px",
+              fontWeight: 500,
+              fontFamily:
+                '"Instrument Sans", "Instrument Sans Fallback", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+              lineHeight: "22.5px",
+              letterSpacing: "normal",
+              textAlign: "center",
+              border: "0px solid rgb(255, 255, 255)",
+              borderTop: "0px solid rgb(255, 255, 255)",
+              borderRight: "0px solid rgb(255, 255, 255)",
+              borderBottom: "0px solid rgb(255, 255, 255)",
+              borderLeft: "0px solid rgb(255, 255, 255)",
+              borderColor: "rgb(255, 255, 255)",
+              boxShadow:
+                "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.12) 0px 1px 0px 0px inset, rgba(17, 17, 20, 0.06) 0px 1px 2px 0px",
+              opacity: 1,
+              zIndex: "auto",
+            }}
+            type="submit"
+          >
+            <span
+              className="flex items-center justify-center gap-2 snip-bbc4-1"
+              style={{
+                outlineOffset: "2px",
+                background:
+                  "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+                color: "rgb(255, 255, 255)",
+                fontSize: "15px",
+                fontWeight: 500,
+                fontFamily:
+                  '"Instrument Sans", "Instrument Sans Fallback", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                lineHeight: "22.5px",
+                letterSpacing: "normal",
+                textAlign: "center",
+                border: "0px solid rgb(255, 255, 255)",
+                borderTop: "0px solid rgb(255, 255, 255)",
+                borderRight: "0px solid rgb(255, 255, 255)",
+                borderBottom: "0px solid rgb(255, 255, 255)",
+                borderLeft: "0px solid rgb(255, 255, 255)",
+                borderColor: "rgb(255, 255, 255)",
+                opacity: 1,
+                zIndex: "auto",
+              }}
+              tabIndex={0}
+            >
+              Get started
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="17"
+                height="17"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.25"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-arrow-right transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+                aria-hidden="true"
+                style={{ outlineOffset: "2px" }}
+              >
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </span>
+          </button>
+          <button
+            className="group font-instrument-sans relative flex h-[50px] w-[150px] cursor-pointer items-center justify-center text-[15px] font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_2px_rgba(17,17,20,0.06)] transition-[filter] duration-150 ease-out hover:brightness-[1.1] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:brightness-100 snip-bbc4-0"
+            style={{
+              borderRadius: "40px",
+              filter: "blur(0px)",
+              transform: "none",
+              transformOrigin: "50% 50% 0px",
+              outlineOffset: "2px",
+              background:
+                "rgba(0, 0, 0, 0) linear-gradient(rgb(80, 81, 85) 0%, rgb(62, 63, 68) 52%, rgb(51, 52, 56) 100%) repeat scroll 0% 0% / auto padding-box border-box",
+              color: "rgb(255, 255, 255)",
+              fontSize: "15px",
+              fontWeight: 500,
+              fontFamily:
+                '"Instrument Sans", "Instrument Sans Fallback", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+              lineHeight: "22.5px",
+              letterSpacing: "normal",
+              textAlign: "center",
+              border: "0px solid rgb(255, 255, 255)",
+              borderTop: "0px solid rgb(255, 255, 255)",
+              borderRight: "0px solid rgb(255, 255, 255)",
+              borderBottom: "0px solid rgb(255, 255, 255)",
+              borderLeft: "0px solid rgb(255, 255, 255)",
+              borderColor: "rgb(255, 255, 255)",
+              boxShadow:
+                "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.12) 0px 1px 0px 0px inset, rgba(17, 17, 20, 0.06) 0px 1px 2px 0px",
+              opacity: 1,
+              zIndex: "auto",
+            }}
+            type="submit"
+          >
+            <span
+              className="flex items-center justify-center gap-2 snip-bbc4-1"
+              style={{
+                outlineOffset: "2px",
+                background:
+                  "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+                color: "rgb(255, 255, 255)",
+                fontSize: "15px",
+                fontWeight: 500,
+                fontFamily:
+                  '"Instrument Sans", "Instrument Sans Fallback", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                lineHeight: "22.5px",
+                letterSpacing: "normal",
+                textAlign: "center",
+                border: "0px solid rgb(255, 255, 255)",
+                borderTop: "0px solid rgb(255, 255, 255)",
+                borderRight: "0px solid rgb(255, 255, 255)",
+                borderBottom: "0px solid rgb(255, 255, 255)",
+                borderLeft: "0px solid rgb(255, 255, 255)",
+                borderColor: "rgb(255, 255, 255)",
+                opacity: 1,
+                zIndex: "auto",
+              }}
+              tabIndex={0}
+            >
+              How it works
+              <ChevronDown size={14} />
+            </span>
+          </button>
+        </div>
 
-              <button className="flex items-center justify-center gap-2 rounded-xl border border-white/10 px-6 py-3.5 text-sm text-white/70 transition hover:bg-white/5 hover:text-white">
-                <Play size={15} />
-                See how it works
-              </button>
-            </div>
-          </motion.div>
-
-          <Dashboard />
+        <div className="mt-20 text-left">
+          <BrowserWindow />
         </div>
       </section>
 
-      {/* TRUST */}
-      <section className="bg-black pb-28 pt-20 text-white">
-        <div className="mx-auto max-w-7xl px-5">
-          <p className="text-center text-xs uppercase tracking-[.25em] text-white/25">
-            Built for modern teams
-          </p>
+      {/* INTRO */}
+      <section id="product" className="border-y border-[#d8d3c8] bg-[#fbfaf7]">
+        <div className="mx-auto max-w-[1180px] px-5 py-28 lg:px-8">
+          <div className="grid gap-12 md:grid-cols-2 md:items-end">
+            <h2 className="font-lastik text-[46px] leading-[1.03] tracking-[-0.04em] md:text-[64px]">
+              Less dashboard.
+              <br />
+              More understanding.
+            </h2>
 
-          <div className="mt-10 grid grid-cols-2 border-y border-white/10 md:grid-cols-4">
-            {["Developers", "Startups", "Agencies", "Businesses"].map(
-              (item) => (
-                <div
-                  key={item}
-                  className="border-white/10 px-5 py-8 text-center text-sm text-white/35 md:border-r last:md:border-r-0"
-                >
-                  {item}
-                </div>
-              )
-            )}
+            <div>
+              <p className="max-w-[480px] text-[17px] font-medium leading-7 text-[#77736c]">
+                Analytics should help you make decisions, not make you stare at
+                charts. Route gives you the context behind every number.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* FEATURES */}
-      <section id="features" className="bg-[#f5f5f2] py-28">
-        <div className="mx-auto max-w-7xl px-5">
-          <div className="max-w-3xl">
-            <p className="text-sm font-medium text-black/40">ONE PLATFORM</p>
+      <section id="features" className="mx-auto max-w-[1180px] px-5 lg:px-8">
+        <Feature
+          number="01"
+          eyebrow="Acquisition"
+          title="Know exactly where your visitors come from."
+          description="See which channels, campaigns, search terms, and referrers are bringing people to your website."
+        >
+          <SourcePanel />
+        </Feature>
 
-            <h2 className="mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-6xl">
-              See the complete picture of your website.
-            </h2>
+        <Feature
+          number="02"
+          eyebrow="Behavior"
+          title="See what people actually do after they arrive."
+          description="Understand pages, clicks, sessions, and events without building a complicated analytics setup."
+        >
+          <EventPanel />
+        </Feature>
 
-            <p className="mt-6 max-w-xl text-base leading-7 text-black/45">
-              Everything you need to understand your visitors and make better
-              decisions, presented in a simple and intuitive way.
-            </p>
-          </div>
+        <Feature
+          number="03"
+          eyebrow="Conversion"
+          title="Find the point where interest becomes action."
+          description="Follow the journey from the first page view to signup and discover where visitors drop off."
+        >
+          <FunnelPanel />
+        </Feature>
 
-          <div className="mt-16 grid gap-5 md:grid-cols-3">
-            {features.map((feature, index) => (
-              <FeatureCard
-                key={feature.title}
-                feature={feature}
-                index={index}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ACQUISITION */}
-      <section className="overflow-hidden bg-white py-28">
-        <div className="mx-auto grid max-w-7xl items-center gap-16 px-5 md:grid-cols-2">
-          <div>
-            <div className="mb-7 flex h-12 w-12 items-center justify-center rounded-xl bg-black text-white">
-              <Globe2 size={20} />
-            </div>
-
-            <p className="text-sm font-medium text-black/35">
-              UNDERSTAND ACQUISITION
-            </p>
-
-            <h2 className="mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-6xl">
-              Know where your visitors come from.
-            </h2>
-
-            <p className="mt-6 max-w-lg leading-7 text-black/45">
-              See your traffic sources, campaigns, countries, devices and
-              referrals in one clean overview.
-            </p>
-
-            <div className="mt-8 space-y-4">
-              {[
-                "Traffic sources",
-                "Campaign tracking",
-                "Geographic data",
-                "Device information",
-              ].map((item) => (
-                <div key={item} className="flex items-center gap-3 text-sm">
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-black text-white">
-                    <Check size={12} />
-                  </span>
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-[30px] border border-black/10 bg-[#f6f6f3] p-4 shadow-xl sm:p-6">
-            <div className="rounded-2xl bg-white p-5">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs text-black/35">Top sources</p>
-                  <p className="mt-1 text-2xl font-semibold">18,492</p>
-                </div>
-                <span className="rounded-full bg-black px-3 py-1 text-xs text-white">
-                  +18.4%
-                </span>
-              </div>
-
-              <div className="mt-8 space-y-5">
-                {[
-                  ["Google", 82],
-                  ["Direct", 64],
-                  ["Twitter", 47],
-                  ["GitHub", 32],
-                  ["Other", 21],
-                ].map(([name, width]) => (
-                  <div key={name}>
-                    <div className="mb-2 flex justify-between text-xs">
-                      <span>{name}</span>
-                      <span className="text-black/35">{width}%</span>
-                    </div>
-
-                    <div className="h-2 overflow-hidden rounded-full bg-black/5">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${width}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                        className="h-full rounded-full bg-black"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* BEHAVIOR */}
-      <section className="bg-[#f5f5f2] py-28">
-        <div className="mx-auto max-w-7xl px-5">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-medium text-black/35">
-              UNDERSTAND BEHAVIOR
-            </p>
-
-            <h2 className="mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-6xl">
-              Understand what people actually do.
-            </h2>
-
-            <p className="mt-6 leading-7 text-black/45">
-              Go beyond page views. Understand the actions and journeys that
-              matter.
-            </p>
-          </div>
-
-          <div className="mt-14">
-            <div className="rounded-[30px] border border-black/10 bg-black p-4 text-white shadow-2xl sm:p-7">
-              <div className="mb-6 flex items-center justify-between">
-                <div>
-                  <p className="text-xs text-white/35">Events</p>
-                  <p className="mt-1 text-xl font-semibold">Live activity</p>
-                </div>
-
-                <div className="flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/45">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
-                  Live
-                </div>
-              </div>
-
-              <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-                {[
-                  ["pageview", "/", "2 sec ago"],
-                  ["signup", "/pricing", "8 sec ago"],
-                  ["click", "/docs", "14 sec ago"],
-                  ["download", "/resources", "21 sec ago"],
-                ].map(([event, page, time]) => (
-                  <div
-                    key={`${event}-${page}`}
-                    className="rounded-2xl border border-white/10 bg-white/[0.04] p-5"
-                  >
-                    <div className="mb-8 flex items-center justify-between">
-                      <span className="rounded-md bg-white px-2 py-1 text-[10px] font-medium text-black">
-                        {event}
-                      </span>
-                      <span className="text-[10px] text-white/25">
-                        {time}
-                      </span>
-                    </div>
-
-                    <p className="text-sm font-medium">{page}</p>
-                    <p className="mt-1 text-xs text-white/30">
-                      Visitor interaction
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+        <Feature
+          number="04"
+          eyebrow="Revenue"
+          title="Connect attention to the value it creates."
+          description="Bring revenue into the same picture so you can understand which traffic and behaviors actually matter."
+        >
+          <RevenuePanel />
+        </Feature>
       </section>
 
       {/* PRIVACY */}
-      <section id="privacy" className="bg-black py-28 text-white">
-        <div className="mx-auto grid max-w-7xl items-center gap-16 px-5 md:grid-cols-2">
-          <div>
-            <div className="mb-7 flex h-12 w-12 items-center justify-center rounded-xl bg-white text-black">
-              <Lock size={20} />
+      <section id="privacy" className="bg-[#24231f] text-[#f7f4ed]">
+        <div className="mx-auto max-w-[1180px] px-5 py-28 lg:px-8">
+          <div className="grid gap-16 lg:grid-cols-[1.1fr_0.9fr]">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.2em] text-[#aaa59b]">
+                Privacy by default
+              </p>
+
+              <h2 className="font-lastik mt-7 max-w-[720px] text-[48px] leading-[1.02] tracking-[-0.04em] md:text-[70px]">
+                Useful data shouldn&apos;t require knowing everything about a
+                person.
+              </h2>
             </div>
 
-            <p className="text-sm font-medium text-white/30">
-              PRIVACY FIRST
+            <div className="grid content-end">
+              {[
+                [
+                  ShieldCheck,
+                  "No invasive tracking",
+                  "Collect the information you need without building profiles around people.",
+                ],
+                [
+                  Users,
+                  "Anonymized visitors",
+                  "Understand behavior without turning analytics into surveillance.",
+                ],
+                [
+                  Globe2,
+                  "Open source",
+                  "Keep your analytics transparent, inspectable, and under your control.",
+                ],
+                [
+                  MousePointer2,
+                  "Own your data",
+                  "Your website data should belong to your product, not an ad network.",
+                ],
+              ].map(([Icon, title, description]) => {
+                const IconComponent = Icon as typeof ShieldCheck;
+
+                return (
+                  <div
+                    key={title as string}
+                    className="border-t border-[#4b4943] py-6"
+                  >
+                    <div className="flex gap-4">
+                      <IconComponent
+                        size={18}
+                        strokeWidth={1.5}
+                        className="mt-1 shrink-0 text-[#c4bfb5]"
+                      />
+
+                      <div>
+                        <h3 className="text-[14px] font-semibold">
+                          {title as string}
+                        </h3>
+
+                        <p className="mt-2 text-[13px] leading-6 text-[#aaa59b]">
+                          {description as string}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* OPEN SOURCE */}
+      <section className="bg-[#fbfaf7]">
+        <div className="mx-auto max-w-[1180px] px-5 py-28 lg:px-8">
+          <div className="rounded-[28px] border border-[#d8d3c8] bg-[#f1eee6] p-8 md:p-14">
+            <div className="grid gap-12 md:grid-cols-2 md:items-end">
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.18em] text-[#8c887f]">
+                  Built in the open
+                </p>
+
+                <h2 className="font-lastik mt-6 text-[45px] leading-[1.03] tracking-[-0.04em] md:text-[60px]">
+                  Your analytics shouldn&apos;t be a black box.
+                </h2>
+              </div>
+
+              <div>
+                <p className="text-[16px] font-medium leading-7 text-[#77736c]">
+                  Route is designed around transparency. Understand how your
+                  analytics work, inspect the system, and keep control of your
+                  data.
+                </p>
+
+                <a
+                  href="#"
+                  className="mt-7 inline-flex items-center gap-2 text-[13px] font-semibold"
+                >
+                  Explore the project
+                  <ArrowRight size={15} />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PRICING */}
+      <section id="pricing" className="border-t border-[#d8d3c8]">
+        <div className="mx-auto max-w-[1180px] px-5 py-28 lg:px-8">
+          <div className="mb-16 max-w-[600px]">
+            <p className="text-[11px] uppercase tracking-[0.18em] text-[#8c887f]">
+              Pricing
             </p>
 
-            <h2 className="mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-6xl">
-              Analytics without compromising privacy.
+            <h2 className="font-lastik mt-5 text-[48px] leading-[1.02] tracking-[-0.04em] md:text-[64px]">
+              Simple enough to understand.
             </h2>
-
-            <p className="mt-6 max-w-lg leading-7 text-white/40">
-              Collect the insights you need without building a detailed
-              profile of every person visiting your website.
-            </p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-3">
             {[
-              ["No invasive tracking", ShieldCheck],
-              ["No unnecessary cookies", Lock],
-              ["Open source", Sparkles],
-              ["Simple analytics", Zap],
-            ].map(([title, Icon]) => {
-              const I = Icon as typeof ShieldCheck;
-
-              return (
-                <div
-                  key={title as string}
-                  className="rounded-3xl border border-white/10 bg-white/[0.035] p-6"
+              {
+                name: "Starter",
+                price: "$0",
+                description:
+                  "For small websites getting started with analytics.",
+                featured: false,
+              },
+              {
+                name: "Growth",
+                price: "$19",
+                description:
+                  "For teams that want deeper insight into their growth.",
+                featured: true,
+              },
+              {
+                name: "Scale",
+                price: "$49",
+                description: "For businesses connecting analytics to revenue.",
+                featured: false,
+              },
+            ].map((plan) => (
+              <div
+                key={plan.name}
+                className={`rounded-[22px] border p-7 ${
+                  plan.featured
+                    ? "border-[#24231f] bg-[#24231f] text-[#f7f4ed]"
+                    : "border-[#d8d3c8] bg-[#fbfaf7]"
+                }`}
+              >
+                <p
+                  className={`text-[12px] font-semibold ${
+                    plan.featured ? "text-[#aaa59b]" : "text-[#77736c]"
+                  }`}
                 >
-                  <I size={20} />
-                  <p className="mt-10 text-sm font-medium">
-                    {title as string}
-                  </p>
-                  <p className="mt-2 text-xs leading-5 text-white/30">
-                    Designed to give you useful data without unnecessary
-                    tracking.
-                  </p>
+                  {plan.name}
+                </p>
+
+                <div className="mt-7 flex items-end gap-1">
+                  <span className="text-[42px] font-semibold tracking-[-0.06em]">
+                    {plan.price}
+                  </span>
+
+                  <span
+                    className={`mb-2 text-[11px] ${
+                      plan.featured ? "text-[#aaa59b]" : "text-[#8c887f]"
+                    }`}
+                  >
+                    / month
+                  </span>
                 </div>
-              );
-            })}
+
+                <p
+                  className={`mt-4 min-h-[52px] text-[13px] leading-6 ${
+                    plan.featured ? "text-[#aaa59b]" : "text-[#77736c]"
+                  }`}
+                >
+                  {plan.description}
+                </p>
+
+                <a
+                  href="#"
+                  className={`mt-8 flex items-center justify-center rounded-full py-3 text-[12px] font-semibold ${
+                    plan.featured
+                      ? "bg-[#f7f4ed] text-[#24231f]"
+                      : "border border-[#cbc5ba]"
+                  }`}
+                >
+                  Get started
+                </a>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section id="pricing" className="bg-white py-32">
-        <div className="mx-auto max-w-4xl px-5 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-white">
-            <Sparkles />
-          </div>
+      <section className="bg-[#24231f] px-5 py-32 text-center text-[#f7f4ed]">
+        <p className="text-[11px] uppercase tracking-[0.2em] text-[#aaa59b]">
+          Start with Route
+        </p>
 
-          <h2 className="mt-8 text-5xl font-semibold tracking-[-0.05em] sm:text-7xl">
-            Start understanding
-            <br />
-            your website today.
-          </h2>
+        <h2 className="font-lastik mx-auto mt-7 max-w-[850px] text-[52px] leading-[0.98] tracking-[-0.045em] md:text-[80px]">
+          Make your analytics feel human again.
+        </h2>
 
-          <p className="mx-auto mt-6 max-w-lg leading-7 text-black/40">
-            Simple analytics. Powerful insights. Privacy-first by design.
-          </p>
+        <p className="mx-auto mt-7 max-w-[520px] text-[16px] leading-7 text-[#aaa59b]">
+          Know where people come from, what they do, and what actually moves
+          your business.
+        </p>
 
-          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-            <button className="flex items-center justify-center gap-2 rounded-xl bg-black px-7 py-4 text-sm font-medium text-white transition hover:bg-black/80">
-              Get started for free
-              <ArrowRight size={16} />
-            </button>
-
-            <button className="rounded-xl border border-black/10 px-7 py-4 text-sm font-medium transition hover:bg-black/5">
-              Explore documentation
-            </button>
-          </div>
-        </div>
+        <a
+          href="#"
+          className="mt-9 inline-flex items-center gap-2 rounded-full bg-[#f7f4ed] px-7 py-3.5 text-[13px] font-semibold text-[#24231f]"
+        >
+          Start for free
+          <ArrowRight size={15} />
+        </a>
       </section>
 
       {/* FOOTER */}
-      <footer id="resources" className="bg-black text-white">
-        <div className="mx-auto max-w-7xl px-5 py-16">
-          <div className="grid gap-12 md:grid-cols-[2fr_1fr_1fr_1fr]">
-            <div>
-              <div className="flex items-center gap-2 font-semibold">
-                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-black">
-                  <Sparkles size={15} />
-                </span>
-                route
-              </div>
+      <footer className="bg-[#24231f] px-5 pb-10 text-[#f7f4ed]">
+        <div className="mx-auto max-w-[1180px] border-t border-[#4b4943] pt-8 lg:px-3">
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
+            <Logo />
 
-              <p className="mt-5 max-w-sm text-sm leading-6 text-white/35">
-                Privacy-first analytics for people who want to understand
-                their websites without unnecessary complexity.
-              </p>
+            <div className="flex flex-wrap gap-6 text-[12px] text-[#aaa59b]">
+              <a href="#">Documentation</a>
+              <a href="#">GitHub</a>
+              <a href="#">Privacy</a>
+              <a href="#">Terms</a>
             </div>
 
-            {[
-              {
-                title: "Product",
-                links: ["Analytics", "Events", "Goals", "Pricing"],
-              },
-              {
-                title: "Resources",
-                links: ["Documentation", "Blog", "GitHub", "Community"],
-              },
-              {
-                title: "Company",
-                links: ["About", "Contact", "Privacy", "Terms"],
-              },
-            ].map((column) => (
-              <div key={column.title}>
-                <p className="text-sm font-medium">{column.title}</p>
-
-                <div className="mt-5 space-y-3">
-                  {column.links.map((link) => (
-                    <a
-                      href="#"
-                      key={link}
-                      className="block text-sm text-white/35 transition hover:text-white"
-                    >
-                      {link}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-16 flex flex-col justify-between gap-4 border-t border-white/10 pt-7 text-xs text-white/25 sm:flex-row">
-            <p>© 2026 Route. All rights reserved.</p>
-            <p>Built for the web.</p>
+            <p className="text-[11px] text-[#77736c]">© 2026 Route</p>
           </div>
         </div>
       </footer>
     </main>
   );
 }
-
-export default Comparison;
