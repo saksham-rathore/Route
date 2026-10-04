@@ -12,6 +12,7 @@ import {
   Users,
 } from "lucide-react";
 import Navbar from "../Navbar";
+import RouteBento from "../RouteBento";
 import Svg1 from "../svg1";
 
 const trafficSources = [
@@ -555,8 +556,7 @@ export default function Home() {
           picture — without invasive tracking or complicated dashboards.
         </p>
 
-        <Svg1 />
-
+        <RouteBento />
 
         <div className="mt-20 text-left">
           <BrowserWindow />

@@ -1,9 +1,101 @@
 import React from 'react'
 
-const svg3 = () => {
+const Svg3 = (props: React.SVGProps<SVGSVGElement>) => {
   return (
-    <div class="relative isolate h-full min-h-[190px] overflow-hidden rounded-[24px] border border-black/[0.045] p-5 text-[#121212] sm:min-h-[220px] sm:rounded-[32px] sm:p-8 snip-7179-0" style="background-color: rgb(242, 238, 255); will-change: transform; box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px; transform: translateX(0.0029957px) translateY(-0.0164944px); outline-offset: 2px; outline: rgb(0, 102, 255) solid 2px;; background: rgb(242, 238, 255) none repeat scroll 0% 0% / auto padding-box border-box; background-color: rgb(242, 238, 255); color: rgb(18, 18, 18); font-size: 16px; font-weight: 400; font-family: &quot;Instrument Sans&quot;, &quot;Instrument Sans Fallback&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif; line-height: 24px; letter-spacing: normal; text-align: start; border: 1px solid oklab(0 0 0 / 0.045); border-top: 1px solid oklab(0 0 0 / 0.045); border-right: 1px solid oklab(0 0 0 / 0.045); border-bottom: 1px solid oklab(0 0 0 / 0.045); border-left: 1px solid oklab(0 0 0 / 0.045); border-color: oklab(0 0 0 / 0.045); border-width: 1px; border-radius: 32px; box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px; opacity: 1; z-index: auto"><div class="relative z-10 h-full snip-7179-1" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box; color: rgb(18, 18, 18); font-size: 16px; font-weight: 400; font-family: &quot;Instrument Sans&quot;, &quot;Instrument Sans Fallback&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif; line-height: 24px; letter-spacing: normal; text-align: start; border: 0px solid rgb(18, 18, 18); border-top: 0px solid rgb(18, 18, 18); border-right: 0px solid rgb(18, 18, 18); border-bottom: 0px solid rgb(18, 18, 18); border-left: 0px solid rgb(18, 18, 18); border-color: rgb(18, 18, 18); opacity: 1; z-index: 10"><div class="flex h-full min-h-0 flex-col snip-7179-2" style="outline-offset: 2px;; background: rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box; color: rgb(18, 18, 18); font-size: 16px; font-weight: 400; font-family: &quot;Instrument Sans&quot;, &quot;Instrument Sans Fallback&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif; line-height: 24px; letter-spacing: normal; text-align: start; border: 0px solid rgb(18, 18, 18); border-top: 0px solid rgb(18, 18, 18); border-right: 0px solid rgb(18, 18, 18); border-bottom: 0px solid rgb(18, 18, 18); border-left: 0px solid rgb(18, 18, 18); border-color: rgb(18, 18, 18); opacity: 1; z-index: auto"><div class="[&amp;_h3]:leading-[1.18] snip-7179-3" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box; color: rgb(18, 18, 18); font-size: 16px; font-weight: 400; font-family: &quot;Instrument Sans&quot;, &quot;Instrument Sans Fallback&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif; line-height: 24px; letter-spacing: normal; text-align: start; border: 0px solid rgb(18, 18, 18); border-top: 0px solid rgb(18, 18, 18); border-right: 0px solid rgb(18, 18, 18); border-bottom: 0px solid rgb(18, 18, 18); border-left: 0px solid rgb(18, 18, 18); border-color: rgb(18, 18, 18); opacity: 1; z-index: auto"><h3 class="font-instrument-sans text-[22px] font-medium leading-[1.08] tracking-[-0.04em] sm:text-[28px] sm:leading-[1.05] sm:tracking-[-0.045em] snip-7179-4" style="color: rgb(94, 42, 196); outline-offset: 2px;; background: rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box; color: rgb(94, 42, 196); font-size: 28px; font-weight: 500; font-family: &quot;Instrument Sans&quot;, &quot;Instrument Sans Fallback&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif; line-height: 33.04px; letter-spacing: -1.26px; text-align: start; border: 0px solid rgb(94, 42, 196); border-top: 0px solid rgb(94, 42, 196); border-right: 0px solid rgb(94, 42, 196); border-bottom: 0px solid rgb(94, 42, 196); border-left: 0px solid rgb(94, 42, 196); border-color: rgb(94, 42, 196); opacity: 1; z-index: auto">Keep everything<br class="snip-7179-5" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box; color: rgb(94, 42, 196); font-size: 28px; font-weight: 500; font-family: &quot;Instrument Sans&quot;, &quot;Instrument Sans Fallback&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif; line-height: 33.04px; letter-spacing: -1.26px; text-align: start; border: 0px solid rgb(94, 42, 196); border-top: 0px solid rgb(94, 42, 196); border-right: 0px solid rgb(94, 42, 196); border-bottom: 0px solid rgb(94, 42, 196); border-left: 0px solid rgb(94, 42, 196); border-color: rgb(94, 42, 196); opacity: 1; z-index: auto">on-brand.</h3></div><p class="font-instrument-sans text-[13.5px] font-medium leading-[1.42] tracking-[-0.02em] text-[#373737]/70 sm:text-[15px] sm:leading-[1.45] sm:tracking-[-0.025em] mt-4 snip-7179-6" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box; color: lab(23.0687 -0.0000298023 -0.00000596046 / 0.7); font-size: 15px; font-weight: 500; font-family: &quot;Instrument Sans&quot;, &quot;Instrument Sans Fallback&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif; line-height: 21.75px; letter-spacing: -0.375px; text-align: start; border: 0px solid lab(23.0687 -0.0000298023 -0.00000596046 / 0.7); border-top: 0px solid lab(23.0687 -0.0000298023 -0.00000596046 / 0.7); border-right: 0px solid lab(23.0687 -0.0000298023 -0.00000596046 / 0.7); border-bottom: 0px solid lab(23.0687 -0.0000298023 -0.00000596046 / 0.7); border-left: 0px solid lab(23.0687 -0.0000298023 -0.00000596046 / 0.7); border-color: lab(23.0687 -0.0000298023 -0.00000596046 / 0.7); opacity: 1; z-index: auto">Bring in your colors and assets so every generated design feels like it belongs to you.</p><div class="mx-auto h-[130px] min-h-0 w-full max-w-[500px] pt-3 sm:h-[220px] sm:pt-4 lg:h-auto lg:max-w-none lg:flex-1 snip-7179-7" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box; color: rgb(18, 18, 18); font-size: 16px; font-weight: 400; font-family: &quot;Instrument Sans&quot;, &quot;Instrument Sans Fallback&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif; line-height: 24px; letter-spacing: normal; text-align: start; border: 0px solid rgb(18, 18, 18); border-top: 0px solid rgb(18, 18, 18); border-right: 0px solid rgb(18, 18, 18); border-bottom: 0px solid rgb(18, 18, 18); border-left: 0px solid rgb(18, 18, 18); border-color: rgb(18, 18, 18); opacity: 1; z-index: auto"><svg viewBox="0 0 400 200" class="h-full w-full overflow-visible" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><defs><filter id="purpleLines" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 0.482 0 0 0 0 0.271 0 0 0 0 0.949 0 0 0 1 0"></feColorMatrix></filter></defs><g><rect x="6" y="8" width="128" height="36" rx="13" fill="#FFFFFF"></rect><circle cx="26" cy="26" r="12" fill="#A98BF5"></circle><text x="26" y="31" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="800" font-family="system-ui, -apple-system, Inter, Segoe UI, sans-serif">L</text><text x="48" y="31" fill="#17152A" font-size="13" font-weight="700" font-family="system-ui, -apple-system, Inter, Segoe UI, sans-serif">Logo</text></g><g><rect x="6" y="52" width="128" height="36" rx="13" fill="#FFFFFF"></rect><circle cx="20" cy="70" r="5" fill="#5E2AC4"></circle><circle cx="33" cy="70" r="5" fill="#0E7CFF"></circle><circle cx="46" cy="70" r="5" fill="#34C759"></circle><text x="60" y="75" fill="#17152A" font-size="13" font-weight="700" font-family="system-ui, -apple-system, Inter, Segoe UI, sans-serif">Colors</text></g><g><rect x="6" y="96" width="128" height="36" rx="13" fill="#FFFFFF"></rect><text x="14" y="120" fill="#A98BF5" font-size="18" font-weight="900" font-family="system-ui, -apple-system, Inter, Segoe UI, sans-serif">Aa</text><text x="46" y="119" fill="#17152A" font-size="13" font-weight="700" font-family="system-ui, -apple-system, Inter, Segoe UI, sans-serif">Tone</text></g><g><rect x="6" y="140" width="128" height="36" rx="13" fill="#FFFFFF"></rect><rect x="15" y="148" width="24" height="20" rx="4" fill="#EDE3FC"></rect><circle cx="21" cy="154" r="2" fill="#A98BF5"></circle><path d="M16 166 L23 156 L27 160 L31 156 L38 166 Z" fill="#A98BF5"></path><text x="46" y="163" fill="#17152A" font-size="13" font-weight="700" font-family="system-ui, -apple-system, Inter, Segoe UI, sans-serif">Assets</text></g><g opacity="1"><circle cx="338" cy="182" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="338" cy="189" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="338" cy="196" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="347" cy="182" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="347" cy="189" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="347" cy="196" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="356" cy="182" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="356" cy="189" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="356" cy="196" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="365" cy="182" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="365" cy="189" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="365" cy="196" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="374" cy="182" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="374" cy="189" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="374" cy="196" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="383" cy="182" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="383" cy="189" r="1.3" fill="#7B45F2" opacity="0.28"></circle><circle cx="383" cy="196" r="1.3" fill="#7B45F2" opacity="0.28"></circle></g><path d="M134 26 L194 26" stroke="#7B45F2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="miter" fill="none" stroke-dasharray="2 6" opacity="1" stroke-dashoffset="-3.6342857142863068"></path><path d="M134 70 L194 70" stroke="#7B45F2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="miter" fill="none" stroke-dasharray="2 6" opacity="1" stroke-dashoffset="-3.6342857142863068"></path><path d="M134 114 L194 114" stroke="#7B45F2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="miter" fill="none" stroke-dasharray="2 6" opacity="1" stroke-dashoffset="-3.6342857142863068"></path><path d="M134 158 L194 158" stroke="#7B45F2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="miter" fill="none" stroke-dasharray="2 6" opacity="1" stroke-dashoffset="-3.6342857142863068"></path><path d="M194 26 L194 92" stroke="#7B45F2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="miter" fill="none" stroke-dasharray="2 6" opacity="1" stroke-dashoffset="-3.6342857142863068"></path><path d="M194 158 L194 92" stroke="#7B45F2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="miter" fill="none" stroke-dasharray="2 6" opacity="1" stroke-dashoffset="-3.6342857142863068"></path><path d="M194 92 L226 92" stroke="#7B45F2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="miter" fill="none" stroke-dasharray="2 6" opacity="1" stroke-dashoffset="-3.6342857142863068"></path><g><circle cx="194" cy="92" r="3.8" fill="#A98BF5"></circle><circle cx="194" cy="92" r="3.1" fill="none" stroke="#F2EEFF" stroke-width="0.8" opacity="0.8"></circle><circle cx="194" cy="92" r="1.3" fill="#D8CCFB"></circle></g><image href="/lines.png" x="376" y="-14" width="58" height="36" filter="url(#purpleLines)" class="opacity-70" preserveAspectRatio="xMidYMid meet"></image><image href="/graphics/five.png" x="226" y="6" width="170" height="172" preserveAspectRatio="xMidYMid meet"></image></svg></div></div></div></div>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 367 282"
+      width="734"
+      height="564"
+      role="img"
+      aria-label="Fast enough to stay out of the way. Route collects useful analytics without turning your website into a heavy tracking system."
+      {...props}
+    >
+      <title>Lightweight analytics card</title>
+      <defs>
+        <clipPath id="card">
+          <rect x="18" y="10" width="342" height="252" rx="30" />
+        </clipPath>
+        <linearGradient id="chip" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#b6f56e" />
+          <stop offset="1" stopColor="#97e84f" />
+        </linearGradient>
+        <linearGradient id="bolt" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#ff9a3c" />
+          <stop offset="1" stopColor="#f0553a" />
+        </linearGradient>
+        <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#fff" stopOpacity="0" />
+          <stop offset=".5" stopColor="#fff" stopOpacity=".55" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <style>{`
+        text{font-family:"Segoe UI",system-ui,-apple-system,Inter,Roboto,sans-serif}
+        .in{opacity:0;animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+        .d1{animation-delay:.15s}.d2{animation-delay:.35s}.d3{animation-delay:.5s}
+        .d4{animation-delay:.7s}.d5{animation-delay:.85s}.d6{animation-delay:1s}
+        @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .chip{transform-origin:67px 59px;animation:pop .6s cubic-bezier(.3,1.5,.5,1) both}
+        @keyframes pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
+        .bolt{transform-origin:67px 59px;animation:zap 2.6s ease-in-out 1s infinite}
+        @keyframes zap{0%,60%,100%{transform:scale(1);opacity:1}66%{transform:scale(1.18);opacity:1}70%{transform:scale(.95);opacity:.75}76%{transform:scale(1.1);opacity:1}84%{transform:scale(1)}}
+        .halo{transform-origin:67px 59px;animation:halo 2.6s ease-out 1s infinite}
+        @keyframes halo{0%,60%{opacity:0;transform:scale(.9)}66%{opacity:.55}100%{opacity:0;transform:scale(1.9)}}
+        .streak{opacity:0;animation:streak 2.6s ease-out 1s infinite}
+        @keyframes streak{0%,62%{opacity:0;transform:translateX(0)}70%{opacity:.8}100%{opacity:0;transform:translateX(-16px)}}
+        .sheen{animation:sweep 5.5s ease-in-out 1.6s infinite}
+        @keyframes sweep{0%{transform:translateX(-120px) skewX(-18deg)}35%,100%{transform:translateX(480px) skewX(-18deg)}}
+        .dot{animation:blink 1.8s ease-in-out infinite}
+        @keyframes blink{0%,100%{opacity:.35}50%{opacity:1}}
+        @media (prefers-reduced-motion:reduce){*{animation:none!important;opacity:1!important}.halo,.streak,.sheen{opacity:0!important}}
+      `}</style>
+
+      <rect width="367" height="282" fill="#f5f2ec" />
+      <rect x="18" y="10" width="342" height="252" rx="30" fill="#effedb" stroke="#e1f3c6" strokeWidth="1.5" />
+
+      <g clipPath="url(#card)">
+        <rect className="sheen" x="0" y="0" width="70" height="282" fill="url(#sheen)" />
+      </g>
+
+      {/* icon chip */}
+      <circle className="halo" cx="67" cy="59" r="17" fill="none" stroke="#7fd32f" strokeWidth="2" />
+      <g stroke="#7fd32f" strokeWidth="2" strokeLinecap="round">
+        <line className="streak" x1="46" y1="52" x2="38" y2="52" />
+        <line className="streak" style={{ animationDelay: "1.08s" }} x1="46" y1="59" x2="34" y2="59" />
+        <line className="streak" style={{ animationDelay: "1.16s" }} x1="46" y1="66" x2="39" y2="66" />
+      </g>
+      <g className="chip">
+        <rect x="52" y="44" width="30" height="30" rx="9" fill="url(#chip)" />
+        <path className="bolt" d="M69.5 49.5 L61.5 60.5 H66.2 L64.6 68.8 L72.8 57.4 H68 Z" fill="url(#bolt)" stroke="#f0553a" strokeWidth=".8" strokeLinejoin="round" />
+      </g>
+
+      {/* label */}
+      <g className="in d1">
+        <text x="92" y="64" fontSize="11.5" fontWeight="600" fill="#58693f">lightweight analytics</text>
+      </g>
+      <circle className="dot" cx="212" cy="60.5" r="2.4" fill="#6cc22a" />
+
+      {/* heading */}
+      <g className="in d2">
+        <text x="189" y="118" textAnchor="middle" fontSize="27" fontWeight="600" fill="#4b7a17" letterSpacing="-.4">Fast enough to</text>
+      </g>
+      <g className="in d3">
+        <text x="189" y="150" textAnchor="middle" fontSize="27" fontWeight="600" fill="#4b7a17" letterSpacing="-.4">stay out of the way.</text>
+      </g>
+
+      {/* body */}
+      <g className="in d4">
+        <text x="189" y="182" textAnchor="middle" fontSize="14.5" fill="#6c6c60">Route collects useful analytics without</text>
+      </g>
+      <g className="in d5">
+        <text x="189" y="203" textAnchor="middle" fontSize="14.5" fill="#6c6c60">turning your website into a heavy</text>
+      </g>
+      <g className="in d6">
+        <text x="189" y="224" textAnchor="middle" fontSize="14.5" fill="#6c6c60">tracking system.</text>
+      </g>
+    </svg>
   )
 }
 
-export default svg3
+export default Svg3
