@@ -514,7 +514,7 @@ export default function Home() {
         <div className="mt-4 sm:mt-4 text-left">
           <BrowserWindow />
         </div>
-        <div className="mt-24 sm:mt-28">
+        <div id="features" className="mt-24 sm:mt-28">
           <RouteBento />
         </div>
       </section>
