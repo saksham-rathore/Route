@@ -15,7 +15,7 @@ const Card = ({
 }) => {
   return (
     <div
-      className={`relative isolate h-full overflow-hidden rounded-[24px] border border-black/[0.045] p-5 text-[#121212] sm:rounded-[32px] sm:p-8 ${className}`}
+      className={`relative isolate h-full overflow-hidden rounded-[20px] border border-black/[0.045] p-4 text-[#121212] sm:rounded-[26px] sm:p-6 ${className}`}
     >
       <div className="relative z-10 h-full">{children}</div>
     </div>
@@ -54,19 +54,19 @@ const TrackEvents = () => {
   return (
     <Card className="bg-[#fff2df]">
       <div className="flex h-full flex-col items-center text-center">
-        <h3 className="font-instrument-sans text-[22px] font-medium leading-[1.08] tracking-[-0.04em] text-[#C64E27] sm:text-[28px]">
+        <h3 className="font-instrument-sans text-[20px] font-medium leading-[1.1] tracking-[-0.04em] text-[#C64E27] sm:text-[24px]">
           Track every
           <br />
           interaction.
         </h3>
 
-        <p className="mt-4 max-w-[420px] text-[13.5px] font-medium leading-[1.42] text-[#373737]/70 sm:text-[15px]">
+        <p className="mt-3 max-w-[380px] text-[13px] font-medium leading-[1.42] text-[#373737]/70 sm:text-[14px]">
           From page views to custom events, Route gives you the building blocks
           to understand how people use your website.
         </p>
 
-        <div className="mt-6 flex flex-1 items-center justify-center w-full">
-          <Svg1 className="h-auto max-h-[220px] w-full max-w-[380px]" />
+        <div className="mt-4 flex flex-1 items-center justify-center w-full">
+          <Svg1 className="h-auto max-h-[200px] w-full max-w-[340px]" />
         </div>
       </div>
     </Card>
@@ -88,19 +88,19 @@ const Everything = () => {
   return (
     <Card className="bg-[#f2eeff]">
       <div className="flex h-full flex-col items-center text-center">
-        <h3 className="font-instrument-sans text-[22px] font-medium leading-[1.08] tracking-[-0.04em] text-[#5e2ac4] sm:text-[28px]">
+        <h3 className="font-instrument-sans text-[20px] font-medium leading-[1.1] tracking-[-0.04em] text-[#5e2ac4] sm:text-[24px]">
           Everything you need
           <br />
           in one place.
         </h3>
 
-        <p className="mt-4 max-w-[420px] text-[13.5px] font-medium leading-[1.42] text-[#373737]/70 sm:text-[15px]">
+        <p className="mt-3 max-w-[380px] text-[13px] font-medium leading-[1.42] text-[#373737]/70 sm:text-[14px]">
           Connect your website to Route and start collecting the signals that
           matter to your product.
         </p>
 
-        <div className="mt-6 flex flex-1 items-center justify-center w-full">
-          <Svg2 className="h-auto max-h-[220px] w-full max-w-[380px]" />
+        <div className="mt-4 flex flex-1 items-center justify-center w-full">
+          <Svg2 className="h-auto max-h-[200px] w-full max-w-[340px]" />
         </div>
       </div>
     </Card>
@@ -126,20 +126,24 @@ export const Insights = () => {
 const LiveActivity = () => {
   return (
     <Card className="bg-[#eaf8ff]">
-      <div className="grid h-full gap-5 md:grid-cols-[0.9fr_1.1fr] md:items-center">
+      <div className="grid h-full gap-4 md:grid-cols-[0.9fr_1.1fr] md:items-center">
         <div>
-          <h3 className="font-instrument-sans text-[22px] font-medium leading-[1.08] tracking-[-0.04em] sm:text-[28px]">
+          <h3 className="font-instrument-sans text-[20px] font-medium leading-[1.1] tracking-[-0.04em] sm:text-[24px]">
             <span className="block text-[#0E7CFF]">Share, export,</span>
             <span className="block text-[#17152A]">and keep moving.</span>
           </h3>
 
-          <p className="mt-4 max-w-[340px] text-[13.5px] font-medium leading-[1.42] text-[#373737]/70 sm:text-[15px]">
+          <p className="mt-3 max-w-[320px] text-[13px] font-medium leading-[1.42] text-[#373737]/70 sm:text-[14px]">
             Send a live preview, export clean assets, or keep iterating with
             your team.
           </p>
         </div>
 
-        <img src="/export.png" alt="" />
+        <img
+          src="/export.png"
+          alt=""
+          className="max-h-[190px] w-auto object-contain"
+        />
       </div>
     </Card>
   );
@@ -165,8 +169,8 @@ const Lightweight = () => {
 
 const RouteBento = () => {
   return (
-    <section className="mx-auto w-full max-w-[1380px] p-2 sm:p-4 lg:p-6">
-      <div className="grid auto-rows-[minmax(190px,auto)] grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-12">
+    <section className="mx-auto w-full max-w-[1140px] p-2 sm:p-3">
+      <div className="grid auto-rows-[minmax(170px,auto)] grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-12">
         {/* Top row */}
         <div className="lg:col-span-5">
           <RouteOverview />

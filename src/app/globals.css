@@ -42,7 +42,8 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-.font-instrument {
+.font-instrument,
+.font-instrument-sans {
   font-family:
     "Instrument Sans",
     ui-sans-serif,

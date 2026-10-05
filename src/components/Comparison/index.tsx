@@ -5,7 +5,9 @@ import {
   Check,
   ChevronDown,
   Copy,
+  GitBranch,
   Globe2,
+  HeartPulse,
   MousePointer2,
   ShieldCheck,
   Sparkles,
@@ -17,6 +19,9 @@ import RouteBento from "../RouteBento";
 import { SnippetCopyButton } from "../SnippetCopyButton";
 import { div } from "framer-motion/client";
 import { HowItWorks } from "../HowItWorks";
+import { Footer } from "../Footer";
+import { PlatformSection } from "../Platform";
+import { FAQ } from "../FAQ";
 
 const trafficSources = [
   { name: "Google", value: 48, visitors: "12,842" },
@@ -187,120 +192,6 @@ function BrowserWindow() {
     </div>
   );
 }
-
-<div className="relative isolate h-full min-h-[190px] overflow-hidden rounded-[24px] border border-black/[0.045] bg-[#f0f9ff] p-5 text-[#121212] sm:min-h-[220px] sm:rounded-[32px] sm:p-8">
-  <div className="relative z-10 h-full">
-    <picture>
-      <img
-        className="pointer-events-none absolute hidden h-64 w-64 object-contain object-left-top lg:-top-1 lg:left-2 lg:block"
-        alt=""
-        src="https://make.design/graphics/second_card/top.png"
-      />
-    </picture>
-    <div className="relative grid h-full gap-5 py-2 sm:gap-6 sm:py-0 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
-      <div>
-        <div className="[&_h3]:leading-[1.18]">
-          <h3 className="font-instrument text-[22px] font-medium leading-[1.08] tracking-[-0.04em] text-[#151515] sm:text-[28px] sm:leading-[1.05] sm:tracking-[-0.045em]">
-            <span className="block text-sky-600">Edit your design</span>
-            <span className="block text-[#17152A]">through chat.</span>
-          </h3>
-        </div>
-        <p className="mt-3 max-w-[360px] text-[13.5px] font-medium leading-[1.42] tracking-[-0.02em] text-[#373737]/70 sm:text-[15px] sm:leading-[1.45] sm:tracking-[-0.025em]">
-          Ask to write a headline, change a layout, update a button, or turn the
-          same idea into marketing assets.
-        </p>
-      </div>
-
-      <div className="flex w-full max-w-[560px] min-w-0 flex-col gap-3 justify-self-center lg:max-w-none lg:justify-self-auto">
-        <div className="flex w-full min-w-0 items-start justify-end gap-1.5 sm:gap-2">
-          <span className="shrink-0">
-            <svg
-              viewBox="0 0 36 36"
-              className="h-8 w-8 sm:h-9 sm:w-9"
-              aria-hidden="true"
-            >
-              <defs>
-                <clipPath id="user-avatar-clip">
-                  <circle cx="18" cy="18" r="17" />
-                </clipPath>
-              </defs>
-              <circle cx="18" cy="18" r="17" fill="#FDE8D3" />
-              <g clipPath="url(#user-avatar-clip)">
-                <circle
-                  cx="18"
-                  cy="14.4"
-                  r="6.6"
-                  fill="#FBD3B3"
-                  stroke="#111111"
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M11.4 12.4 Q11.4 7 18 7 Q24.6 7 24.6 12.4 Q22.4 10.2 18 10.2 Q13.6 10.2 11.4 12.4 Z"
-                  fill="#3A2A1F"
-                />
-                <circle cx="15.9" cy="14.3" r="0.95" fill="#111111" />
-                <circle cx="20.1" cy="14.3" r="0.95" fill="#111111" />
-                <path
-                  d="M15.9 16.7 Q18 18.1 20.1 16.7"
-                  stroke="#111111"
-                  strokeWidth="1.1"
-                  fill="none"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M1.5 36 C1.5 27.8 9 20 18 20 C27 20 34.5 27.8 34.5 36 Z"
-                  fill="#A8C8F0"
-                />
-                <path
-                  d="M1.5 36 C1.5 27.8 9 20 18 20 C27 20 34.5 27.8 34.5 36"
-                  fill="none"
-                  stroke="#111111"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </g>
-              <circle
-                cx="18"
-                cy="18"
-                r="17"
-                fill="none"
-                stroke="#111111"
-                strokeWidth="2"
-              />
-            </svg>
-          </span>
-        </div>
-
-        <div className="flex w-full min-w-0 items-start gap-1.5 sm:gap-2">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white sm:h-9 sm:w-9">
-            <img
-              className="h-6 w-6 object-contain sm:h-7 sm:w-7"
-              alt=""
-              src="https://make.design/icon.png"
-            />
-          </div>
-        </div>
-
-        <div className="flex min-w-0 items-end gap-2 sm:gap-3">
-          <picture className="shrink-0">
-            <img
-              className="h-16 w-16 object-contain sm:h-24 sm:w-24"
-              alt=""
-              src="https://make.design/graphics/second_card/character.png"
-            />
-          </picture>
-          <picture className="min-w-0 flex-1">
-            <img
-              className="w-full rounded-xl object-contain"
-              alt=""
-              src="https://make.design/graphics/second_card/dashboard.png"
-            />
-          </picture>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>;
 
 function EventPanel() {
   return (
@@ -473,9 +364,11 @@ function Nav() {
   );
 }
 
-<SnippetCopyButton />
-
 export default function Home() {
+  const [activeHeroTab, setActiveHeroTab] = useState<
+    "pageviews" | "journeys" | "vitals"
+  >("pageviews");
+
   return (
     <main className="overflow-hidden bg-white text-[#24231f]">
       <Nav />
@@ -521,10 +414,107 @@ export default function Home() {
           picture — without invasive tracking or complicated dashboards.
         </p>
 
-        <div className="mt-20 text-left">
+        {/* CTA Buttons */}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href="/auth/sign-up"
+            className="inline-flex items-center justify-center rounded-[14px] bg-[#0284C7] px-7 py-2.5 text-[15px] font-semibold text-white font-instrument shadow-[0_2px_10px_rgba(2,132,199,0.32),inset_0_1px_0_rgba(255,255,255,0.25)] transition-all hover:brightness-105 active:scale-[0.99]"
+          >
+            Start for free
+          </a>
+          <button
+            type="button"
+            className="inline-flex items-center justify-center rounded-[14px] border border-[#cbd5e1] bg-white px-7 py-2.5 text-[15px] font-medium text-[#1e293b] font-instrument transition-all hover:bg-slate-50/90 active:scale-[0.99]"
+            style={{
+              boxShadow:
+                "inset 0 1.5px 2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.05)",
+            }}
+          >
+            Get a demo
+          </button>
+        </div>
+
+        {/* 4 AI Logos directly imported from public SVGs */}
+        <div className="mt-5 flex items-center justify-center gap-6 sm:gap-7">
+          <img
+            src="/GPT.svg"
+            alt="OpenAI ChatGPT"
+            className="h-[18px] w-[18px] object-contain transition-transform duration-200 hover:scale-110 cursor-pointer"
+            title="OpenAI ChatGPT"
+          />
+          <img
+            src="/Claude.svg"
+            alt="Anthropic Claude"
+            className="h-[18px] w-[18px] object-contain transition-transform duration-200 hover:scale-110 cursor-pointer"
+            title="Anthropic Claude"
+          />
+          <img
+            src="/Perplexity.svg"
+            alt="Perplexity AI"
+            className="h-[18px] w-[18px] object-contain transition-transform duration-200 hover:scale-110 cursor-pointer"
+            title="Perplexity AI"
+          />
+          <img
+            src="/Grok.svg"
+            alt="xAI Grok"
+            className="h-[18px] w-[18px] object-contain transition-transform duration-200 hover:scale-110 cursor-pointer"
+            title="xAI Grok"
+          />
+        </div>
+
+        {/* 3 Highlight Chips */}
+        <div className="mt-10 sm:mt-20 flex flex-wrap items-center justify-center gap-3">
+          <div
+            className="inline-flex items-center gap-2 rounded-[9px] border border-[#cbd5e1] bg-white px-3.5 py-1.5 transition-all cursor-pointer hover:bg-slate-50/80"
+            style={{
+              boxShadow:
+                "inset 0 1.5px 3px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.04)",
+            }}
+          >
+            <span className="flex h-6 w-6 items-center justify-center rounded-[6px] border border-[#fde68a] bg-[#fef3c7] text-[#d97706]">
+              <BarChart3 size={13} strokeWidth={2.4} />
+            </span>
+            <span className="text-[13px] font-medium font-instrument text-[#1e293b]">
+              Pageviews & sessions
+            </span>
+          </div>
+
+          <div
+            className="inline-flex items-center gap-2 rounded-[9px] border border-[#cbd5e1] bg-white px-3.5 py-1.5 transition-all cursor-pointer hover:bg-slate-50/80"
+            style={{
+              boxShadow:
+                "inset 0 1.5px 3px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.04)",
+            }}
+          >
+            <span className="flex h-6 w-6 items-center justify-center rounded-[6px] border border-[#99f6e4] bg-[#ccfbf1] text-[#0d9488]">
+              <GitBranch size={13} strokeWidth={2.4} />
+            </span>
+            <span className="text-[13px] font-medium font-instrument text-[#1e293b]">
+              Journey paths
+            </span>
+          </div>
+
+          <div
+            className="inline-flex items-center gap-2 rounded-[9px] border border-[#cbd5e1] bg-white px-3.5 py-1.5 transition-all cursor-pointer hover:bg-slate-50/80"
+            style={{
+              boxShadow:
+                "inset 0 1.5px 3px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.04)",
+            }}
+          >
+            <span className="flex h-6 w-6 items-center justify-center rounded-[6px] border border-[#ddd6fe] bg-[#ede9fe] text-[#8b5cf6]">
+              <HeartPulse size={13} strokeWidth={2.4} />
+            </span>
+            <span className="text-[13px] font-medium font-instrument text-[#1e293b]">
+              Core Web Vitals
+            </span>
+          </div>
+        </div>
+
+        {/* Dashboard (BrowserWindow) */}
+        <div className="mt-4 sm:mt-4 text-left">
           <BrowserWindow />
         </div>
-        <div className="mt-50">
+        <div className="mt-24 sm:mt-28">
           <RouteBento />
         </div>
       </section>
@@ -534,23 +524,14 @@ export default function Home() {
         <HowItWorks />
       </div>
 
+      {/* PLATFORM SYSTEMS (User Analytics, Observability, ISP Diagnostics, Web Vitals, Installation) */}
+      <PlatformSection />
+
+      {/* FAQ SECTION */}
+      <FAQ />
+
       {/* FOOTER */}
-      <footer className="bg-[#24231f] px-5 pb-10 text-[#f7f4ed]">
-        <div className="mx-auto max-w-[1180px] border-t border-[#4b4943] pt-8 lg:px-3">
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
-            {/* <Logo /> */}
-
-            <div className="flex flex-wrap gap-6 text-[12px] text-[#aaa59b]">
-              <a href="#">Documentation</a>
-              <a href="#">GitHub</a>
-              <a href="#">Privacy</a>
-              <a href="#">Terms</a>
-            </div>
-
-            <p className="text-[11px] text-[#77736c]">© 2026 Route</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }
