@@ -1,6 +1,9 @@
-import React from 'react'
+import React from "react";
 
-const Svg5 = ({ className = "h-auto w-full", ...props }: React.SVGProps<SVGSVGElement>) => {
+const Svg5 = ({
+  className = "h-auto w-full",
+  ...props
+}: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +37,13 @@ const Svg5 = ({ className = "h-auto w-full", ...props }: React.SVGProps<SVGSVGEl
           <stop offset="1" stopColor="#fff" stopOpacity="0" />
         </linearGradient>
         <filter id="sh" x="-10%" y="-10%" width="120%" height="135%">
-          <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#2a62d8" floodOpacity=".14" />
+          <feDropShadow
+            dx="0"
+            dy="4"
+            stdDeviation="6"
+            floodColor="#2a62d8"
+            floodOpacity=".14"
+          />
         </filter>
         <clipPath id="cc">
           <rect x="1" y="1" width="736" height="394" rx="34" />
@@ -85,74 +94,390 @@ const Svg5 = ({ className = "h-auto w-full", ...props }: React.SVGProps<SVGSVGEl
         @keyframes arrow{0%{stroke-dashoffset:1;opacity:1}35%,85%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
         @media (prefers-reduced-motion:reduce){*{animation:none!important}.u,.a,.r,.reply{opacity:1!important}.typing{opacity:0!important}.arrow{stroke-dashoffset:0}}
       `}</style>
-      <rect x="1" y="1" width="736" height="394" rx="34" fill="#f0f9ff" stroke="#e0f0fe" />
+      <rect
+        x="1"
+        y="1"
+        width="736"
+        height="394"
+        rx="34"
+        fill="#f0f9ff"
+        stroke="#e0f0fe"
+      />
 
       {/* dot grid */}
       <g fill="#2f7be8">
-        <circle className="tw" style={{ animationDelay: "0.00s" }} cx="55" cy="43.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.18s" }} cx="55" cy="54.5" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.36s" }} cx="55" cy="66.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.54s" }} cx="55" cy="77.5" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.72s" }} cx="55" cy="89.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.18s" }} cx="73" cy="43.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.36s" }} cx="73" cy="54.5" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.54s" }} cx="73" cy="66.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.72s" }} cx="73" cy="77.5" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.90s" }} cx="73" cy="89.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.36s" }} cx="91" cy="43.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.54s" }} cx="91" cy="54.5" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.54s" }} cx="91" cy="66.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.72s" }} cx="91" cy="77.5" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "1.08s" }} cx="91" cy="89.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.54s" }} cx="109" cy="43.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.72s" }} cx="109" cy="54.5" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.90s" }} cx="109" cy="66.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "1.08s" }} cx="109" cy="77.5" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "1.26s" }} cx="109" cy="89.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.72s" }} cx="127" cy="43.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.90s" }} cx="127" cy="54.5" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "1.08s" }} cx="127" cy="66.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "1.26s" }} cx="127" cy="77.5" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "1.44s" }} cx="127" cy="89.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "0.90s" }} cx="145" cy="43.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "1.08s" }} cx="145" cy="54.5" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "1.26s" }} cx="145" cy="66.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "1.44s" }} cx="145" cy="77.5" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "1.62s" }} cx="145" cy="89.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "1.08s" }} cx="163" cy="43.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "1.26s" }} cx="163" cy="54.5" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "1.44s" }} cx="163" cy="66.0" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "1.62s" }} cx="163" cy="77.5" r="1.2" opacity=".35" />
-        <circle className="tw" style={{ animationDelay: "1.80s" }} cx="163" cy="89.0" r="1.2" opacity=".35" />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.00s" }}
+          cx="55"
+          cy="43.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.18s" }}
+          cx="55"
+          cy="54.5"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.36s" }}
+          cx="55"
+          cy="66.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.54s" }}
+          cx="55"
+          cy="77.5"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.72s" }}
+          cx="55"
+          cy="89.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.18s" }}
+          cx="73"
+          cy="43.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.36s" }}
+          cx="73"
+          cy="54.5"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.54s" }}
+          cx="73"
+          cy="66.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.72s" }}
+          cx="73"
+          cy="77.5"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.90s" }}
+          cx="73"
+          cy="89.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.36s" }}
+          cx="91"
+          cy="43.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.54s" }}
+          cx="91"
+          cy="54.5"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.54s" }}
+          cx="91"
+          cy="66.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.72s" }}
+          cx="91"
+          cy="77.5"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "1.08s" }}
+          cx="91"
+          cy="89.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.54s" }}
+          cx="109"
+          cy="43.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.72s" }}
+          cx="109"
+          cy="54.5"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.90s" }}
+          cx="109"
+          cy="66.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "1.08s" }}
+          cx="109"
+          cy="77.5"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "1.26s" }}
+          cx="109"
+          cy="89.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.72s" }}
+          cx="127"
+          cy="43.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.90s" }}
+          cx="127"
+          cy="54.5"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "1.08s" }}
+          cx="127"
+          cy="66.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "1.26s" }}
+          cx="127"
+          cy="77.5"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "1.44s" }}
+          cx="127"
+          cy="89.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "0.90s" }}
+          cx="145"
+          cy="43.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "1.08s" }}
+          cx="145"
+          cy="54.5"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "1.26s" }}
+          cx="145"
+          cy="66.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "1.44s" }}
+          cx="145"
+          cy="77.5"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "1.62s" }}
+          cx="145"
+          cy="89.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "1.08s" }}
+          cx="163"
+          cy="43.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "1.26s" }}
+          cx="163"
+          cy="54.5"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "1.44s" }}
+          cx="163"
+          cy="66.0"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "1.62s" }}
+          cx="163"
+          cy="77.5"
+          r="1.2"
+          opacity=".35"
+        />
+        <circle
+          className="tw"
+          style={{ animationDelay: "1.80s" }}
+          cx="163"
+          cy="89.0"
+          r="1.2"
+          opacity=".35"
+        />
       </g>
 
       {/* curly arrow + sparks */}
-      <path className="arrow" pathLength={1} d="M198 100 C196 84 214 80 220 92 C226 104 210 108 210 96 C214 80 250 92 268 88" fill="none" stroke="#1d1b2e" strokeWidth="1.3" strokeLinecap="round" />
-      <g stroke="#2f7be8" strokeWidth="1.4" strokeLinecap="round" className="tw">
+      <path
+        className="arrow"
+        pathLength={1}
+        d="M198 100 C196 84 214 80 220 92 C226 104 210 108 210 96 C214 80 250 92 268 88"
+        fill="none"
+        stroke="#1d1b2e"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
+      <g
+        stroke="#2f7be8"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        className="tw"
+      >
         <line x1="270" y1="74" x2="276" y2="68" />
         <line x1="276" y1="82" x2="284" y2="80" />
         <line x1="272" y1="90" x2="278" y2="95" />
       </g>
 
       {/* text */}
-      <text x="32" y="150" fontSize="30" fontWeight="500" letterSpacing="-.6" fill="url(#hd)">Track events</text>
-      <text x="32" y="181" fontSize="30" fontWeight="500" letterSpacing="-.6" fill="#12122a">through chat.</text>
+      <text
+        x="32"
+        y="150"
+        fontSize="30"
+        fontWeight="500"
+        letterSpacing="-.6"
+        fill="url(#hd)"
+      >
+        Track events
+      </text>
+      <text
+        x="32"
+        y="181"
+        fontSize="30"
+        fontWeight="500"
+        letterSpacing="-.6"
+        fill="#12122a"
+      >
+        through chat.
+      </text>
       <g fontSize="13" fill="#6a6f82">
-        <text x="32" y="218">Ask to track a click, add a goal, watch a</text>
-        <text x="32" y="238">route, or turn a pageview into a funnel,</text>
-        <text x="32" y="258">all in plain words.</text>
+        <text x="32" y="218">
+          Ask to track a click, add a goal, watch a
+        </text>
+        <text x="32" y="238">
+          route, or turn a pageview into a funnel,
+        </text>
+        <text x="32" y="258">
+          all in plain words.
+        </text>
       </g>
 
       {/* user message */}
       <g className="u">
-        <rect x="420" y="52" width="240" height="64" rx="16" fill="url(#ub)" filter="url(#sh)" />
+        <rect
+          x="420"
+          y="52"
+          width="240"
+          height="64"
+          rx="16"
+          fill="url(#ub)"
+          filter="url(#sh)"
+        />
         <g clipPath="url(#ubc)">
-          <rect className="sweep" x="380" y="46" width="44" height="76" fill="url(#sheen)" />
+          <rect
+            className="sweep"
+            x="380"
+            y="46"
+            width="44"
+            height="76"
+            fill="url(#sheen)"
+          />
         </g>
-        <text x="438" y="80" fontSize="12" fontWeight="700" fill="#fff">Track clicks on the</text>
-        <text x="438" y="98" fontSize="12" fontWeight="700" fill="#fff">pricing button</text>
+        <text x="438" y="80" fontSize="12" fontWeight="700" fill="#fff">
+          Track clicks on the
+        </text>
+        <text x="438" y="98" fontSize="12" fontWeight="700" fill="#fff">
+          pricing button
+        </text>
 
-        <image href="/svg_7.svg" xlinkHref="/svg_7.svg" x="668" y="66" width="36" height="36" />
+        <image
+          href="/svg_7.svg"
+          xlinkHref="/svg_7.svg"
+          x="668"
+          y="66"
+          width="36"
+          height="36"
+        />
       </g>
 
       {/* assistant reply */}
@@ -170,47 +495,153 @@ const Svg5 = ({ className = "h-auto w-full", ...props }: React.SVGProps<SVGSVGEl
         </g>
         <circle cx="337" cy="145" r="1.5" fill="#fff" />
         <circle cx="344" cy="145" r="1.5" fill="#fff" />
-        <rect x="366" y="128" width="260" height="64" rx="16" fill="#fff" filter="url(#sh)"/>
+        <rect
+          x="366"
+          y="128"
+          width="260"
+          height="64"
+          rx="16"
+          fill="#fff"
+          filter="url(#sh)"
+        />
         <g className="typing">
           <circle className="d1" cx="388" cy="160" r="3.2" fill="#2f7be8" />
           <circle className="d2" cx="400" cy="160" r="3.2" fill="#2f7be8" />
           <circle className="d3" cx="412" cy="160" r="3.2" fill="#2f7be8" />
         </g>
         <g className="reply" fontSize="11.5" fill="#2a2f45">
-          <text x="384" y="153">Done! <tspan className="evt" fontWeight="700" fill="#0a84d6">pricing_click</tspan> is now</text>
-          <text x="384" y="171">being tracked on every page.</text>
+          <text x="384" y="153">
+            Done!{" "}
+            <tspan className="evt" fontWeight="700" fill="#0a84d6">
+              pricing_click
+            </tspan>{" "}
+            is now
+          </text>
+          <text x="384" y="171">
+            being tracked on every page.
+          </text>
         </g>
       </g>
 
       {/* result card */}
       <g className="r">
-        <rect x="430" y="205" width="274" height="137" rx="16" fill="#fff" filter="url(#sh)" />
-        <text x="567" y="240" textAnchor="middle" fontSize="22" fontWeight="800" letterSpacing="-.5" fill="#12122a">Insights that</text>
-        <text x="567" y="264" textAnchor="middle" fontSize="22" fontWeight="800" letterSpacing="-.5" fill="#12122a">drive results</text>
-        <text x="567" y="281" textAnchor="middle" fontSize="6.8" fill="#8b8fa0">Simple, privacy-friendly analytics for every route.</text>
+        <rect
+          x="430"
+          y="205"
+          width="274"
+          height="137"
+          rx="16"
+          fill="#fff"
+          filter="url(#sh)"
+        />
+        <text
+          x="567"
+          y="240"
+          textAnchor="middle"
+          fontSize="22"
+          fontWeight="600"
+          letterSpacing="-.5"
+          fill="#12122a"
+        >
+          Insights that
+        </text>
+        <text
+          x="567"
+          y="264"
+          textAnchor="middle"
+          fontSize="22"
+          fontWeight="600"
+          letterSpacing="-.5"
+          fill="#12122a"
+        >
+          drive results
+        </text>
+        <text x="567" y="281" textAnchor="middle" fontSize="6.8" fill="#8b8fa0">
+          Simple, privacy-friendly analytics for every route.
+        </text>
         <rect x="445" y="293" width="74" height="35" rx="9" fill="#f1e8ff" />
-        <text x="482" y="309" textAnchor="middle" fontSize="11" fontWeight="800" fill="#7a3df0">12.4k</text>
-        <text x="482" y="321" textAnchor="middle" fontSize="6.5" fill="#6a6f82">Visitors</text>
+        <text
+          x="482"
+          y="309"
+          textAnchor="middle"
+          fontSize="11"
+          fontWeight="600"
+          fill="#7a3df0"
+        >
+          12.4k
+        </text>
+        <text x="482" y="321" textAnchor="middle" fontSize="6.5" fill="#6a6f82">
+          Visitors
+        </text>
         <rect x="526" y="293" width="74" height="35" rx="9" fill="#e4f0ff" />
-        <text x="563" y="309" textAnchor="middle" fontSize="11" fontWeight="800" fill="#2f7be8">8.7k</text>
-        <text x="563" y="321" textAnchor="middle" fontSize="6.5" fill="#6a6f82">Sessions</text>
+        <text
+          x="563"
+          y="309"
+          textAnchor="middle"
+          fontSize="11"
+          fontWeight="600"
+          fill="#2f7be8"
+        >
+          8.7k
+        </text>
+        <text x="563" y="321" textAnchor="middle" fontSize="6.5" fill="#6a6f82">
+          Sessions
+        </text>
         <rect x="607" y="293" width="74" height="35" rx="9" fill="#e2f8ea" />
-        <text x="644" y="309" textAnchor="middle" fontSize="11" fontWeight="800" fill="#12a150">32.8k</text>
-        <text x="644" y="321" textAnchor="middle" fontSize="6.5" fill="#6a6f82">Events</text>
+        <text
+          x="644"
+          y="309"
+          textAnchor="middle"
+          fontSize="11"
+          fontWeight="600"
+          fill="#12a150"
+        >
+          32.8k
+        </text>
+        <text x="644" y="321" textAnchor="middle" fontSize="6.5" fill="#6a6f82">
+          Events
+        </text>
         <g clipPath="url(#rc)">
-          <rect className="sweep" x="380" y="200" width="40" height="150" fill="url(#sheen)" style={{ animationDelay: "1s" }} />
+          <rect
+            className="sweep"
+            x="380"
+            y="200"
+            width="40"
+            height="150"
+            fill="url(#sheen)"
+            style={{ animationDelay: "1s" }}
+          />
         </g>
       </g>
 
       {/* blue mascot */}
       <g className="bob">
         <g className="armL">
-          <path d="M352 280 q-14 -8 -12 -26" stroke="#12122a" strokeWidth="2" fill="none" strokeLinecap="round" />
+          <path
+            d="M352 280 q-14 -8 -12 -26"
+            stroke="#12122a"
+            strokeWidth="2"
+            fill="none"
+            strokeLinecap="round"
+          />
         </g>
         <g className="armR">
-          <path d="M392 280 q14 -8 12 -26" stroke="#12122a" strokeWidth="2" fill="none" strokeLinecap="round" />
+          <path
+            d="M392 280 q14 -8 12 -26"
+            stroke="#12122a"
+            strokeWidth="2"
+            fill="none"
+            strokeLinecap="round"
+          />
         </g>
-        <path d="M362 316 l-4 22 h-12 M382 316 l4 22 h12" stroke="#12122a" strokeWidth="1.8" fill="#fff" strokeLinejoin="round" strokeLinecap="round" />
+        <path
+          d="M362 316 l-4 22 h-12 M382 316 l4 22 h12"
+          stroke="#12122a"
+          strokeWidth="1.8"
+          fill="#fff"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
         <circle cx="372" cy="296" r="25" fill="url(#ball)" />
         <ellipse cx="364" cy="284" rx="8" ry="4.5" fill="#fff" opacity=".25" />
         <g className="blink">
@@ -223,7 +654,7 @@ const Svg5 = ({ className = "h-auto w-full", ...props }: React.SVGProps<SVGSVGEl
         <path d="M367 306 q5 4 10 0 q-5 -3 -10 0Z" fill="#ff7a8a" />
       </g>
     </svg>
-  )
-}
+  );
+};
 
-export default Svg5
+export default Svg5;
