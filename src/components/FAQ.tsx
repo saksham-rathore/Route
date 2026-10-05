@@ -63,7 +63,7 @@ export const FAQ = () => {
   };
 
   return (
-    <section id="faq" className="w-full bg-white py-24 px-4 sm:px-6 lg:px-8 font-instrument-sans">
+    <section id="faq" className="w-full bg-white py-2 px-4 sm:px-6 lg:px-8 font-instrument-sans">
       <div className="mx-auto max-w-[760px]">
         {/* Section Header */}
         <div className="text-center">

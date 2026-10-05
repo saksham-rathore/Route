@@ -22,7 +22,7 @@ export function SnippetCopyButton() {
         background:
           "radial-gradient(circle, color(srgb 0.00784314 0.517647 0.780392 / 0.68) 0%, rgb(2, 132, 199) 64%)",
       }}
-      className="mt-8 flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-lg text-[13.5px] font-semibold text-white shadow-[0_2px_8px_rgba(29,110,229,0.3)] transition-all hover:brightness-105 active:scale-[0.99]"
+      className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-lg text-[13.5px] font-semibold text-white shadow-[0_2px_8px_rgba(29,110,229,0.3)] transition-all hover:brightness-105 active:scale-[0.99]"
     >
       {copied ? (
         <>

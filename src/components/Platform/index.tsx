@@ -3,14 +3,14 @@
 import React, { useState } from "react";
 import { UserAnalyticsView } from "./UserAnalyticsView";
 import { ObservabilityView } from "./ObservabilityView";
-import { ISPDiagnosticsView } from "./ISPDiagnosticsView";
+// import { ISPDiagnosticsView } from "./ISPDiagnosticsView";
 import { WebVitalsView } from "./WebVitalsView";
 import { InstallationView } from "./InstallationView";
 
 export type PlatformTab =
   | "analytics"
   | "observability"
-  | "isp"
+  // | "isp"
   | "vitals"
   | "installation";
 
@@ -34,12 +34,12 @@ const tabs: TabConfig[] = [
     eyebrow: "OBSERVABILITY",
     headline: "End-to-end edge tracing & real-time error telemetry.",
   },
-  {
-    id: "isp",
-    label: "ISP Diagnostics",
-    eyebrow: "ISP & NETWORK DIAGNOSTICS",
-    headline: "Diagnose carrier throttling & BGP edge routing bottlenecks.",
-  },
+  // {
+  //   id: "isp",
+  //   label: "ISP Diagnostics",
+  //   eyebrow: "ISP & NETWORK DIAGNOSTICS",
+  //   headline: "Diagnose carrier throttling & BGP edge routing bottlenecks.",
+  // },
   {
     id: "vitals",
     label: "Web Vitals",
@@ -123,7 +123,7 @@ export const PlatformSection = () => {
           <div className="transition-opacity duration-300">
             {activeTab === "analytics" && <UserAnalyticsView />}
             {activeTab === "observability" && <ObservabilityView />}
-            {activeTab === "isp" && <ISPDiagnosticsView />}
+            {/* {activeTab === "isp" && <ISPDiagnosticsView />} */}
             {activeTab === "vitals" && <WebVitalsView />}
             {activeTab === "installation" && <InstallationView />}
           </div>
