@@ -30,7 +30,7 @@ export const Footer = () => {
             </div>
 
             {/* Headline */}
-            <h3 className="mt-8 font-instrument-sans text-[24px] sm:text-[27px] font-bold leading-[1.18] tracking-[-0.035em] text-[#0f172a]">
+            <h3 className="mt-8 font-instrument-sans text-[24px] sm:text-[27px] font-semibold leading-[1.18] tracking-[-0.035em] text-[#0f172a]">
               Understand your users.
               <br />
               Monitor your product.
