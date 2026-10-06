@@ -48,21 +48,21 @@ export function LatencyDistributionChart() {
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          {/* p99 red gradient */}
+          {/* p99 landing page rose-red gradient */}
           <linearGradient id="p99Grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#ef4444" stopOpacity="0.09" />
-            <stop offset="100%" stopColor="#ef4444" stopOpacity="0.0" />
+            <stop offset="0%" stopColor="#e11d48" stopOpacity="0.07" />
+            <stop offset="100%" stopColor="#e11d48" stopOpacity="0.0" />
           </linearGradient>
 
-          {/* p95 teal gradient */}
+          {/* p95 landing page Route blue gradient */}
           <linearGradient id="p95Grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#14b8a6" stopOpacity="0.13" />
-            <stop offset="100%" stopColor="#14b8a6" stopOpacity="0.0" />
+            <stop offset="0%" stopColor="#0284c7" stopOpacity="0.09" />
+            <stop offset="100%" stopColor="#0284c7" stopOpacity="0.0" />
           </linearGradient>
 
-          {/* p50 dark gradient */}
+          {/* p50 dark charcoal gradient */}
           <linearGradient id="p50Grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#0f172a" stopOpacity="0.06" />
+            <stop offset="0%" stopColor="#0f172a" stopOpacity="0.04" />
             <stop offset="100%" stopColor="#0f172a" stopOpacity="0.0" />
           </linearGradient>
         </defs>
@@ -76,7 +76,7 @@ export function LatencyDistributionChart() {
               x2="840"
               y2={tick.y}
               stroke="#f1f5f9"
-              strokeWidth="1"
+              strokeWidth="0.8"
             />
             <text
               x="44"
@@ -97,25 +97,25 @@ export function LatencyDistributionChart() {
         <path d={p95Area} fill="url(#p95Grad)" />
         <path d={p50Area} fill="url(#p50Grad)" />
 
-        {/* Continuous Wave Lines */}
+        {/* Continuous Wave Lines - slightly thin elegant strokes */}
         <path
           d={p99Line}
-          stroke="#f87171"
-          strokeWidth="2"
+          stroke="#e11d48"
+          strokeWidth="1.4"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d={p95Line}
-          stroke="#14b8a6"
-          strokeWidth="2"
+          stroke="#0284c7"
+          strokeWidth="1.4"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d={p50Line}
           stroke="#0f172a"
-          strokeWidth="2"
+          strokeWidth="1.4"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -167,8 +167,8 @@ export function CumulativeRequestsChart() {
       >
         <defs>
           <linearGradient id="blueAreaGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#2563eb" stopOpacity="0.15" />
-            <stop offset="100%" stopColor="#2563eb" stopOpacity="0.0" />
+            <stop offset="0%" stopColor="#0284c7" stopOpacity="0.12" />
+            <stop offset="100%" stopColor="#0284c7" stopOpacity="0.0" />
           </linearGradient>
         </defs>
 
@@ -181,7 +181,7 @@ export function CumulativeRequestsChart() {
               x2="405"
               y2={tick.y}
               stroke="#f1f5f9"
-              strokeWidth="1"
+              strokeWidth="0.8"
             />
             <text
               x="36"
@@ -200,11 +200,11 @@ export function CumulativeRequestsChart() {
         {/* Shaded Area */}
         <path d={areaPath} fill="url(#blueAreaGrad)" />
 
-        {/* Rising Curve */}
+        {/* Rising Curve - thin elegant stroke */}
         <path
           d={linePath}
-          stroke="#2563eb"
-          strokeWidth="2"
+          stroke="#0284c7"
+          strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -244,26 +244,26 @@ export function RequestDeltaChart() {
   // baseline: y = 90
   // scale: 12 units = 68px (approx 5.67px per unit)
   const bars = [
-    // Negative cluster (red)
+    // Negative cluster (landing page rose-red #e11d48)
     { x: 50, val: -11.5, type: "down" },
     { x: 64, val: -3.5, type: "down" },
     { x: 78, val: -4.0, type: "down" },
     { x: 92, val: -3.0, type: "down" },
     { x: 106, val: -8.0, type: "down" },
-    // Positive cluster (teal)
+    // Positive cluster (landing page teal #0d9488)
     { x: 128, val: 8.5, type: "up" },
     { x: 142, val: 2.2, type: "up" },
     { x: 156, val: 4.5, type: "up" },
     { x: 170, val: 6.2, type: "up" },
     { x: 184, val: 6.2, type: "up" },
     { x: 198, val: 11.5, type: "up" },
-    // Negative cluster (red)
+    // Negative cluster (landing page rose-red #e11d48)
     { x: 220, val: -11.5, type: "down" },
     { x: 234, val: -4.0, type: "down" },
     { x: 248, val: -4.0, type: "down" },
     { x: 262, val: -3.0, type: "down" },
     { x: 276, val: -5.0, type: "down" },
-    // Positive cluster (teal)
+    // Positive cluster (landing page teal #0d9488)
     { x: 298, val: 9.0, type: "up" },
     { x: 312, val: 4.5, type: "up" },
     { x: 326, val: 5.8, type: "up" },
@@ -287,7 +287,7 @@ export function RequestDeltaChart() {
               x2="405"
               y2={tick.y}
               stroke={tick.label === "0" ? "#e2e8f0" : "#f1f5f9"}
-              strokeWidth={tick.label === "0" ? "1.2" : "1"}
+              strokeWidth={tick.label === "0" ? "1" : "0.8"}
             />
             <text
               x="36"
@@ -307,7 +307,7 @@ export function RequestDeltaChart() {
         {bars.map((b, i) => {
           const height = Math.abs(b.val) * 5.67;
           const y = b.val >= 0 ? 90 - height : 90;
-          const fill = b.type === "up" ? "#0d9488" : "#be123c";
+          const fill = b.type === "up" ? "#0d9488" : "#e11d48";
 
           return (
             <rect

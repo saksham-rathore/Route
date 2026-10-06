@@ -25,7 +25,7 @@ export default function DashboardPage() {
         {/* Top Header Row of Center Column: DEMO DATA ... Get Started */}
         <div className="flex items-center justify-between pb-0.5">
           <div className="flex items-center gap-3 text-[12px]">
-            <span className="font-semibold tracking-wider text-slate-400">
+            <span className="tracking-wider text-slate-400">
               DEMO DATA
             </span>
             <span className="flex items-center gap-1.5 font-medium text-emerald-600">
@@ -55,7 +55,7 @@ export default function DashboardPage() {
         {/* Overview Subheader Row with Range Selector */}
         <div className="flex items-center justify-between pt-0.5">
           <h1 className="flex items-center gap-2 text-[15px] font-semibold text-slate-900">
-            <span className="h-2 w-2 rounded-full bg-blue-600" />
+            <span className="h-2 w-2 rounded-full bg-[#0284c7]" />
             Overview
           </h1>
           <DashboardRangePills />
@@ -72,19 +72,19 @@ export default function DashboardPage() {
             </h2>
             <div className="flex items-center gap-3.5 text-[11px] text-slate-500">
               <span className="flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-slate-900" /> p50
+                <span className="h-1.5 w-1.5 rounded-full bg-[#0f172a]" /> p50
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-teal-500" /> p95
+                <span className="h-1.5 w-1.5 rounded-full bg-[#0284c7]" /> p95
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-red-500" /> p99
+                <span className="h-1.5 w-1.5 rounded-full bg-[#e11d48]" /> p99
               </span>
             </div>
           </div>
 
           <p className="mt-1 flex items-baseline gap-2">
-            <span className="font-sans text-[25px] sm:text-[27px] font-semibold leading-none tracking-tight text-emerald-500 tabular-nums">
+            <span className="font-sans text-[25px] sm:text-[27px] font-semibold leading-none tracking-tight text-[#0284c7] tabular-nums">
               146ms
             </span>
             <span className="text-[11px] font-normal text-slate-400">
@@ -102,7 +102,7 @@ export default function DashboardPage() {
             <h2 className="text-[12.5px] font-medium text-slate-500">
               Cumulative Requests
             </h2>
-            <p className="mt-1 font-sans text-[22px] sm:text-[24px] font-semibold leading-none tracking-tight text-emerald-500 tabular-nums">
+            <p className="mt-1 font-sans text-[22px] sm:text-[24px] font-semibold leading-none tracking-tight text-[#0284c7] tabular-nums">
               1,052
             </p>
             <CumulativeRequestsChart />
@@ -119,11 +119,11 @@ export default function DashboardPage() {
                   <span className="h-2 w-2 rounded-xs bg-[#0d9488]" /> up
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-xs bg-[#be123c]" /> down
+                  <span className="h-2 w-2 rounded-xs bg-[#e11d48]" /> down
                 </span>
               </div>
             </div>
-            <p className="mt-1 font-sans text-[22px] sm:text-[24px] font-semibold leading-none tracking-tight text-slate-900 tabular-nums">
+            <p className="mt-1 font-sans text-[22px] sm:text-[24px] font-semibold leading-none tracking-tight text-[#0f172a] tabular-nums">
               53
             </p>
             <RequestDeltaChart />

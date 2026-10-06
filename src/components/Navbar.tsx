@@ -5,7 +5,7 @@ const Navbar = () => {
     <div className="flex justify-center p-4">
       <nav className="flex w-full max-w-[826px] items-center justify-between gap-3 rounded-full border border-white/20 bg-white/35 px-4 py-3 text-white shadow-[0_10px_40px_rgba(0,80,150,0.15)] backdrop-blur-lg transition-[background-color,border-color,color,box-shadow,backdrop-filter] duration-700 ease-out sm:gap-4 sm:px-5 sm:py-3.5">
         <a
-          className="font-lastik ml-1 flex items-center gap-2 text-[20px] leading-none tracking-[-0.02em] text-black transition-colors duration-700 ease-out sm:ml-2 sm:text-[22px]"
+          className="ml-1 flex items-center gap-2 text-[20px] leading-none tracking-[-0.02em] text-black transition-colors duration-700 ease-out sm:ml-2 sm:text-[22px]"
           href="/"
         >
           <img src="/logo.svg" alt="Route" className="h-[32px] w-[32px] shrink-0 object-contain" />

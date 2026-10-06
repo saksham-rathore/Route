@@ -9,6 +9,18 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  async rewrites() {
+    return [
+      {
+        source: "/onboarding",
+        destination: "/Onboarding",
+      },
+      {
+        source: "/onboarding-script",
+        destination: "/Onboarding-Script",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
