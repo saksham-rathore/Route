@@ -1,10 +1,10 @@
 import React from "react";
-import Svg1 from "./svg1";
-import Svg2 from "./svg2";
-import Svg3 from "./svg3";
-import Svg4 from "./svg4";
-import Svg5 from "./svg5";
-import Svg6 from "./svg6";
+import Svg1 from "./SVGs/svg1";
+import Svg2 from "./SVGs/svg2";
+import Svg3 from "./SVGs/svg3";
+import Svg4 from "./SVGs/svg4";
+import Svg5 from "./SVGs/svg5";
+import Svg6 from "./SVGs/svg6";
 
 const Card = ({
   children,
