@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { Moon, GitBranch } from "lucide-react";
 
 export default function SignUpPage() {
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <div className="min-h-screen w-full bg-[#eef2f6] flex flex-col font-instrument-sans antialiased text-[#0f172a]">
       {/* Top Bar with Theme Toggle on Right */}
@@ -33,7 +34,7 @@ export default function SignUpPage() {
               alt="Route"
               className="h-10 w-10 object-contain rounded-xl shadow-[0_3px_12px_rgba(2,132,199,0.22)] transition-transform duration-200 group-hover:scale-105"
             />
-            <span className="font-lastik text-[26px] font-normal leading-none tracking-[-0.02em] text-[#0f172a]">
+            <span className="text-[26px] font-normal leading-none tracking-[-0.02em] text-[#0f172a]">
               Route
             </span>
           </Link>
@@ -41,10 +42,10 @@ export default function SignUpPage() {
 
         {/* Card with Inside Shadow Border */}
         <div
-          className="w-full max-w-[450px] rounded-[18px] border border-slate-200/80 bg-white p-7 sm:p-9"
+          className="w-full max-w-[450px] rounded-[18px] border border-slate-200/80 bg-white p-7 sm:p-9 inside-shadow"
           style={{
             boxShadow:
-              "inset 0 1.5px 3px rgba(255, 255, 255, 0.9), inset 0 0 0 1px rgba(0, 0, 0, 0.03), 0 14px 45px -10px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03)",
+              "inset 0 1.5px 3px 0 rgba(0, 0, 0, 0.08), inset 0 -1px 2px 0 rgba(255, 255, 255, 0.9), inset 0 0 0 1px rgba(226, 232, 240, 0.9), 0 14px 45px -10px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03)",
           }}
         >
           {/* Category Header */}
@@ -155,17 +156,33 @@ export default function SignUpPage() {
             </div>
 
             <div>
-              <label className="block text-[10.5px] font-bold text-[#64748b] tracking-[0.12em] uppercase mb-1.5 font-instrument-sans">
-                PASSWORD
-              </label>
-              <input
-                type="password"
-                placeholder="........"
-                style={{
-                  boxShadow: "inset 0 1.5px 3px rgba(0, 0, 0, 0.05)",
-                }}
-                className="w-full rounded-[10px] border border-slate-200 bg-white px-3.5 py-2.5 text-[14px] text-[#0f172a] placeholder-[#94a3b8] outline-none transition-all focus:border-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/10 font-instrument-sans"
-              />
+              <div className="flex justify-between items-center mb-1.5">
+                <label className="block text-[10.5px] font-bold text-[#64748b] tracking-[0.12em] uppercase font-instrument-sans">
+                  PASSWORD
+                </label>
+              </div>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="........"
+                  style={{
+                    boxShadow: "inset 0 1.5px 3px rgba(0, 0, 0, 0.05)",
+                  }}
+                  className="w-full rounded-[10px] border border-slate-200 bg-white pl-3.5 pr-10 py-2.5 text-[14px] text-[#0f172a] placeholder-[#94a3b8] outline-none transition-all focus:border-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/10 font-instrument-sans"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3.5 cursor-pointer text-slate-500 hover:text-slate-800 transition-colors"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  <img
+                    src={showPassword ? "/EyeClose.svg" : "/Eye.svg"}
+                    alt={showPassword ? "Hide password" : "Show password"}
+                    className="h-[18px] w-[18px] object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                </button>
+              </div>
             </div>
 
             {/* Checkbox */}
