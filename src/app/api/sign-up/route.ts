@@ -10,7 +10,7 @@ export async function POST(req: Request) {
         name,
         email,
         password,
-        callbackURL: "/dashboard",
+        callbackURL: "/Onboarding",
       },
       headers: req.headers,
       asResponse: true,

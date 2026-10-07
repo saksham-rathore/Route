@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Moon, GitBranch } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { authClient } from "../../../lib/auth-client";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -19,6 +20,13 @@ export default function SignInPage() {
   });
 
   const [Message, setMessage] = useState("");
+
+  const handleSocialSign = async (provider: "google" | "github") => {
+    await authClient.signIn.social({
+      provider,
+      callbackURL: "/Onboarding",
+    });
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -50,7 +58,11 @@ export default function SignInPage() {
         router.push("/dashboard");
       } else {
         const data = await response.json().catch(() => null);
-        setMessage(data?.message || data?.error || "Sign in failed. Please check your credentials.");
+        setMessage(
+          data?.message ||
+            data?.error ||
+            "Sign in failed. Please check your credentials.",
+        );
       }
     } catch (error) {
       setMessage("User authorization Failed");
@@ -115,6 +127,7 @@ export default function SignInPage() {
           {/* OAuth Buttons with Inside Shadow Border */}
           <div className="mt-6 space-y-2.5">
             <button
+              onClick={() => handleSocialSign("github")}
               type="button"
               style={{
                 boxShadow:
@@ -128,6 +141,7 @@ export default function SignInPage() {
 
             <button
               type="button"
+              onClick={() => handleSocialSign("google")}
               style={{
                 boxShadow:
                   "inset 0 1.5px 3px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.03)",

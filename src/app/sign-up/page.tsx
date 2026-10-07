@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Moon, GitBranch } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { authClient } from "../../../lib/auth-client";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -20,6 +21,13 @@ export default function SignUpPage() {
   });
 
   const [Message, setMessage] = useState("");
+
+  const handleSocialSign = async (provider: "google" | "github") => {
+    await authClient.signIn.social({
+      provider,
+      callbackURL: "/Onboarding",
+    });
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -48,7 +56,7 @@ export default function SignUpPage() {
       });
 
       if (response.ok) {
-        router.push("/dashboard")
+        router.push("/dashboard");
       } else {
         setMessage("Registration failed. Please try again.");
       }
@@ -56,6 +64,7 @@ export default function SignUpPage() {
       setMessage("User authorization Failed");
     }
   };
+
   return (
     <div className="min-h-screen w-full bg-[#eef2f6] flex flex-col font-instrument-sans antialiased text-[#0f172a]">
       {/* Top Bar with Theme Toggle on Right */}
@@ -114,6 +123,7 @@ export default function SignUpPage() {
           <div className="mt-6 space-y-2.5">
             <button
               type="button"
+              onClick={() => handleSocialSign("github")}
               style={{
                 boxShadow:
                   "inset 0 1.5px 3px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.03)",
@@ -126,6 +136,7 @@ export default function SignUpPage() {
 
             <button
               type="button"
+              onClick={() => handleSocialSign("google")}
               style={{
                 boxShadow:
                   "inset 0 1.5px 3px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.03)",

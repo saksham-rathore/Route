@@ -11,7 +11,7 @@ interface Platform {
   badgeBg: string;
   badgeText: string;
 }
-
+ 
 const platforms: Platform[] = [
   { id: "nextjs", name: "Next.js", letter: "N", badgeBg: "bg-black", badgeText: "text-white" },
   { id: "react", name: "React", letter: "R", badgeBg: "bg-[#0a8fb5]", badgeText: "text-white" },
