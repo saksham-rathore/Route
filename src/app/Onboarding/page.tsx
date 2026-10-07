@@ -2,7 +2,8 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { ChevronDown, Moon, Sun, Check, ArrowRight } from "lucide-react";
+import { ChevronDown, Moon, Sun, Check, ArrowRight, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Platform {
   id: string;
@@ -11,18 +12,114 @@ interface Platform {
   badgeBg: string;
   badgeText: string;
 }
- 
+
 const platforms: Platform[] = [
-  { id: "nextjs", name: "Next.js", letter: "N", badgeBg: "bg-black", badgeText: "text-white" },
-  { id: "react", name: "React", letter: "R", badgeBg: "bg-[#0a8fb5]", badgeText: "text-white" },
-  { id: "vue", name: "Vue", letter: "V", badgeBg: "bg-[#2f9e6e]", badgeText: "text-white" },
-  { id: "svelte", name: "Svelte", letter: "S", badgeBg: "bg-[#e0451f]", badgeText: "text-white" },
-  { id: "angular", name: "Angular", letter: "A", badgeBg: "bg-[#c2262e]", badgeText: "text-white" },
-  { id: "wordpress", name: "WordPress", letter: "W", badgeBg: "bg-[#2a6aa1]", badgeText: "text-white" },
-  { id: "html", name: "HTML", letter: "H", badgeBg: "bg-[#e2662b]", badgeText: "text-white" },
+  {
+    id: "nextjs",
+    name: "Next.js",
+    letter: "N",
+    badgeBg: "bg-black",
+    badgeText: "text-white",
+  },
+  {
+    id: "react",
+    name: "React",
+    letter: "R",
+    badgeBg: "bg-[#0a8fb5]",
+    badgeText: "text-white",
+  },
+  {
+    id: "vue",
+    name: "Vue",
+    letter: "V",
+    badgeBg: "bg-[#2f9e6e]",
+    badgeText: "text-white",
+  },
+  {
+    id: "svelte",
+    name: "Svelte",
+    letter: "S",
+    badgeBg: "bg-[#e0451f]",
+    badgeText: "text-white",
+  },
+  {
+    id: "angular",
+    name: "Angular",
+    letter: "A",
+    badgeBg: "bg-[#c2262e]",
+    badgeText: "text-white",
+  },
+  {
+    id: "wordpress",
+    name: "WordPress",
+    letter: "W",
+    badgeBg: "bg-[#2a6aa1]",
+    badgeText: "text-white",
+  },
+  {
+    id: "html",
+    name: "HTML",
+    letter: "H",
+    badgeBg: "bg-[#e2662b]",
+    badgeText: "text-white",
+  },
 ];
 
 export default function OnboardingPage() {
+  const router = useRouter();
+  const [FormData, setFormData] = useState<{
+    Project: string;
+    Domain: string;
+  }>({
+    Project: "",
+    Domain: "",
+  });
+
+  const [Loading, setLoading] = useState(false);
+  const [Message, setMessage] = useState("");
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    platforms;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setMessage("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/projects", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: FormData.Project,
+          domain: FormData.Domain,
+        }),
+      });
+
+      if (response.ok) {
+        router.push("/Onboarding-Script");
+      } else {
+        const data = await response.json().catch(() => null);
+        setMessage(data?.error || "Failed to create project");
+      }
+    } catch (error) {
+      setMessage("Project creating failed !!");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-[#eef1f6] font-sans text-[#0b1220] antialiased transition-colors duration-200 dark:bg-[#0c111b] dark:text-[#f1f4fa]">
@@ -45,11 +142,8 @@ export default function OnboardingPage() {
           <button
             type="button"
             aria-label="Toggle theme"
-           
             className="flex h-[32px] w-[32px] cursor-pointer items-center justify-center rounded-lg border border-slate-200/80 bg-white text-slate-600 shadow-xs transition hover:bg-slate-50 dark:border-[#1c2433] dark:bg-[#151d2e] dark:text-[#cbd5e1] inside-shadow"
-          >
-            
-          </button>
+          ></button>
         </div>
       </header>
 
@@ -67,10 +161,17 @@ export default function OnboardingPage() {
           </h1>
 
           <p className="mb-[26px] text-[14.5px] leading-relaxed text-[#4b5565] dark:text-[#a3adbf]">
-            One script tag unlocks user analytics and real-user observability for your app.
+            One script tag unlocks user analytics and real-user observability
+            for your app.
           </p>
 
-          <form>
+          {Message && (
+            <div className="mb-4 rounded-lg bg-red-50 p-3 text-[13px] text-red-600 border border-red-200 dark:bg-red-950/30 dark:border-red-800 dark:text-red-400">
+              {Message}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit}>
             {/* Project Name */}
             <div className="mb-[22px]">
               <label
@@ -80,9 +181,11 @@ export default function OnboardingPage() {
                 Project name
               </label>
               <input
+                name="Project"
+                onChange={handleChange}
+                value={FormData.Project}
                 id="projectName"
                 type="text"
-        
                 placeholder="my-app"
                 required
                 autoComplete="off"
@@ -101,7 +204,9 @@ export default function OnboardingPage() {
               <input
                 id="domain"
                 type="text"
-        
+                name="Domain"
+                onChange={handleChange}
+                value={FormData.Domain}
                 placeholder="route.dev"
                 required
                 autoComplete="off"
@@ -118,7 +223,7 @@ export default function OnboardingPage() {
                 Platform
               </label>
 
-              <div className="relative">
+              <div className="relative" onScroll={handleScroll}>
                 <button
                   type="button"
                   className="flex h-[42px] w-full cursor-pointer items-center justify-between rounded-lg border border-[#dde2ea] bg-white px-3.5 text-[14.5px] transition hover:border-[#c4ccda] focus:border-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/20 inside-shadow-inset dark:border-[#263148] dark:bg-[#0e1522]"
@@ -140,16 +245,26 @@ export default function OnboardingPage() {
             {/* Submit Button with Previous Signature Radial Gradient */}
             <button
               type="submit"
+              disabled={Loading}
               style={{
                 background:
                   "radial-gradient(circle, color(srgb 0.00784314 0.517647 0.780392 / 0.68) 0%, rgb(2, 132, 199) 64%)",
                 boxShadow:
                   "0 2px 10px rgba(2, 132, 199, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3)",
               }}
-              className="flex h-[42px] w-full cursor-pointer items-center justify-center gap-2 rounded-lg text-[14.5px] font-semibold text-white transition hover:brightness-105 active:scale-[0.99]"
+              className="flex h-[42px] w-full cursor-pointer items-center justify-center gap-2 rounded-lg text-[14.5px] font-semibold text-white transition hover:brightness-105 active:scale-[0.99] disabled:opacity-75 disabled:cursor-not-allowed"
             >
-              <span>Create project</span>
-              <ArrowRight className="h-4 w-4" />
+              {Loading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <span>Creating project...</span>
+                </>
+              ) : (
+                <>
+                  <span>Create project</span>
+                  <ArrowRight className="h-4 w-4" />
+                </>
+              )}
             </button>
           </form>
         </section>

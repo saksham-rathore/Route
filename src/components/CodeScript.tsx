@@ -65,7 +65,7 @@ export const CodeScript = () => {
               <div className="pl-3.5 sm:pl-4">
                 <span className="text-amber-500 font-medium">src</span>
                 <span className="text-[#94a3b8]">=</span>
-                <span className="text-teal-600">&quot;https://cdn.route.dev/script.js&quot;</span>
+                <span className="text-teal-600">&quot;https://t.route.dev/script.js&quot;</span>
               </div>
               <div className="pl-3.5 sm:pl-4">
                 <span className="text-amber-500 font-medium">data-pid</span>
@@ -75,12 +75,12 @@ export const CodeScript = () => {
               <div className="pl-3.5 sm:pl-4">
                 <span className="text-amber-500 font-medium">data-domain</span>
                 <span className="text-[#94a3b8]">=</span>
-                <span className="text-teal-600">&quot;route.dev&quot;</span>
+                <span className="text-teal-600">&quot;example.dev&quot;</span>
               </div>
               <div>
-                <span className="text-[#94a3b8]">&gt;&lt;/</span>
-                <span className="font-bold text-[#c73c4d]">script</span>
-                <span className="text-[#94a3b8]">&gt;</span>
+                <span className="text-[#94a3b8]">/&gt;</span>
+              
+                <span className="text-[#94a3b8]"></span>
               </div>
             </code>
           </pre>

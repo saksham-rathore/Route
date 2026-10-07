@@ -17,7 +17,7 @@ export default function SignInPage() {
   }>({
     email: "",
     Password: "",
-  });
+  })
 
   const [Message, setMessage] = useState("");
 
