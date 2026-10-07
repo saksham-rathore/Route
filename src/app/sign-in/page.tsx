@@ -3,9 +3,61 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Moon, GitBranch } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
+  const router = useRouter();
+
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [Form, setForm] = useState<{
+    email: string;
+    Password: string;
+  }>({
+    email: "",
+    Password: "",
+  });
+
+  const [Message, setMessage] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Handle form submission and API call
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setMessage("");
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/sign-in", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: Form.email,
+          password: Form.Password,
+        }),
+      });
+
+      if (response.ok) {
+        router.push("/dashboard");
+      } else {
+        const data = await response.json().catch(() => null);
+        setMessage(data?.message || data?.error || "Sign in failed. Please check your credentials.");
+      }
+    } catch (error) {
+      setMessage("User authorization Failed");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <div className="min-h-screen w-full bg-[#eef2f6] flex flex-col font-instrument-sans antialiased text-[#0f172a]">
       {/* Top Bar with Theme Toggle on Right */}
@@ -56,7 +108,8 @@ export default function SignInPage() {
             Sign in to your account
           </h1>
           <p className="mt-2 font-instrument-sans text-[13.5px] leading-[1.5] text-[#64748b]">
-            Start monitoring your app with the same clean workflow as onboarding.
+            Start monitoring your app with the same clean workflow as
+            onboarding.
           </p>
 
           {/* OAuth Buttons with Inside Shadow Border */}
@@ -95,7 +148,18 @@ export default function SignInPage() {
           </div>
 
           {/* Input Form with Inside Shadow Border */}
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            {Message && (
+              <div
+                className={`p-3 rounded-[10px] text-[13px] font-medium ${
+                  Message.includes("successful")
+                    ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                    : "bg-red-50 text-red-700 border border-red-200"
+                }`}
+              >
+                {Message}
+              </div>
+            )}
             <div>
               <label className="block text-[10.5px] font-bold text-[#64748b] tracking-[0.12em] uppercase mb-1.5 font-instrument-sans">
                 EMAIL
@@ -115,6 +179,9 @@ export default function SignInPage() {
                 </span>
                 <input
                   type="email"
+                  name="email"
+                  value={Form.email}
+                  onChange={handleChange}
                   placeholder="you@example.com"
                   style={{
                     boxShadow: "inset 0 1.5px 3px rgba(0, 0, 0, 0.05)",
@@ -129,13 +196,19 @@ export default function SignInPage() {
                 <label className="block text-[10.5px] font-bold text-[#64748b] tracking-[0.12em] uppercase font-instrument-sans">
                   PASSWORD
                 </label>
-                <a href="#" className="text-[12px] font-medium text-[#0284c7] hover:underline font-instrument-sans">
+                <a
+                  href="#"
+                  className="text-[12px] font-medium text-[#0284c7] hover:underline font-instrument-sans"
+                >
                   Forgot password?
                 </a>
               </div>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
+                  name="Password"
+                  value={Form.Password}
+                  onChange={handleChange}
                   placeholder="........"
                   style={{
                     boxShadow: "inset 0 1.5px 3px rgba(0, 0, 0, 0.05)",
@@ -164,26 +237,32 @@ export default function SignInPage() {
                 id="remember"
                 className="h-4 w-4 rounded-[4px] border-slate-300 text-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/20 cursor-pointer"
               />
-              <label htmlFor="remember" className="text-[12.5px] text-[#64748b] cursor-pointer select-none font-instrument-sans">
+              <label
+                htmlFor="remember"
+                className="text-[12.5px] text-[#64748b] cursor-pointer select-none font-instrument-sans"
+              >
                 Remember this device
               </label>
             </div>
 
             {/* Submit Button with user's signature button gradient & shadow border */}
             <button
-              type="button"
+              type="submit"
+              disabled={isLoading}
               style={{
                 background:
                   "radial-gradient(circle, color(srgb 0.00784314 0.517647 0.780392 / 0.68) 0%, rgb(2, 132, 199) 64%)",
                 boxShadow:
                   "0 2px 10px rgba(2, 132, 199, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 -1px 2px rgba(0, 0, 0, 0.15)",
               }}
-              className="group mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-[11px] text-[14px] font-semibold text-white transition-all duration-200 hover:brightness-105 active:scale-[0.99] cursor-pointer font-instrument-sans"
+              className="group mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-[11px] text-[14px] font-semibold text-white transition-all duration-200 hover:brightness-105 active:scale-[0.99] cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed font-instrument-sans"
             >
-              <span>Sign In</span>
-              <span className="text-[15px] font-normal leading-none transition-transform duration-200 group-hover:translate-x-0.5">
-                →
-              </span>
+              <span>{isLoading ? "Signing in..." : "Sign In"}</span>
+              {!isLoading && (
+                <span className="text-[15px] font-normal leading-none transition-transform duration-200 group-hover:translate-x-0.5">
+                  →
+                </span>
+              )}
             </button>
           </form>
 

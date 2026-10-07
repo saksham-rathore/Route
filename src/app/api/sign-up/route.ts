@@ -12,7 +12,7 @@ export async function POST(req: Request) {
         password,
         callbackURL: "/dashboard",
       },
-      // Pass the request if auth.api needs to read/set headers
+      headers: req.headers,
       asResponse: true,
     });
 

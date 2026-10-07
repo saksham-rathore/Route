@@ -11,6 +11,7 @@ export async function POST(req: Request) {
         password,
         callbackURL: "/dashboard",
       },
+      headers: req.headers,
       asResponse: true,
     });
 

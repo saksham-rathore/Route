@@ -3,9 +3,59 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Moon, GitBranch } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
+  const router = useRouter();
+
   const [showPassword, setShowPassword] = useState(false);
+  const [Form, setForm] = useState<{
+    UserName: string;
+    email: string;
+    Password: string;
+  }>({
+    UserName: "",
+    email: "",
+    Password: "",
+  });
+
+  const [Message, setMessage] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Handle form submission and API call
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setMessage("");
+
+    try {
+      const response = await fetch("/api/sign-up", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: Form.UserName,
+          email: Form.email,
+          password: Form.Password,
+        }),
+      });
+
+      if (response.ok) {
+        router.push("/dashboard")
+      } else {
+        setMessage("Registration failed. Please try again.");
+      }
+    } catch (error) {
+      setMessage("User authorization Failed");
+    }
+  };
   return (
     <div className="min-h-screen w-full bg-[#eef2f6] flex flex-col font-instrument-sans antialiased text-[#0f172a]">
       {/* Top Bar with Theme Toggle on Right */}
@@ -56,7 +106,8 @@ export default function SignUpPage() {
             Create your account
           </h1>
           <p className="mt-2 font-instrument-sans text-[13.5px] leading-[1.5] text-[#64748b]">
-            Start monitoring your app with the same clean workflow as onboarding.
+            Start monitoring your app with the same clean workflow as
+            onboarding.
           </p>
 
           {/* OAuth Buttons with Inside Shadow Border */}
@@ -95,7 +146,18 @@ export default function SignUpPage() {
           </div>
 
           {/* Input Form with Inside Shadow Border */}
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            {Message && (
+              <div
+                className={`p-3 rounded-[10px] text-[13px] font-medium ${
+                  Message.includes("successful")
+                    ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                    : "bg-red-50 text-red-700 border border-red-200"
+                }`}
+              >
+                {Message}
+              </div>
+            )}
             <div>
               <label className="block text-[10.5px] font-bold text-[#64748b] tracking-[0.12em] uppercase mb-1.5 font-instrument-sans">
                 USERNAME
@@ -118,6 +180,9 @@ export default function SignUpPage() {
                 </span>
                 <input
                   type="text"
+                  name="UserName"
+                  value={Form.UserName}
+                  onChange={handleChange}
                   placeholder="yourusername"
                   style={{
                     boxShadow: "inset 0 1.5px 3px rgba(0, 0, 0, 0.05)",
@@ -146,6 +211,9 @@ export default function SignUpPage() {
                 </span>
                 <input
                   type="email"
+                  name="email"
+                  value={Form.email}
+                  onChange={handleChange}
                   placeholder="you@example.com"
                   style={{
                     boxShadow: "inset 0 1.5px 3px rgba(0, 0, 0, 0.05)",
@@ -164,6 +232,9 @@ export default function SignUpPage() {
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
+                  name="Password"
+                  value={Form.Password}
+                  onChange={handleChange}
                   placeholder="........"
                   style={{
                     boxShadow: "inset 0 1.5px 3px rgba(0, 0, 0, 0.05)",
@@ -192,7 +263,10 @@ export default function SignUpPage() {
                 id="terms"
                 className="h-4 w-4 rounded-[4px] border-slate-300 text-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/20 cursor-pointer"
               />
-              <label htmlFor="terms" className="text-[12.5px] text-[#0284c7] cursor-pointer select-none font-instrument-sans">
+              <label
+                htmlFor="terms"
+                className="text-[12.5px] text-[#0284c7] cursor-pointer select-none font-instrument-sans"
+              >
                 I agree to the{" "}
                 <a href="#" className="font-medium text-[#0284c7]">
                   Terms and Conditions
@@ -202,7 +276,7 @@ export default function SignUpPage() {
 
             {/* Submit Button with user's signature button gradient & shadow border */}
             <button
-              type="button"
+              type="submit"
               style={{
                 background:
                   "radial-gradient(circle, color(srgb 0.00784314 0.517647 0.780392 / 0.68) 0%, rgb(2, 132, 199) 64%)",
