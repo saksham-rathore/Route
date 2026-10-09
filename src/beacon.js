@@ -812,36 +812,4 @@
     15000
   );
 
-  // debugging
-
-  if (
-    script.getAttribute("data-debug") ===
-    "true"
-  ) {
-
-    console.log(
-      "[route] Beacon initialized"
-    );
-
-    console.log(
-      "[route] Project:",
-      PID
-    );
-
-    console.log(
-      "[route] Session:",
-      SESSION_ID
-    );
-
-    console.log(
-      "[route] Visitor:",
-      VISITOR_ID
-    );
-
-    console.log(
-      "[route] Device:",
-      DEVICE
-    );
-  }
-
 })();

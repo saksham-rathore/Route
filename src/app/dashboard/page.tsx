@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import {
   CumulativeRequestsChart,
@@ -11,8 +12,18 @@ import DashboardRightPanel, {
   DashboardRangePills,
   DashboardStatCards,
 } from "@/components/dashboard/DashboardPanels";
+import OnboardingProjectsPage from "./Projects";
 
 export default function DashboardPage() {
+    const router = useRouter();
+  const [Project, setProject] = useState([]);
+
+  if (Project.length === 0) {
+    router.push("/Onboarding");
+  } else if (Project.length > 0) {
+    return <OnboardingProjectsPage />;
+  }
+
   return (
     <div className="h-screen w-full bg-[#eef2f7] font-sans antialiased flex overflow-hidden">
       {/* 1. Left Sidebar Column (starts from the very top with Route logo) */}

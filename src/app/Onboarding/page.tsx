@@ -2,8 +2,16 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { ChevronDown, Moon, Sun, Check, ArrowRight, Loader2 } from "lucide-react";
+import {
+  ChevronDown,
+  Moon,
+  Sun,
+  Check,
+  ArrowRight,
+  Loader2,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
+import { authClient } from "../../../lib/auth-client";
 
 interface Platform {
   id: string;
@@ -66,6 +74,7 @@ const platforms: Platform[] = [
 ];
 
 export default function OnboardingPage() {
+  const { data: session } = authClient.useSession();
   const router = useRouter();
   const [FormData, setFormData] = useState<{
     Project: string;
@@ -109,7 +118,15 @@ export default function OnboardingPage() {
       });
 
       if (response.ok) {
-        router.push("/Onboarding-Script");
+        const data = await response.json().catch(() => null);
+        const pid = data?.project?.projectId as string | undefined;
+        const domain =
+          (data?.project?.domain as string | undefined) ?? FormData.Domain;
+        const qs = new URLSearchParams();
+        if (pid) qs.set("pid", pid);
+        if (domain) qs.set("domain", domain);
+        const suffix = qs.toString();
+        router.push(`/Onboarding-Script${suffix ? `?${suffix}` : ""}`);
       } else {
         const data = await response.json().catch(() => null);
         setMessage(data?.error || "Failed to create project");
@@ -137,13 +154,6 @@ export default function OnboardingPage() {
               Route
             </span>
           </Link>
-
-          {/* Theme Toggle */}
-          <button
-            type="button"
-            aria-label="Toggle theme"
-            className="flex h-[32px] w-[32px] cursor-pointer items-center justify-center rounded-lg border border-slate-200/80 bg-white text-slate-600 shadow-xs transition hover:bg-slate-50 dark:border-[#1c2433] dark:bg-[#151d2e] dark:text-[#cbd5e1] inside-shadow"
-          ></button>
         </div>
       </header>
 
