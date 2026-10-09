@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import {
   CumulativeRequestsChart,
@@ -12,17 +12,28 @@ import DashboardRightPanel, {
   DashboardRangePills,
   DashboardStatCards,
 } from "@/components/dashboard/DashboardPanels";
-import OnboardingProjectsPage from "./Projects";
 
 export default function DashboardPage() {
-    const router = useRouter();
-  const [Project, setProject] = useState([]);
+  const router = useRouter();
+  const [project, setProject] = useState<any[]>([]);
 
-  if (Project.length === 0) {
-    router.push("/Onboarding");
-  } else if (Project.length > 0) {
-    return <OnboardingProjectsPage />;
-  }
+  useEffect(() => {
+    async function checkProjects() {
+      try {
+        const res = await fetch("/api/projects");
+        const data = await res.json();
+        if (data.projects && Array.isArray(data.projects)) {
+          setProject(data.projects);
+          if (data.projects.length === 0) {
+            router.push("/Onboarding");
+          }
+        }
+      } catch (err) {
+        console.error("Failed to check projects:", err);
+      }
+    }
+    checkProjects();
+  }, [router]);
 
   return (
     <div className="h-screen w-full bg-[#eef2f7] font-sans antialiased flex overflow-hidden">
