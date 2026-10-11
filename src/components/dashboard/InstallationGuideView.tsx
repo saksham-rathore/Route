@@ -1,0 +1,146 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { Check, Copy, Terminal, Play, Zap } from "lucide-react";
+
+interface Props {
+  projectId: string;
+  domain: string;
+}
+
+type FwId = "nextjs" | "nuxt" | "html" | "react";
+
+export default function InstallationGuideView({ projectId, domain }: Props) {
+  const [fw, setFw] = useState<FwId>("nextjs");
+  const [copied, setCopied] = useState(false);
+  const [verifying, setVerifying] = useState(false);
+  const [log, setLog] = useState<string[] | null>(null);
+
+  const beaconSrc = typeof window !== "undefined" ? `${window.location.origin}/beacon.js` : "/beacon.js";
+
+  const snippets: Record<FwId, { label: string; filename: string; code: string }> = useMemo(
+    () => ({
+      nextjs: {
+        label: "Next.js",
+        filename: "app/layout.tsx",
+        code: `import Script from "next/script";\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang="en">\n      <body>\n        {children}\n        <Script\n          src="${beaconSrc}"\n          data-pid="${projectId}"\n          data-domain="${domain}"\n          strategy="afterInteractive"\n        />\n      </body>\n    </html>\n  );\n}`,
+      },
+      nuxt: {
+        label: "Nuxt 3",
+        filename: "nuxt.config.ts",
+        code: `export default defineNuxtConfig({\n  app: {\n    head: {\n      script: [\n        {\n          src: "${beaconSrc}",\n          defer: true,\n          "data-pid": "${projectId}",\n          "data-domain": "${domain}",\n        },\n      ],\n    },\n  },\n});`,
+      },
+      html: {
+        label: "HTML",
+        filename: "index.html",
+        code: `<!-- before </head> -->\n<script\n  defer\n  src="${beaconSrc}"\n  data-pid="${projectId}"\n  data-domain="${domain}"\n></script>`,
+      },
+      react: {
+        label: "React / Vite",
+        filename: "index.html",
+        code: `<!-- Vite / CRA: paste into index.html -->\n<script\n  defer\n  src="${beaconSrc}"\n  data-pid="${projectId}"\n  data-domain="${domain}"\n></script>\n\n<script>\n  // custom events anywhere:\n  // window.route?.track("signup_completed", { plan: "pro" });\n</script>`,
+      },
+    }),
+    [beaconSrc, projectId, domain],
+  );
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(snippets[fw].code);
+    } catch {
+      /* clipboard unavailable */
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const verify = async () => {
+    setVerifying(true);
+    setLog(["[*] Sending test ping to /api/collect ..."]);
+    try {
+      const res = await fetch("/api/collect", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          project_id: projectId,
+          session_id: `verify_${Date.now()}`,
+          visitor_id: "verify_visitor",
+          host: domain,
+          page: "/verify-installation",
+          device: { device: "desktop", browser: "verify" },
+          events: [{ type: "page_view", name: "page_view", properties: {}, page: "/verify-installation", timestamp: Date.now() }],
+          measurements: [],
+          vitals: [],
+          errors: [],
+        }),
+      });
+      const json = await res.json().catch(() => null);
+      setLog((p) => [...(p || []), res.ok ? `[+] Project resolved: ${projectId}` : `[-] HTTP ${res.status}`, json?.success ? "[✓] Status 200 OK — pipeline verified! Check Overview in ~10s." : `[-] ${(json as { error?: string })?.error || "failed"}`]);
+    } catch (e) {
+      setLog((p) => [...(p || []), `[-] ${e instanceof Error ? e.message : "network error"}`]);
+    } finally {
+      setVerifying(false);
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-3.5 pb-4">
+      <div className="flex items-center gap-2 pt-0.5">
+        <h1 className="flex items-center gap-2 text-[15px] font-semibold text-slate-900 dark:text-white"><span className="h-2 w-2 rounded-full bg-[#0284c7]" />Installation</h1>
+        <span className="rounded-md bg-sky-50 px-2 py-0.5 text-[10px] font-semibold text-sky-700 border border-sky-100">{"< 60 SEC SETUP"}</span>
+      </div>
+
+      <div className="rounded-xl border border-slate-200/80 bg-white p-4 sm:p-5 inside-shadow dark:border-[#1e2738] dark:bg-[#121927]">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4 dark:border-slate-800">
+          <div>
+            <h3 className="text-[16px] font-semibold text-slate-900 dark:text-white">Install for your stack</h3>
+            <p className="text-[12px] text-slate-500">Same beacon, framework-specific snippet. Project key is baked in.</p>
+          </div>
+          <code className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono text-[11px] font-semibold text-[#2563eb]">{projectId || "—"}</code>
+        </div>
+
+        <div className="mt-4 flex flex-wrap gap-2">
+          {(Object.keys(snippets) as FwId[]).map((id) => (
+            <button key={id} onClick={() => setFw(id)} className={`rounded-lg px-3 py-1.5 text-[12px] font-semibold border transition ${fw === id ? "border-[#2563eb] bg-[#eff6ff] text-[#2563eb]" : "border-slate-200 bg-white text-slate-500 hover:text-slate-900"}`}>
+              {snippets[id].label}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-4 overflow-hidden rounded-xl border border-slate-300 bg-[#0f172a] text-slate-100">
+          <div className="flex items-center justify-between border-b border-slate-700 bg-[#1e293b] px-4 py-2 text-[11px]">
+            <span className="font-mono text-slate-400">{snippets[fw].filename}</span>
+            <button onClick={copy} className="flex items-center gap-1.5 rounded-md bg-slate-700 px-2.5 py-1 text-[11px] font-medium text-white hover:bg-slate-600">
+              {copied ? (<><Check size={12} className="text-emerald-400" /><span className="text-emerald-300">Copied!</span></>) : (<><Copy size={12} /><span>Copy</span></>)}
+            </button>
+          </div>
+          <pre className="overflow-x-auto p-4 font-mono text-[12px] leading-relaxed"><code>{snippets[fw].code}</code></pre>
+        </div>
+
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
+          <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+              <span className="flex items-center gap-2 text-[12px] font-bold text-slate-900"><Terminal size={13} className="text-[#2563eb]" />Live verification</span>
+              <button disabled={verifying} onClick={verify} className="flex items-center gap-1.5 rounded-lg bg-[#2563eb] px-3 py-1 text-[11px] font-medium text-white disabled:opacity-50">
+                <Play size={11} fill="currentColor" /><span>{verifying ? "Sending..." : "Send Test Ping"}</span>
+              </button>
+            </div>
+            <div className="mt-3 min-h-[110px] rounded-lg bg-[#090d16] p-3 font-mono text-[11px] text-slate-200">
+              {log ? log.map((l, i) => (<p key={i} className={l.includes("✓") || l.includes("[+]") ? "text-emerald-400" : l.includes("[-]") ? "text-red-400" : "text-slate-400"}>{l}</p>)) : (
+                <p className="flex flex-col items-center gap-1 py-5 text-center text-slate-500"><Zap size={16} className="text-sky-400" />Click “Send Test Ping” to verify your pipeline end-to-end.</p>
+              )}
+            </div>
+          </div>
+          <div className="rounded-xl border border-slate-200 bg-white p-4">
+            <h5 className="text-[12px] font-semibold text-slate-900">What you get</h5>
+            <ul className="mt-2 space-y-2 text-[11.5px] text-slate-500">
+              <li className="rounded-lg border border-slate-200 bg-slate-50/60 p-2.5"><b className="text-slate-800">Pageviews + sessions</b> — automatic, no code.</li>
+              <li className="rounded-lg border border-slate-200 bg-slate-50/60 p-2.5"><b className="text-slate-800">API latency</b> — fetch/XHR auto-instrumented.</li>
+              <li className="rounded-lg border border-slate-200 bg-slate-50/60 p-2.5"><b className="text-slate-800">Web vitals + errors</b> — LCP/CLS/INP/FCP/TTFB + JS errors.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

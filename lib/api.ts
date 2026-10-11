@@ -44,14 +44,31 @@ export function fail(error: string, status = 400, details?: unknown) {
 const DEFAULT_RANGE_DAYS = 7;
 const MAX_LIMIT = 100;
 
+const RANGE_TO_MS: Record<string, number> = {
+  "1h": 3600_000,
+  "24h": 24 * 3600_000,
+  "7d": 7 * 24 * 3600_000,
+  "30d": 30 * 24 * 3600_000,
+  "90d": 90 * 24 * 3600_000,
+  "1y": 365 * 24 * 3600_000,
+};
+
+export type RangeKey = "1h" | "24h" | "7d" | "30d" | "90d" | "1y";
+
 export function parseRange(sp: URLSearchParams) {
   const now = new Date();
+  const rangeParam = sp.get("range");
   const toRaw = sp.get("to");
   const fromRaw = sp.get("from");
   const to = toRaw ? new Date(toRaw) : now;
-  const from = fromRaw
-    ? new Date(fromRaw)
-    : new Date(now.getTime() - DEFAULT_RANGE_DAYS * 24 * 3600 * 1000);
+  let from: Date;
+  if (fromRaw) {
+    from = new Date(fromRaw);
+  } else if (rangeParam && RANGE_TO_MS[rangeParam]) {
+    from = new Date(now.getTime() - RANGE_TO_MS[rangeParam]);
+  } else {
+    from = new Date(now.getTime() - DEFAULT_RANGE_DAYS * 24 * 3600 * 1000);
+  }
 
   const page = Math.max(1, Number.parseInt(sp.get("page") ?? "1", 10) || 1);
   const limit = Math.min(
@@ -62,6 +79,7 @@ export function parseRange(sp: URLSearchParams) {
   return {
     from: Number.isNaN(from.getTime()) ? new Date(now.getTime() - DEFAULT_RANGE_DAYS * 24 * 3600 * 1000) : from,
     to: Number.isNaN(to.getTime()) ? now : to,
+    range: rangeParam && RANGE_TO_MS[rangeParam] ? (rangeParam as RangeKey) : "7d" as RangeKey,
     page,
     limit,
     skip: (page - 1) * limit,
