@@ -55,6 +55,7 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
     where: { id: project.id },
     data: {
       ...(parsed.data.name !== undefined ? { name: parsed.data.name } : {}),
+      ...(parsed.data.framework !== undefined ? { framework: parsed.data.framework } : {}),
       ...(parsed.data.domain !== undefined ? { domain: parsed.data.domain } : {}),
       ...(parsed.data.status !== undefined ? { status: parsed.data.status } : {}),
       ...(parsed.data.timeZone !== undefined ? { timeZone: parsed.data.timeZone } : {}),

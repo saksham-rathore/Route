@@ -73,6 +73,7 @@ model Project {
   domain            String             @unique
   ownerId           String
   name              String
+  framework         String             @default("nextjs")
   status            ProjectStatus      @default(ACTIVE)
   timeZone          String             @default("UTC")
   dataRetentionDays Int                @default(30)

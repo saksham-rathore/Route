@@ -1,71 +1,12 @@
 "use client";
 
-import React, { useRef, Suspense, useMemo, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { ChevronDown, Check, ArrowRight, Loader2, Copy } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { authClient } from "../../../lib/auth-client";
-
-interface Platform {
-  id: string;
-  name: string;
-  letter: string;
-  badgeBg: string;
-  badgeText: string;
-}
-
-const platforms: Platform[] = [
-  {
-    id: "nextjs",
-    name: "Next.js",
-    letter: "N",
-    badgeBg: "bg-black",
-    badgeText: "text-white",
-  },
-  {
-    id: "react",
-    name: "React",
-    letter: "R",
-    badgeBg: "bg-[#0a8fb5]",
-    badgeText: "text-white",
-  },
-  {
-    id: "vue",
-    name: "Vue",
-    letter: "V",
-    badgeBg: "bg-[#2f9e6e]",
-    badgeText: "text-white",
-  },
-  {
-    id: "svelte",
-    name: "Svelte",
-    letter: "S",
-    badgeBg: "bg-[#e0451f]",
-    badgeText: "text-white",
-  },
-  {
-    id: "angular",
-    name: "Angular",
-    letter: "A",
-    badgeBg: "bg-[#c2262e]",
-    badgeText: "text-white",
-  },
-  {
-    id: "wordpress",
-    name: "WordPress",
-    letter: "W",
-    badgeBg: "bg-[#2a6aa1]",
-    badgeText: "text-white",
-  },
-  {
-    id: "html",
-    name: "HTML",
-    letter: "H",
-    badgeBg: "bg-[#e2662b]",
-    badgeText: "text-white",
-  },
-];
+import { FRAMEWORKS, getFramework, getSnippet, isFrameworkId, type FrameworkId } from "@/lib/stacks";
 
 export default function OnboardingPage() {
   const { data: session } = authClient.useSession();
@@ -77,13 +18,31 @@ export default function OnboardingPage() {
     Project: "",
     Domain: "",
   });
+  const [framework, setFramework] = useState<FrameworkId>("nextjs");
+  const [platformOpen, setPlatformOpen] = useState(false);
+  const platformRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function onDocClick(e: MouseEvent) {
+      if (platformRef.current && !platformRef.current.contains(e.target as Node)) {
+        setPlatformOpen(false);
+      }
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setPlatformOpen(false);
+    }
+    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, []);
+
+  const selectedFw = getFramework(framework);
 
   const [Loading, setLoading] = useState(false);
   const [Message, setMessage] = useState("");
-
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    platforms;
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -108,6 +67,7 @@ export default function OnboardingPage() {
         body: JSON.stringify({
           name: FormData.Project,
           domain: FormData.Domain,
+          framework,
         }),
       });
 
@@ -116,9 +76,11 @@ export default function OnboardingPage() {
         const pid = data?.project?.projectId as string | undefined;
         const domain =
           (data?.project?.domain as string | undefined) ?? FormData.Domain;
+        const fw = (data?.project?.framework as string | undefined) ?? framework;
         const qs = new URLSearchParams();
         if (pid) qs.set("pid", pid);
         if (domain) qs.set("domain", domain);
+        if (fw) qs.set("framework", fw);
         const suffix = qs.toString();
         router.push(`/Onboarding-Script${suffix ? `?${suffix}` : ""}`);
       } else {
@@ -227,23 +189,62 @@ export default function OnboardingPage() {
                 Platform
               </label>
 
-              <div className="relative" onScroll={handleScroll}>
+              <div className="relative" ref={platformRef}>
                 <button
                   type="button"
-                  className="flex h-[42px] w-full cursor-pointer items-center justify-between rounded-lg border border-[#dde2ea] bg-white px-3.5 text-[14.5px] transition hover:border-[#c4ccda] focus:border-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/20 inside-shadow-inset dark:border-[#263148] dark:bg-[#0e1522]"
+                  aria-haspopup="listbox"
+                  aria-expanded={platformOpen}
+                  onClick={() => setPlatformOpen((v) => !v)}
+                  className={`flex h-[42px] w-full cursor-pointer items-center justify-between rounded-lg border bg-white px-3.5 text-[14.5px] transition inside-shadow-inset dark:bg-[#0e1522] ${platformOpen ? "border-[#0284c7] ring-2 ring-[#0284c7]/20" : "border-[#dde2ea] hover:border-[#c4ccda] dark:border-[#263148]"}`}
                 >
                   <div className="flex items-center gap-2.5">
-                    <span className="flex h-4 w-4 items-center justify-center rounded-full bg-black text-[9px] font-bold text-white">
-                      N
+                    <span className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold text-white ${selectedFw.badgeBg}`}>
+                      {selectedFw.letter}
                     </span>
                     <span className="font-medium text-[#0b1220] dark:text-white">
-                      Next.js
+                      {selectedFw.name}
+                    </span>
+                    <span className="hidden text-[11px] text-[#8a93a3] sm:inline">
+                      · {selectedFw.hint}
                     </span>
                   </div>
 
-                  <ChevronDown className="h-4 w-4 text-[#5b6577] transition-transform duration-200 dark:text-[#8b97ab]" />
+                  <ChevronDown className={`h-4 w-4 text-[#5b6577] transition-transform duration-200 dark:text-[#8b97ab] ${platformOpen ? "rotate-180" : ""}`} />
                 </button>
+
+                {platformOpen && (
+                  <div role="listbox" className="absolute z-20 mt-2 max-h-[264px] w-full overflow-y-auto rounded-xl border border-[#dde2ea] bg-white p-1.5 shadow-[0_12px_32px_rgba(20,40,90,.14)] dark:border-[#263148] dark:bg-[#0e1522]">
+                    {FRAMEWORKS.map((p) => {
+                      const active = p.id === framework;
+                      return (
+                        <button
+                          key={p.id}
+                          type="button"
+                          role="option"
+                          aria-selected={active}
+                          onClick={() => {
+                            setFramework(p.id);
+                            setPlatformOpen(false);
+                          }}
+                          className={`flex w-full cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[13.5px] transition ${active ? "bg-[#eff6ff] text-[#0b1220] dark:bg-[#142137] dark:text-white" : "text-[#334155] hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#151d2e]"}`}
+                        >
+                          <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white ${p.badgeBg}`}>
+                            {p.letter}
+                          </span>
+                          <span className="min-w-0 flex-1">
+                            <span className="block font-medium leading-tight">{p.name}</span>
+                            <span className="block truncate text-[11px] text-[#8a93a3]">{p.hint}</span>
+                          </span>
+                          {active && <Check className="h-4 w-4 shrink-0 text-[#0284c7]" />}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
+              <p className="mt-2 text-xs text-[#6b7585] dark:text-[#8590a3]">
+                Your install snippet on the next step adapts to this stack.
+              </p>
             </div>
 
             {/* Submit Button with Previous Signature Radial Gradient */}
@@ -282,24 +283,28 @@ function OnboardingScriptContent() {
   const searchParams = useSearchParams();
   const pid = searchParams.get("pid") ?? "your-project-id";
   const domain = searchParams.get("domain") ?? "your-domain.com";
+  const fwParam = searchParams.get("framework");
+  const [fw, setFw] = useState<FrameworkId>(isFrameworkId(fwParam) ? fwParam : "nextjs");
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (isFrameworkId(fwParam)) setFw(fwParam);
+  }, [fwParam]);
 
   const HandleClick = async () => {
     router.push("/dashboard");
   };
 
-  const snippet = useMemo(
-    () =>
-      `<Script\n  src="${typeof window !== "undefined" ? window.location.origin : ""}/beacon.js"\n  data-pid="${pid}"\n  data-domain="${domain}"\n  strategy="afterInteractive"\n/>`,
-    [pid, domain],
-  );
+  const beaconSrc = typeof window !== "undefined" ? `${window.location.origin}/beacon.js` : "/beacon.js";
+  const snippet = useMemo(() => getSnippet(fw, { beaconSrc, projectId: pid, domain }), [fw, beaconSrc, pid, domain]);
+  const activeFw = getFramework(fw);
 
   const copySnippet = async () => {
     try {
-      await navigator.clipboard.writeText(snippet);
+      await navigator.clipboard.writeText(snippet.code);
     } catch {
       const ta = document.createElement("textarea");
-      ta.value = snippet;
+      ta.value = snippet.code;
       document.body.appendChild(ta);
       ta.select();
       document.execCommand("copy");
@@ -308,11 +313,6 @@ function OnboardingScriptContent() {
     setCopied(true);
     window.setTimeout(() => setCopied(false), 2000);
   };
-
-  const scriptSrc =
-    typeof window !== "undefined"
-      ? `${window.location.origin}/beacon.js`
-      : "/beacon.js";
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-[#eef2f6] font-sans text-[#0b1220] antialiased transition-colors duration-200 dark:bg-[#0c111b] dark:text-[#f1f4fa]">
@@ -353,10 +353,25 @@ function OnboardingScriptContent() {
 
           {/* Snippet Panel */}
           <div className="overflow-hidden rounded-[14px] border border-[#cfdaea] bg-[#edf2f9] p-3.5 sm:p-4 dark:border-[#26334a] dark:bg-[#0e1624]">
-            {/* Header with SCRIPT.JS and Copy Icon */}
+            {/* Framework tabs — user can switch stack here too */}
+            <div className="mb-3 flex flex-wrap gap-1.5">
+              {FRAMEWORKS.map((f) => (
+                <button
+                  key={f.id}
+                  type="button"
+                  onClick={() => setFw(f.id)}
+                  className={`flex cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 text-[11.5px] font-semibold transition ${fw === f.id ? "border-[#0284c7] bg-white text-[#0284c7] shadow-2xs dark:bg-[#142137]" : "border-transparent text-[#64748b] hover:border-[#c5d5e8] hover:bg-white/60 dark:text-[#8b97ab]"}`}
+                >
+                  <span className={`flex h-4 w-4 items-center justify-center rounded-full text-[8px] font-bold text-white ${f.badgeBg}`}>{f.letter}</span>
+                  {f.name}
+                </button>
+              ))}
+            </div>
+
+            {/* Header with filename and Copy Icon */}
             <div className="mb-3 flex items-center justify-between">
               <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.1em] text-[#64748b] dark:text-[#8b97ab]">
-                SCRIPT.JS
+                {snippet.filename} · {activeFw.name}
               </span>
 
               <button
@@ -374,53 +389,9 @@ function OnboardingScriptContent() {
               </button>
             </div>
 
-            {/* Code Box */}
-            <div className="rounded-[10px] border border-[#d5dfea] bg-[#e6ecf4] p-3.5 sm:p-4 font-mono text-[12.5px] sm:text-[13px] leading-[1.65] select-text dark:border-[#222e42] dark:bg-[#0a111c]">
-              <div>
-                <span className="text-[#64748b] dark:text-[#7f8ea3]">&lt;</span>
-                <span className="font-medium text-[#d9465b]">Script</span>
-              </div>
-              <div className="pl-4">
-                <span className="font-medium text-[#a8501f] dark:text-amber-400">
-                  src
-                </span>
-                <span className="text-[#64748b] dark:text-[#7f8ea3]">=</span>
-                <span className="text-[#0d9488] dark:text-emerald-400">
-                  &quot;{scriptSrc}&quot;
-                </span>
-              </div>
-              <div className="pl-4">
-                <span className="font-medium text-[#a8501f] dark:text-amber-400">
-                  data-pid
-                </span>
-                <span className="text-[#64748b] dark:text-[#7f8ea3]">=</span>
-                <span className="text-[#0d9488] dark:text-emerald-400">
-                  &quot;{pid}&quot;
-                </span>
-              </div>
-              <div className="pl-4">
-                <span className="font-medium text-[#a8501f] dark:text-amber-400">
-                  data-domain
-                </span>
-                <span className="text-[#64748b] dark:text-[#7f8ea3]">=</span>
-                <span className="text-[#0d9488] dark:text-emerald-400">
-                  &quot;{domain}&quot;
-                </span>
-              </div>
-              <div className="pl-4">
-                <span className="font-medium text-[#a8501f] dark:text-amber-400">
-                  strategy
-                </span>
-                <span className="text-[#64748b] dark:text-[#7f8ea3]">=</span>
-                <span className="text-[#0d9488] dark:text-emerald-400">
-                  &quot;afterInteractive&quot;
-                </span>
-              </div>
-              <div>
-                <span className="font-medium text-[#2563eb] dark:text-sky-400">
-                  /&gt;
-                </span>
-              </div>
+            {/* Code Box — framework-specific */}
+            <div className="rounded-[10px] border border-[#d5dfea] bg-[#e6ecf4] p-3.5 sm:p-4 font-mono text-[12px] sm:text-[12.5px] leading-[1.65] select-text whitespace-pre-wrap break-all dark:border-[#222e42] dark:bg-[#0a111c] dark:text-slate-200">
+              {snippet.code}
             </div>
 
             {/* Install with Agent */}

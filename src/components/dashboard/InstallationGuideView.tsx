@@ -2,51 +2,30 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, Terminal, Play, Zap } from "lucide-react";
+import { FRAMEWORKS, getSnippet, type FrameworkId } from "@/lib/stacks";
 
 interface Props {
   projectId: string;
   domain: string;
+  initialFramework?: string | null;
 }
 
-type FwId = "nextjs" | "nuxt" | "html" | "react";
+function validFw(v: string | null | undefined): FrameworkId {
+  return (FRAMEWORKS.some((f) => f.id === v) ? v : "nextjs") as FrameworkId;
+}
 
-export default function InstallationGuideView({ projectId, domain }: Props) {
-  const [fw, setFw] = useState<FwId>("nextjs");
+export default function InstallationGuideView({ projectId, domain, initialFramework }: Props) {
+  const [fw, setFw] = useState<FrameworkId>(validFw(initialFramework));
   const [copied, setCopied] = useState(false);
   const [verifying, setVerifying] = useState(false);
   const [log, setLog] = useState<string[] | null>(null);
 
   const beaconSrc = typeof window !== "undefined" ? `${window.location.origin}/beacon.js` : "/beacon.js";
-
-  const snippets: Record<FwId, { label: string; filename: string; code: string }> = useMemo(
-    () => ({
-      nextjs: {
-        label: "Next.js",
-        filename: "app/layout.tsx",
-        code: `import Script from "next/script";\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang="en">\n      <body>\n        {children}\n        <Script\n          src="${beaconSrc}"\n          data-pid="${projectId}"\n          data-domain="${domain}"\n          strategy="afterInteractive"\n        />\n      </body>\n    </html>\n  );\n}`,
-      },
-      nuxt: {
-        label: "Nuxt 3",
-        filename: "nuxt.config.ts",
-        code: `export default defineNuxtConfig({\n  app: {\n    head: {\n      script: [\n        {\n          src: "${beaconSrc}",\n          defer: true,\n          "data-pid": "${projectId}",\n          "data-domain": "${domain}",\n        },\n      ],\n    },\n  },\n});`,
-      },
-      html: {
-        label: "HTML",
-        filename: "index.html",
-        code: `<!-- before </head> -->\n<script\n  defer\n  src="${beaconSrc}"\n  data-pid="${projectId}"\n  data-domain="${domain}"\n></script>`,
-      },
-      react: {
-        label: "React / Vite",
-        filename: "index.html",
-        code: `<!-- Vite / CRA: paste into index.html -->\n<script\n  defer\n  src="${beaconSrc}"\n  data-pid="${projectId}"\n  data-domain="${domain}"\n></script>\n\n<script>\n  // custom events anywhere:\n  // window.route?.track("signup_completed", { plan: "pro" });\n</script>`,
-      },
-    }),
-    [beaconSrc, projectId, domain],
-  );
+  const snippet = useMemo(() => getSnippet(fw, { beaconSrc, projectId, domain }), [fw, beaconSrc, projectId, domain]);
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(snippets[fw].code);
+      await navigator.clipboard.writeText(snippet.code);
     } catch {
       /* clipboard unavailable */
     }
@@ -100,21 +79,22 @@ export default function InstallationGuideView({ projectId, domain }: Props) {
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
-          {(Object.keys(snippets) as FwId[]).map((id) => (
-            <button key={id} onClick={() => setFw(id)} className={`rounded-lg px-3 py-1.5 text-[12px] font-semibold border transition ${fw === id ? "border-[#2563eb] bg-[#eff6ff] text-[#2563eb]" : "border-slate-200 bg-white text-slate-500 hover:text-slate-900"}`}>
-              {snippets[id].label}
+          {FRAMEWORKS.map((f) => (
+            <button key={f.id} onClick={() => setFw(f.id)} className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[12px] font-semibold border transition ${fw === f.id ? "border-[#2563eb] bg-[#eff6ff] text-[#2563eb]" : "border-slate-200 bg-white text-slate-500 hover:text-slate-900"}`}>
+              <span className={`flex h-4 w-4 items-center justify-center rounded-full text-[8px] font-bold text-white ${f.badgeBg}`}>{f.letter}</span>
+              {f.name}
             </button>
           ))}
         </div>
 
         <div className="mt-4 overflow-hidden rounded-xl border border-slate-300 bg-[#0f172a] text-slate-100">
           <div className="flex items-center justify-between border-b border-slate-700 bg-[#1e293b] px-4 py-2 text-[11px]">
-            <span className="font-mono text-slate-400">{snippets[fw].filename}</span>
+            <span className="font-mono text-slate-400">{snippet.filename}</span>
             <button onClick={copy} className="flex items-center gap-1.5 rounded-md bg-slate-700 px-2.5 py-1 text-[11px] font-medium text-white hover:bg-slate-600">
               {copied ? (<><Check size={12} className="text-emerald-400" /><span className="text-emerald-300">Copied!</span></>) : (<><Copy size={12} /><span>Copy</span></>)}
             </button>
           </div>
-          <pre className="overflow-x-auto p-4 font-mono text-[12px] leading-relaxed"><code>{snippets[fw].code}</code></pre>
+          <pre className="overflow-x-auto whitespace-pre-wrap break-all p-4 font-mono text-[12px] leading-relaxed"><code>{snippet.code}</code></pre>
         </div>
 
         <div className="mt-4 grid gap-4 lg:grid-cols-2">

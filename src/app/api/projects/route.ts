@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     return fail("Invalid project data", 400, parsed.error.flatten().fieldErrors);
   }
 
-  const { name, domain } = parsed.data;
+  const { name, domain, framework } = parsed.data;
 
   const existing = await prisma.project.findUnique({ where: { domain } });
   if (existing) return fail("A project with this domain already exists", 409);
@@ -29,6 +29,7 @@ export async function POST(req: NextRequest) {
     data: {
       name,
       domain,
+      framework: framework ?? "nextjs",
       ownerId: user.id,
       domains: { create: { domain } },
     },

@@ -1,5 +1,16 @@
 import * as z from "zod";
 
+export const FRAMEWORK_IDS = [
+  "nextjs",
+  "react",
+  "nuxt",
+  "vue",
+  "svelte",
+  "angular",
+  "html",
+  "wordpress",
+] as const;
+
 export const CreateProjectSchema = z.object({
   name: z
     .string()
@@ -17,12 +28,15 @@ export const CreateProjectSchema = z.object({
       /^(?!-)[a-z0-9-]+(\.[a-z0-9-]+)+$/i,
       "Enter a valid domain, for example: example.com",
     ),
+
+  framework: z.enum(FRAMEWORK_IDS).optional().default("nextjs"),
 });
 
 export type CreateProjectInput = z.infer<typeof CreateProjectSchema>;
 
 export const UpdateProjectSchema = z.object({
   name: z.string().trim().min(2).max(64).optional(),
+  framework: z.enum(FRAMEWORK_IDS).optional(),
   domain: z
     .string()
     .trim()
