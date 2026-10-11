@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../lib/prisma";
 import { z } from "zod";
-import { CollectSchema } from "../../../../lib/zod/types"; 
+import { CollectSchema } from "../../../../lib/zod/types";
 
 type CollectInput = z.infer<typeof CollectSchema>;
 

@@ -21,6 +21,8 @@ import DashboardRightPanel, {
   DashboardRangePills,
   DashboardStatCards,
 } from "@/components/dashboard/DashboardPanels";
+import WebVitalsDashboardView from "@/components/dashboard/WebVitalsDashboardView";
+import PagePerformanceDashboardView from "@/components/dashboard/PagePerformanceDashboardView";
 import { authClient } from "../../../lib/auth-client";
 
 interface ProjectData {
@@ -37,7 +39,7 @@ interface ProjectData {
   createdAt?: string;
 }
 
-  //  1. OnboardingProjectsView — Project Cards List View
+//  1. OnboardingProjectsView — Project Cards List View
 
 interface OnboardingProjectsViewProps {
   projects: ProjectData[];
@@ -54,15 +56,65 @@ function OnboardingProjectsView({
   const { data: session } = authClient.useSession();
 
   const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState<"latest" | "name" | "requests">("latest");
-  const [statusFilter, setStatusFilter] = useState<"all" | "connected" | "pending">("all");
+  const [sortBy, setSortBy] = useState<"latest" | "name" | "requests">(
+    "latest",
+  );
+  const [statusFilter, setStatusFilter] = useState<
+    "all" | "connected" | "pending"
+  >("all");
 
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [isStatusOpen, setIsStatusOpen] = useState(false);
+  const [Project, setProject] = useState([]);
+  const [Loading, setLoading] = useState(true);
 
   const handleClick = () => {
     router.push("/Onboarding");
   };
+
+  useEffect(() => {
+    async function fetchDashboard() {
+      try {
+        setLoading(true);
+        const projectId = projects[0]?.id;
+        const query = projectId
+          ? `?projectId=${encodeURIComponent(projectId)}`
+          : "";
+
+        const [overview, vitals, events, sessions] = await Promise.all([
+          fetch(`/api/analytics/overview${query}`),
+          fetch(`/api/analytics/vitals${query}`),
+          fetch(`/api/analytics/events${query}`),
+          fetch(`/api/analytics/sessions${query}`),
+        ]);
+
+        if (![overview, vitals, events, sessions].every((res) => res.ok)) {
+          throw new Error("Failed to fetch dashboard data");
+        }
+
+        const [overviewData, vitalsData, eventData, sessionData] =
+          await Promise.all([
+            overview.json(),
+            vitals.json(),
+            events.json(),
+            sessions.json(),
+          ]);
+
+        return {
+          overview: overviewData,
+          events: eventData,
+          vitals: vitalsData,
+          sessions: sessionData,
+        };
+      } catch (err) {
+        console.error("Failed to fetch dashboard data:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchDashboard();
+  }, [projects]);
 
   const initials =
     session?.user?.name
@@ -103,7 +155,8 @@ function OnboardingProjectsView({
     if (q) {
       list = list.filter(
         (p) =>
-          p.name.toLowerCase().includes(q) || p.domain.toLowerCase().includes(q),
+          p.name.toLowerCase().includes(q) ||
+          p.domain.toLowerCase().includes(q),
       );
     }
 
@@ -269,7 +322,12 @@ function OnboardingProjectsView({
               className="flex h-[36px] cursor-pointer items-center gap-2 rounded-lg border border-[#dfe4ec] bg-white px-3 text-[13px] font-medium text-[#0b1220] transition hover:bg-slate-50 dark:border-[#1e2738] dark:bg-[#121927] dark:text-white dark:hover:bg-[#172134]"
             >
               <span>
-                Sort by: {sortBy === "latest" ? "Latest" : sortBy === "name" ? "Name" : "Requests"}
+                Sort by:{" "}
+                {sortBy === "latest"
+                  ? "Latest"
+                  : sortBy === "name"
+                    ? "Name"
+                    : "Requests"}
               </span>
               <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
             </button>
@@ -321,7 +379,12 @@ function OnboardingProjectsView({
               className="flex h-[36px] cursor-pointer items-center gap-2 rounded-lg border border-[#dfe4ec] bg-white px-3 text-[13px] font-medium text-[#0b1220] transition hover:bg-slate-50 dark:border-[#1e2738] dark:bg-[#121927] dark:text-white dark:hover:bg-[#172134]"
             >
               <span>
-                Status: {statusFilter === "all" ? "All" : statusFilter === "connected" ? "Connected" : "Pending"}
+                Status:{" "}
+                {statusFilter === "all"
+                  ? "All"
+                  : statusFilter === "connected"
+                    ? "Connected"
+                    : "Pending"}
               </span>
               <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
             </button>
@@ -484,7 +547,7 @@ function OnboardingProjectsView({
     </div>
   );
 }
-  //  2. DashboardAnalyticsView — Full Charts & Metrics Dashboard View
+//  2. DashboardAnalyticsView — Full Charts & Metrics Dashboard View
 
 interface DashboardAnalyticsViewProps {
   project?: ProjectData | null;
@@ -495,138 +558,183 @@ function DashboardAnalyticsView({
   project,
   onBackToProjects,
 }: DashboardAnalyticsViewProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const queryTab = searchParams.get("tab");
+  const { data: session } = authClient.useSession();
+
+  const [activeTab, setActiveTab] = useState<string>(queryTab || "overview");
+
+  useEffect(() => {
+    if (queryTab) {
+      setActiveTab(queryTab);
+    }
+  }, [queryTab]);
+
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+    const url = new URL(window.location.href);
+    url.searchParams.set("tab", tab);
+    window.history.pushState(null, "", url.toString());
+  };
+
+  const handleAddProject = () => {
+    router.push("/Onboarding");
+  };
+
   return (
     <div className="h-screen w-full bg-[#eef2f7] font-sans antialiased flex overflow-hidden">
       {/* 1. Left Sidebar Column */}
       <div className="shrink-0 h-full border-r border-slate-200/80 bg-white px-3 py-3">
-        <DashboardSidebar />
+        <DashboardSidebar
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+          onBackToProjects={onBackToProjects}
+          onAddProject={handleAddProject}
+        />
       </div>
 
       {/* 2. Center Column */}
       <main className="min-w-0 flex-1 h-full overflow-y-auto no-scrollbar px-4.5 py-3.5 sm:px-6 flex flex-col gap-3.5">
-        {/* Top Header Row of Center Column */}
-        <div className="flex items-center justify-between pb-0.5">
-          <div className="flex items-center gap-3 text-[12px]">
-            {/* Back to all projects button */}
-            <button
-              type="button"
-              onClick={onBackToProjects}
-              className="flex items-center gap-1 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-[11.5px] font-semibold text-slate-700 shadow-2xs hover:bg-slate-50 transition cursor-pointer dark:border-slate-800 dark:bg-[#121927] dark:text-slate-300"
-            >
-              <ChevronLeft className="h-3 w-3" />
-              <span>All Projects</span>
-            </button>
+        {activeTab === "vitals" ? (
+          <WebVitalsDashboardView project={project} />
+        ) : activeTab === "pages" ? (
+          <PagePerformanceDashboardView project={project} />
+        ) : (
+          <>
+            {/* Top Header Row of Center Column */}
+            <div className="flex items-center justify-between pb-0.5">
+              <div className="flex items-center gap-3 text-[12px]">
+                {/* Back to all projects button */}
+                <button
+                  type="button"
+                  onClick={onBackToProjects}
+                  className="flex items-center gap-1 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-[11.5px] font-semibold text-slate-700 shadow-2xs hover:bg-slate-50 transition cursor-pointer dark:border-slate-800 dark:bg-[#121927] dark:text-slate-300"
+                >
+                  <ChevronLeft className="h-3 w-3" />
+                  <span>All Projects</span>
+                </button>
 
-            <span className="font-semibold text-slate-800 dark:text-white">
-              {project?.name ?? "DEMO DATA"}
-            </span>
-
-            <span className="flex items-center gap-1.5 font-medium text-emerald-600">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-              </span>
-              Live
-            </span>
-            <span className="text-slate-400">Updated 20s ago</span>
-          </div>
-
-          <button
-            type="button"
-            style={{
-              background:
-                "radial-gradient(circle, color(srgb 0.00784314 0.517647 0.780392 / 0.68) 0%, rgb(2, 132, 199) 64%)",
-              boxShadow:
-                "0 2px 8px rgba(2, 132, 199, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.28)",
-            }}
-            className="rounded-lg px-4 py-2 text-[12.5px] font-semibold text-white transition hover:brightness-105 active:scale-[0.99]"
-          >
-            Get Started
-          </button>
-        </div>
-
-        {/* Overview Subheader Row with Range Selector */}
-        <div className="flex items-center justify-between pt-0.5">
-          <h1 className="flex items-center gap-2 text-[15px] font-semibold text-slate-900 dark:text-white">
-            <span className="h-2 w-2 rounded-full bg-[#0284c7]" />
-            {project?.name ? `${project.name} Overview` : "Overview"}
-          </h1>
-          <DashboardRangePills />
-        </div>
-
-        {/* 4 Stat Cards */}
-        <DashboardStatCards />
-
-        {/* Latency Distribution Card */}
-        <section className="rounded-xl border border-slate-200/80 bg-white p-3.5 sm:p-4 inside-shadow dark:border-[#1e2738] dark:bg-[#121927]">
-          <div className="flex items-center justify-between">
-            <h2 className="text-[12.5px] font-medium text-slate-500">
-              Latency Distribution
-            </h2>
-            <div className="flex items-center gap-3.5 text-[11px] text-slate-500">
-              <span className="flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#0f172a] dark:bg-white" /> p50
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#0284c7]" /> p95
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#e11d48]" /> p99
-              </span>
-            </div>
-          </div>
-
-          <p className="mt-1 flex items-baseline gap-2">
-            <span className="font-sans text-[25px] sm:text-[27px] font-semibold leading-none tracking-tight text-[#0284c7] tabular-nums">
-              146ms
-            </span>
-            <span className="text-[11px] font-normal text-slate-400">
-              p95 over selected range
-            </span>
-          </p>
-
-          <LatencyDistributionChart />
-        </section>
-
-        {/* Bottom row (Cumulative Requests & Request Delta) */}
-        <div className="grid gap-3 md:grid-cols-2 pb-4">
-          {/* Cumulative Requests */}
-          <section className="rounded-xl border border-slate-200/80 bg-white p-3.5 sm:p-4 inside-shadow dark:border-[#1e2738] dark:bg-[#121927]">
-            <h2 className="text-[12.5px] font-medium text-slate-500">
-              Cumulative Requests
-            </h2>
-            <p className="mt-1 font-sans text-[22px] sm:text-[24px] font-semibold leading-none tracking-tight text-[#0284c7] tabular-nums">
-              {project?._count?.events ? project._count.events.toLocaleString() : "1,052"}
-            </p>
-            <CumulativeRequestsChart />
-          </section>
-
-          {/* Request Delta */}
-          <section className="rounded-xl border border-slate-200/80 bg-white p-3.5 sm:p-4 inside-shadow dark:border-[#1e2738] dark:bg-[#121927]">
-            <div className="flex items-center justify-between">
-              <h2 className="text-[12.5px] font-medium text-slate-500">
-                Request Delta
-              </h2>
-              <div className="flex items-center gap-3.5 text-[11px] text-slate-500">
-                <span className="flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-xs bg-[#0d9488]" /> up
+                <span className="font-semibold text-slate-800 dark:text-white">
+                  {project?.name ?? "DEMO DATA"}
                 </span>
-                <span className="flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-xs bg-[#e11d48]" /> down
+
+                <span className="flex items-center gap-1.5 font-medium text-emerald-600">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                  </span>
+                  Live
                 </span>
+                <span className="text-slate-400">Updated 20s ago</span>
               </div>
+
+              <button
+                type="button"
+                onClick={handleAddProject}
+                style={{
+                  background:
+                    "radial-gradient(circle, color(srgb 0.00784314 0.517647 0.780392 / 0.68) 0%, rgb(2, 132, 199) 64%)",
+                  boxShadow:
+                    "0 2px 8px rgba(2, 132, 199, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.28)",
+                }}
+                className="rounded-lg px-4 py-2 text-[12.5px] font-semibold text-white transition hover:brightness-105 active:scale-[0.99] cursor-pointer"
+              >
+                Get Started
+              </button>
             </div>
-            <p className="mt-1 font-sans text-[22px] sm:text-[24px] font-semibold leading-none tracking-tight text-[#0f172a] dark:text-white tabular-nums">
-              53
-            </p>
-            <RequestDeltaChart />
-          </section>
-        </div>
+
+            {/* Overview Subheader Row with Range Selector */}
+            <div className="flex items-center justify-between pt-0.5">
+              <h1 className="flex items-center gap-2 text-[15px] font-semibold text-slate-900 dark:text-white">
+                <span className="h-2 w-2 rounded-full bg-[#0284c7]" />
+                {project?.name ? `${project.name} Overview` : "Overview"}
+              </h1>
+              <DashboardRangePills />
+            </div>
+
+            {/* 4 Stat Cards */}
+            <DashboardStatCards />
+
+            {/* Latency Distribution Card */}
+            <section className="rounded-xl border border-slate-200/80 bg-white p-3.5 sm:p-4 inside-shadow dark:border-[#1e2738] dark:bg-[#121927]">
+              <div className="flex items-center justify-between">
+                <h2 className="text-[12.5px] font-medium text-slate-500">
+                  Latency Distribution
+                </h2>
+                <div className="flex items-center gap-3.5 text-[11px] text-slate-500">
+                  <span className="flex items-center gap-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#0f172a] dark:bg-white" />{" "}
+                    p50
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#0284c7]" /> p95
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#e11d48]" /> p99
+                  </span>
+                </div>
+              </div>
+
+              <p className="mt-1 flex items-baseline gap-2">
+                <span className="font-sans text-[25px] sm:text-[27px] font-semibold leading-none tracking-tight text-[#0284c7] tabular-nums">
+                  146ms
+                </span>
+                <span className="text-[11px] font-normal text-slate-400">
+                  p95 over selected range
+                </span>
+              </p>
+
+              <LatencyDistributionChart />
+            </section>
+
+            {/* Bottom row (Cumulative Requests & Request Delta) */}
+            <div className="grid gap-3 md:grid-cols-2 pb-4">
+              {/* Cumulative Requests */}
+              <section className="rounded-xl border border-slate-200/80 bg-white p-3.5 sm:p-4 inside-shadow dark:border-[#1e2738] dark:bg-[#121927]">
+                <h2 className="text-[12.5px] font-medium text-slate-500">
+                  Cumulative Requests
+                </h2>
+                <p className="mt-1 font-sans text-[22px] sm:text-[24px] font-semibold leading-none tracking-tight text-[#0284c7] tabular-nums">
+                  {project?._count?.events
+                    ? project._count.events.toLocaleString()
+                    : "1,052"}
+                </p>
+                <CumulativeRequestsChart />
+              </section>
+
+              {/* Request Delta */}
+              <section className="rounded-xl border border-slate-200/80 bg-white p-3.5 sm:p-4 inside-shadow dark:border-[#1e2738] dark:bg-[#121927]">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-[12.5px] font-medium text-slate-500">
+                    Request Delta
+                  </h2>
+                  <div className="flex items-center gap-3.5 text-[11px] text-slate-500">
+                    <span className="flex items-center gap-1.5">
+                      <span className="h-2 w-2 rounded-xs bg-[#0d9488]" /> up
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <span className="h-2 w-2 rounded-xs bg-[#e11d48]" /> down
+                    </span>
+                  </div>
+                </div>
+                <p className="mt-1 font-sans text-[22px] sm:text-[24px] font-semibold leading-none tracking-tight text-[#0f172a] dark:text-white tabular-nums">
+                  53
+                </p>
+                <RequestDeltaChart />
+              </section>
+            </div>
+          </>
+        )}
       </main>
 
       {/* 3. Right Panel Column */}
       <div className="shrink-0 h-full border-l border-slate-200/80 bg-[#f5f6f9]/50 px-3.5 py-3.5 overflow-y-auto no-scrollbar dark:border-[#1e2738] dark:bg-[#0c111b]">
-        <DashboardRightPanel />
+        <DashboardRightPanel
+          project={project}
+          user={session?.user}
+          onNavigateTab={handleTabChange}
+        />
       </div>
     </div>
   );

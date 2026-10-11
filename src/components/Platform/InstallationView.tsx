@@ -114,7 +114,9 @@ export const InstallationView = () => {
   const [activeFw, setActiveFw] = useState<FrameworkOption>(frameworks[0]);
   const [copied, setCopied] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
-  const [verificationOutput, setVerificationOutput] = useState<string[] | null>(null);
+  const [verificationOutput, setVerificationOutput] = useState<string[] | null>(
+    null,
+  );
 
   const handleCopy = () => {
     const textToCopy = activeFw.installCommand
@@ -189,12 +191,15 @@ export const InstallationView = () => {
                 </span>
               </div>
               <p className="text-[12px] text-[#64748b]">
-                Zero dependencies. Zero cookie banners. Instant data flow to your dashboard.
+                Zero dependencies. Zero cookie banners. Instant data flow to
+                your dashboard.
               </p>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-medium text-[#64748b]">Project Key:</span>
+              <span className="text-[11px] font-medium text-[#64748b]">
+                Project Key:
+              </span>
               <code className="rounded-lg border border-[#e2e8f0] bg-[#f8fafc] px-2.5 py-1 text-[11px] font-mono text-[#2563eb] font-semibold">
                 rt_live_948f2a1b
               </code>
@@ -215,9 +220,13 @@ export const InstallationView = () => {
                 }`}
               >
                 <span>{fw.name}</span>
-                <span className={`text-[9.5px] px-1.5 py-0.2 rounded font-medium ${
-                  activeFw.id === fw.id ? "bg-[#2563eb] text-white" : "bg-slate-100 text-[#64748b]"
-                }`}>
+                <span
+                  className={`text-[9.5px] px-1.5 py-0.2 rounded font-medium ${
+                    activeFw.id === fw.id
+                      ? "bg-[#2563eb] text-white"
+                      : "bg-slate-100 text-[#64748b]"
+                  }`}
+                >
                   {fw.badge}
                 </span>
               </button>
@@ -257,7 +266,9 @@ export const InstallationView = () => {
               {activeFw.installCommand && (
                 <div className="mb-3 pb-3 border-b border-[#334155]">
                   <span className="text-[#94a3b8] select-none">$ </span>
-                  <span className="text-emerald-400 font-semibold">{activeFw.installCommand}</span>
+                  <span className="text-emerald-400 font-semibold">
+                    {activeFw.installCommand}
+                  </span>
                 </div>
               )}
               <pre className="text-[#e2e8f0] whitespace-pre">
@@ -284,7 +295,9 @@ export const InstallationView = () => {
                   className="flex items-center gap-1.5 rounded-lg bg-[#2563eb] px-3 py-1 text-[11px] font-medium text-white shadow-xs hover:bg-[#1d4ed8] transition-colors disabled:opacity-50"
                 >
                   <Play size={11} fill="currentColor" />
-                  <span>{isVerifying ? "Dispatching..." : "Send Test Ping"}</span>
+                  <span>
+                    {isVerifying ? "Dispatching..." : "Send Test Ping"}
+                  </span>
                 </button>
               </div>
 
@@ -299,8 +312,8 @@ export const InstallationView = () => {
                           line.includes("✓")
                             ? "text-emerald-400 font-semibold"
                             : line.includes("[+]")
-                            ? "text-sky-300"
-                            : "text-[#94a3b8]"
+                              ? "text-sky-300"
+                              : "text-[#94a3b8]"
                         }
                       >
                         {line}
@@ -310,7 +323,10 @@ export const InstallationView = () => {
                 ) : (
                   <div className="flex h-full flex-col items-center justify-center text-center py-6 text-[#64748b]">
                     <Zap size={18} className="text-[#38bdf8] mb-1.5" />
-                    <p className="text-[11px]">Click &quot;Send Test Ping&quot; to test your edge pipeline.</p>
+                    <p className="text-[11px]">
+                      Click &quot;Send Test Ping&quot; to test your edge
+                      pipeline.
+                    </p>
                   </div>
                 )}
               </div>

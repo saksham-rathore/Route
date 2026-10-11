@@ -7,7 +7,6 @@ import {
   ChevronLeft,
   Gauge,
   History,
-  LayoutDashboard,
   LayoutGrid,
   Layers,
   MessageSquare,
@@ -15,31 +14,57 @@ import {
   Settings,
 } from "lucide-react";
 
-export default function DashboardSidebar() {
+interface DashboardSidebarProps {
+  activeTab?: string;
+  onTabChange?: (tab: string) => void;
+  onBackToProjects?: () => void;
+  onAddProject?: () => void;
+}
+
+export default function DashboardSidebar({
+  activeTab = "overview",
+  onTabChange,
+  onBackToProjects,
+  onAddProject,
+}: DashboardSidebarProps) {
+  const getTabClass = (tabId: string) => {
+    const isActive = activeTab === tabId;
+    return isActive
+      ? "flex cursor-pointer items-center gap-2 rounded-lg bg-slate-100/90 border border-slate-200/70 px-2.5 py-1.5 text-[11.5px] font-medium text-slate-900 inside-shadow"
+      : "flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1 text-[11.5px] text-slate-600 transition hover:bg-slate-100 hover:text-slate-900";
+  };
+
+  const handleTabClick = (tabId: string) => {
+    if (onTabChange) {
+      onTabChange(tabId);
+    }
+  };
+
   return (
     <aside className="flex w-full shrink-0 flex-col gap-2.5 lg:w-[195px] xl:w-[205px] h-full overflow-y-auto no-scrollbar">
-      {/* Brand */}
+      {/* Brand: raah. with logo */}
       <Link href="/" className="flex items-center gap-2 px-1 py-0.5">
         <img
           src="/logo.svg"
-          alt="Route"
+          alt="raah."
           className="h-[22px] w-[22px] shrink-0 object-contain"
         />
         <span className="font-sans text-[17.5px] font-bold leading-none tracking-tight text-slate-900">
-          Route
+          raah.
         </span>
       </Link>
 
       {/* Add Project button with previous button gradient */}
       <button
         type="button"
+        onClick={onAddProject}
         style={{
           background:
             "radial-gradient(circle, color(srgb 0.00784314 0.517647 0.780392 / 0.68) 0%, rgb(2, 132, 199) 64%)",
           boxShadow:
             "0 2px 8px rgba(2, 132, 199, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.28)",
         }}
-        className="flex w-full items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-[12px] font-semibold text-white transition hover:brightness-105 active:scale-[0.99]"
+        className="flex w-full items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-[12px] font-semibold text-white transition hover:brightness-105 active:scale-[0.99] cursor-pointer"
       >
         <span className="text-sm leading-none font-bold">+</span>
         <span>Add Project</span>
@@ -73,7 +98,10 @@ export default function DashboardSidebar() {
           PORTFOLIO
         </p>
         <nav className="mt-1 flex flex-col gap-0.5">
-          <span className="flex cursor-pointer items-center gap-2 rounded-lg bg-slate-100/90 border border-slate-200/70 px-2.5 py-1.5 text-[11.5px] font-medium text-slate-900 inside-shadow">
+          <span
+            onClick={() => handleTabClick("overview")}
+            className={getTabClass("overview")}
+          >
             <img src="/Home.svg" className="h-4 w-4 shrink-0 object-contain" alt="Overview" />
             <span>Overview</span>
           </span>
@@ -86,52 +114,82 @@ export default function DashboardSidebar() {
           ANALYTICS
         </p>
         <nav className="mt-1 flex flex-col gap-0.5">
-          <span className="flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1 text-[11.5px] text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+          <span
+            onClick={() => handleTabClick("map")}
+            className={getTabClass("map")}
+          >
             <img src="/GlobalMap.svg" className="h-3.5 w-3.5 shrink-0 object-contain" alt="Global Map" />
             <span>Global Map</span>
           </span>
 
-          <span className="flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1 text-[11.5px] text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+          <span
+            onClick={() => handleTabClick("endpoints")}
+            className={getTabClass("endpoints")}
+          >
             <img src="/Endpoints.svg" className="h-3.5 w-3.5 shrink-0 object-contain" alt="Endpoints" />
             <span>Endpoints</span>
           </span>
 
-          <span className="flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1 text-[11.5px] text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+          <span
+            onClick={() => handleTabClick("isps")}
+            className={getTabClass("isps")}
+          >
             <Radio className="h-3.5 w-3.5 shrink-0 text-slate-400" />
             <span>ISPs</span>
           </span>
 
-          <span className="flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1 text-[11.5px] text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+          <span
+            onClick={() => handleTabClick("errors")}
+            className={getTabClass("errors")}
+          >
             <img src="/Error.svg" className="h-3.5 w-3.5 shrink-0 object-contain" alt="Errors" />
             <span>Errors</span>
           </span>
 
-          <span className="flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1 text-[11.5px] text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+          <span
+            onClick={() => handleTabClick("pages")}
+            className={getTabClass("pages")}
+          >
             <img src="/Pages.svg" className="h-3.5 w-3.5 shrink-0 object-contain" alt="Pages" />
             <span>Pages</span>
           </span>
 
-          <span className="flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1 text-[11.5px] text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+          <span
+            onClick={() => handleTabClick("vitals")}
+            className={getTabClass("vitals")}
+          >
             <Gauge className="h-3.5 w-3.5 shrink-0 text-slate-400" />
             <span>Web Vitals</span>
           </span>
 
-          <span className="flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1 text-[11.5px] text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+          <span
+            onClick={() => handleTabClick("network")}
+            className={getTabClass("network")}
+          >
             <img src="/Network.svg" className="h-3.5 w-3.5 shrink-0 object-contain" alt="Network" />
             <span>Network</span>
           </span>
 
-          <span className="flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1 text-[11.5px] text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+          <span
+            onClick={() => handleTabClick("third-parties")}
+            className={getTabClass("third-parties")}
+          >
             <Layers className="h-3.5 w-3.5 shrink-0 text-slate-400" />
             <span>Third Parties</span>
           </span>
 
-          <span className="flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1 text-[11.5px] text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+          <span
+            onClick={() => handleTabClick("sessions")}
+            className={getTabClass("sessions")}
+          >
             <img src="/Power.svg" className="h-3.5 w-3.5 shrink-0 object-contain" alt="Sessions" />
             <span>Sessions</span>
           </span>
 
-          <span className="flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1 text-[11.5px] text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+          <span
+            onClick={() => handleTabClick("time-series")}
+            className={getTabClass("time-series")}
+          >
             <img src="/Time.svg" className="h-3.5 w-3.5 shrink-0 object-contain" alt="Time Series" />
             <span>Time Series</span>
           </span>
@@ -144,19 +202,31 @@ export default function DashboardSidebar() {
           CONFIGURATION
         </p>
         <nav className="mt-1 flex flex-col gap-0.5">
-          <span className="flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1 text-[11.5px] text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+          <span
+            onClick={() => handleTabClick("alerts")}
+            className={getTabClass("alerts")}
+          >
             <Bell className="h-3.5 w-3.5 text-slate-400" />
             <span>Alerts</span>
           </span>
-          <span className="flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1 text-[11.5px] text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+          <span
+            onClick={() => handleTabClick("alert-history")}
+            className={getTabClass("alert-history")}
+          >
             <History className="h-3.5 w-3.5 text-slate-400" />
             <span>Alert History</span>
           </span>
-          <span className="flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1 text-[11.5px] text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+          <span
+            onClick={() => handleTabClick("status-page")}
+            className={getTabClass("status-page")}
+          >
             <LayoutGrid className="h-3.5 w-3.5 text-slate-400" />
             <span>Status Page</span>
           </span>
-          <span className="flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1 text-[11.5px] text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+          <span
+            onClick={() => handleTabClick("settings")}
+            className={getTabClass("settings")}
+          >
             <Settings className="h-3.5 w-3.5 text-slate-400" />
             <span>Settings</span>
           </span>
@@ -173,14 +243,15 @@ export default function DashboardSidebar() {
             boxShadow:
               "0 2px 8px rgba(2, 132, 199, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25)",
           }}
-          className="flex w-full items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-[11.5px] font-semibold text-white transition hover:brightness-105 active:scale-[0.99]"
+          className="flex w-full items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-[11.5px] font-semibold text-white transition hover:brightness-105 active:scale-[0.99] cursor-pointer"
         >
           <MessageSquare className="h-3.5 w-3.5" />
           <span>Share feedback</span>
         </button>
         <button
           type="button"
-          className="flex items-center gap-1.5 rounded-lg border border-slate-200/80 bg-white px-3 py-1.5 text-[11.5px] font-medium text-slate-600 inside-shadow transition hover:bg-slate-50"
+          onClick={onBackToProjects}
+          className="flex items-center gap-1.5 rounded-lg border border-slate-200/80 bg-white px-3 py-1.5 text-[11.5px] font-medium text-slate-600 inside-shadow transition hover:bg-slate-50 cursor-pointer"
         >
           <ChevronLeft className="h-3.5 w-3.5 text-slate-400" />
           <span>Back</span>
