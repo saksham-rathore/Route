@@ -24,17 +24,12 @@ export function SnippetCopyButton() {
       }}
       className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-lg text-[13.5px] font-semibold text-white shadow-[0_2px_8px_rgba(29,110,229,0.3)] transition-all hover:brightness-105 active:scale-[0.99]"
     >
-      {copied ? (
-        <>
-          <Check size={14} className="text-white" />
-          <span>Copied!</span>
-        </>
-      ) : (
+
         <>
           <Copy size={14} className="text-white" />
           <span>Copy snippet</span>
         </>
-      )}
+    
     </button>
   );
 }

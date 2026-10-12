@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Check, Copy, ArrowLeft, ArrowRight, Loader2, Sparkles, CheckCircle2 } from "lucide-react";
+import { Check, Copy, ArrowLeft, ArrowRight, Loader2, CheckCircle2 } from "lucide-react";
 import type { Platform } from "./OnboardingProjectStep";
 
 interface OnboardingSnippetStepProps {
@@ -21,7 +21,6 @@ export default function OnboardingSnippetStep({
 }: OnboardingSnippetStepProps) {
   const router = useRouter();
   const [copiedSnippet, setCopiedSnippet] = useState(false);
-  const [copiedAgent, setCopiedAgent] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<"idle" | "checking" | "connected">("idle");
 
   const safeDomain = domain.trim() || "route.dev";
@@ -33,21 +32,11 @@ export default function OnboardingSnippetStep({
     ? `<Script\n  src="https://cdn.route.dev/script.js"\n  data-pid="${projectId}"\n  data-domain="${safeDomain}"\n  strategy="afterInteractive"\n/>`
     : `<script\n  defer\n  src="https://cdn.route.dev/script.js"\n  data-pid="${projectId}"\n  data-domain="${safeDomain}"\n></script>`;
 
-  const agentPrompt = `Install Route website analytics in my ${selectedPlatform.name} project: Add the snippet with src="https://cdn.route.dev/script.js", data-pid="${projectId}", and data-domain="${safeDomain}".`;
-
   function copySnippet() {
     if (typeof navigator !== "undefined" && navigator.clipboard) {
       navigator.clipboard.writeText(snippetCode);
       setCopiedSnippet(true);
       setTimeout(() => setCopiedSnippet(false), 2000);
-    }
-  }
-
-  function copyAgentPrompt() {
-    if (typeof navigator !== "undefined" && navigator.clipboard) {
-      navigator.clipboard.writeText(agentPrompt);
-      setCopiedAgent(true);
-      setTimeout(() => setCopiedAgent(false), 2000);
     }
   }
 
@@ -159,36 +148,6 @@ export default function OnboardingSnippetStep({
               )}
             </code>
           </pre>
-        </div>
-
-        {/* Install with Agent */}
-        <div className="mx-4 mb-4 sm:mx-5 sm:mb-5 flex items-center justify-between gap-3 rounded-lg border border-[#a9bce6] bg-[#e1e8f6]/70 px-3.5 py-2.5 dark:border-[#33497a] dark:bg-[#16213a]/90">
-          <div>
-            <p className="text-[12.5px] font-semibold leading-[18px] text-[#0b1220] dark:text-white flex items-center gap-1.5">
-              <Sparkles className="h-3.5 w-3.5 text-sky-600 dark:text-sky-400" />
-              <span>Install with agent</span>
-            </p>
-            <p className="text-[12px] leading-[18px] text-[#4b5565] dark:text-[#a3adbf]">
-              Paste into Cursor, Copilot, or Claude Code.
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={copyAgentPrompt}
-            className="flex h-[30px] flex-none cursor-pointer items-center gap-1.5 rounded-md bg-white px-3 text-xs font-semibold text-[#0b1220] shadow-xs transition hover:bg-[#f6f7fa] dark:bg-[#151d2e] dark:text-[#f1f4fa]"
-          >
-            {copiedAgent ? (
-              <>
-                <Check className="h-3.5 w-3.5 text-emerald-600" />
-                <span className="text-emerald-600">Copied</span>
-              </>
-            ) : (
-              <>
-                <Copy className="h-3.5 w-3.5" />
-                <span>Copy</span>
-              </>
-            )}
-          </button>
         </div>
       </div>
 

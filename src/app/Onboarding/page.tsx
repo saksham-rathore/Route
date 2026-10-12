@@ -353,38 +353,34 @@ function OnboardingScriptContent() {
 
           {/* Snippet Panel */}
           <div className="overflow-hidden rounded-[14px] border border-[#cfdaea] bg-[#edf2f9] p-3.5 sm:p-4 dark:border-[#26334a] dark:bg-[#0e1624]">
-            {/* Framework tabs — user can switch stack here too */}
-            <div className="mb-3 flex flex-wrap gap-1.5">
-              {FRAMEWORKS.map((f) => (
-                <button
-                  key={f.id}
-                  type="button"
-                  onClick={() => setFw(f.id)}
-                  className={`flex cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1 text-[11.5px] font-semibold transition ${fw === f.id ? "border-[#0284c7] bg-white text-[#0284c7] shadow-2xs dark:bg-[#142137]" : "border-transparent text-[#64748b] hover:border-[#c5d5e8] hover:bg-white/60 dark:text-[#8b97ab]"}`}
-                >
-                  <span className={`flex h-4 w-4 items-center justify-center rounded-full text-[8px] font-bold text-white ${f.badgeBg}`}>{f.letter}</span>
-                  {f.name}
-                </button>
-              ))}
-            </div>
-
-            {/* Header with filename and Copy Icon */}
+            {/* Header with filename, framework badge, and Copy Icon */}
             <div className="mb-3 flex items-center justify-between">
-              <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.1em] text-[#64748b] dark:text-[#8b97ab]">
-                {snippet.filename} · {activeFw.name}
-              </span>
+              <div className="flex items-center gap-2">
+                <span className={`flex h-4.5 w-4.5 items-center justify-center rounded-full text-[8.5px] font-bold text-white shrink-0 ${activeFw.badgeBg}`}>
+                  {activeFw.letter}
+                </span>
+                <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-[#64748b] dark:text-[#8b97ab]">
+                  {snippet.filename} · {activeFw.name}
+                </span>
+              </div>
 
               <button
                 type="button"
                 aria-label="Copy snippet"
                 title="Copy snippet"
                 onClick={copySnippet}
-                className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg border border-[#d0dbe9] bg-white text-[#5b6577] shadow-2xs transition hover:bg-slate-50 hover:text-[#0b1220] dark:border-[#26334a] dark:bg-[#151f30] dark:text-[#cbd5e1]"
+                className="flex h-7 items-center gap-1.5 cursor-pointer rounded-lg border border-[#d0dbe9] bg-white px-2.5 text-[11px] font-semibold text-[#5b6577] shadow-2xs transition hover:bg-slate-50 hover:text-[#0b1220] dark:border-[#26334a] dark:bg-[#151f30] dark:text-[#cbd5e1]"
               >
                 {copied ? (
-                  <Check className="h-3 w-3 text-emerald-600" />
+                  <>
+                    <Check className="h-3 w-3 text-emerald-600" />
+                    <span className="text-emerald-600">Copied!</span>
+                  </>
                 ) : (
-                  <Copy className="h-3 w-3" />
+                  <>
+                    <Copy className="h-3 w-3" />
+                    <span>Copy</span>
+                  </>
                 )}
               </button>
             </div>
@@ -392,36 +388,6 @@ function OnboardingScriptContent() {
             {/* Code Box — framework-specific */}
             <div className="rounded-[10px] border border-[#d5dfea] bg-[#e6ecf4] p-3.5 sm:p-4 font-mono text-[12px] sm:text-[12.5px] leading-[1.65] select-text whitespace-pre-wrap break-all dark:border-[#222e42] dark:bg-[#0a111c] dark:text-slate-200">
               {snippet.code}
-            </div>
-
-            {/* Install with Agent */}
-            <div className="mt-3.5 flex items-center justify-between gap-3 rounded-[10px] border border-[#c5d5e8] bg-[#dbe6f6]/85 px-3.5 py-2.5 dark:border-[#2d3d59] dark:bg-[#142137]">
-              <div>
-                <p className="text-[12px] font-semibold leading-tight text-[#0b1220] dark:text-white">
-                  Install with agent
-                </p>
-                <p className="mt-0.5 text-[11px] leading-tight text-[#4b5565] dark:text-[#a3adbf]">
-                  Paste into Cursor, Copilot, or Claude Code.
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={copySnippet}
-                className="flex cursor-pointer items-center gap-1.5 rounded-[7px] border border-[#c7d6e8] bg-white px-2.5 py-1 text-[11.5px] font-semibold text-[#0b1220] shadow-2xs transition hover:bg-slate-50 dark:border-[#2e3e5c] dark:bg-[#182338] dark:text-white"
-              >
-                {copied ? (
-                  <>
-                    <Check className="h-3 w-3 text-emerald-600" />
-                    <span className="text-emerald-600">Copied</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-3 w-3 text-[#4b5565] dark:text-[#a3adbf]" />
-                    <span>Copy</span>
-                  </>
-                )}
-              </button>
             </div>
           </div>
 

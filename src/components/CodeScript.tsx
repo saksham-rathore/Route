@@ -4,17 +4,6 @@ import React, { useState } from "react";
 import { Check, Copy } from "lucide-react";
 
 export const CodeScript = () => {
-  const [copied, setCopied] = useState(false);
-
-  const snippetCode = `<script\n  defer\n  src="https://cdn.route.dev/script.js"\n  data-pid="YOUR_PROJECT_ID"\n  data-domain="route.dev"\n></script>`;
-
-  const handleCopy = () => {
-    if (typeof navigator !== "undefined" && navigator.clipboard) {
-      navigator.clipboard.writeText(snippetCode);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
 
   return (
     <div
@@ -42,16 +31,13 @@ export const CodeScript = () => {
           {/* Top-Right Copy Icon */}
           <button
             type="button"
-            onClick={handleCopy}
             className="absolute right-2.5 top-2.5 flex h-6 w-6 items-center justify-center rounded-md text-[#738094] hover:bg-slate-200/60 hover:text-[#0f172a] transition-colors cursor-pointer"
             aria-label="Copy script"
             title="Copy script"
           >
-            {copied ? (
-              <Check size={14} className="text-emerald-600" />
-            ) : (
+        
               <Copy size={14} />
-            )}
+         
           </button>
 
           {/* Syntax Highlighted Code without horizontal scrollbar */}
