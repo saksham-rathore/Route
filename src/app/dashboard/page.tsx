@@ -722,7 +722,7 @@ function OnboardingProjectsView({
 
             <pre className="overflow-x-auto rounded-lg border border-slate-200/70 bg-[#fbfbfa] p-3.5 font-mono text-[11px] leading-[1.65] text-slate-700 inside-shadow-inset select-all dark:border-slate-800 dark:bg-[#0c111b] dark:text-slate-300">
               <code>
-                {`<script\n  src="https://t.raah.dev/script.js"\n  data-pid="${snippetModalProject.projectId || snippetModalProject.id}"\n  data-domain="${snippetModalProject.domain}"\n  strategy="afterInteractive"\n/>`}
+                {`<script\n  src="${typeof window !== "undefined" ? window.location.origin : ""}/beacon.js"\n  data-pid="${snippetModalProject.projectId || snippetModalProject.id}"\n  data-domain="${snippetModalProject.domain}"\n  data-beacon="${typeof window !== "undefined" ? window.location.origin : ""}/api/collect"\n  strategy="afterInteractive"\n/>`}
               </code>
             </pre>
 
@@ -731,7 +731,7 @@ function OnboardingProjectsView({
                 type="button"
                 onClick={() => {
                   navigator.clipboard.writeText(
-                    `<script\n  src="https://t.raah.dev/script.js"\n  data-pid="${snippetModalProject.projectId || snippetModalProject.id}"\n  data-domain="${snippetModalProject.domain}"\n  strategy="afterInteractive"\n/>`
+                    `<script\n  src="${window.location.origin}/beacon.js"\n  data-pid="${snippetModalProject.projectId || snippetModalProject.id}"\n  data-domain="${snippetModalProject.domain}"\n  data-beacon="${window.location.origin}/api/collect"\n  strategy="afterInteractive"\n/>`
                   );
                   showToast("Snippet copied to clipboard");
                 }}

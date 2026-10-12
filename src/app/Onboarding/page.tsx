@@ -296,7 +296,8 @@ function OnboardingScriptContent() {
   };
 
   const beaconSrc = typeof window !== "undefined" ? `${window.location.origin}/beacon.js` : "/beacon.js";
-  const snippet = useMemo(() => getSnippet(fw, { beaconSrc, projectId: pid, domain }), [fw, beaconSrc, pid, domain]);
+  const beaconApi = typeof window !== "undefined" ? `${window.location.origin}/api/collect` : "/api/collect";
+  const snippet = useMemo(() => getSnippet(fw, { beaconSrc, beaconApi, projectId: pid, domain }), [fw, beaconSrc, beaconApi, pid, domain]);
   const activeFw = getFramework(fw);
 
   const copySnippet = async () => {

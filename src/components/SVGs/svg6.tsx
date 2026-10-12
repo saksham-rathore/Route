@@ -24,7 +24,7 @@ const Svg6 = () => {
         <picture className="w-full flex justify-center">
           <img
             className="pointer-events-none h-auto max-h-[200px] w-full max-w-[320px] object-contain object-top"
-            src="https://make.design/graphics/third_card/graphic.png"
+            src=""
             alt=""
           />
         </picture>

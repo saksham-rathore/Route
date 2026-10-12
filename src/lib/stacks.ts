@@ -38,34 +38,34 @@ export function getFramework(id: string | null | undefined): Framework {
 
 export function getSnippet(
   framework: FrameworkId | string,
-  opts: { beaconSrc: string; projectId: string; domain: string },
+  opts: { beaconSrc: string; beaconApi: string; projectId: string; domain: string },
 ): { filename: string; code: string; language: string } {
-  const { beaconSrc, projectId, domain } = opts;
-  const tag = `<script\n  defer\n  src="${beaconSrc}"\n  data-pid="${projectId}"\n  data-domain="${domain}"\n></script>`;
+  const { beaconSrc, beaconApi, projectId, domain } = opts;
+  const tag = `<script\n  defer\n  src="${beaconSrc}"\n  data-pid="${projectId}"\n  data-domain="${domain}"\n  data-beacon="${beaconApi}"\n></script>`;
   switch (framework) {
     case "nextjs":
       return {
         filename: "app/layout.tsx",
         language: "tsx",
-        code: `import Script from "next/script";\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang="en">\n      <body>\n        {children}\n        <Script\n          src="${beaconSrc}"\n          data-pid="${projectId}"\n          data-domain="${domain}"\n          strategy="afterInteractive"\n        />\n      </body>\n    </html>\n  );\n}`,
+        code: `import Script from "next/script";\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang="en">\n      <body>\n        {children}\n        <Script\n          src="${beaconSrc}"\n          data-pid="${projectId}"\n          data-domain="${domain}"\n          data-beacon="${beaconApi}"\n          strategy="afterInteractive"\n        />\n      </body>\n    </html>\n  );\n}`,
       };
     case "nuxt":
       return {
         filename: "nuxt.config.ts",
         language: "ts",
-        code: `export default defineNuxtConfig({\n  app: {\n    head: {\n      script: [\n        {\n          src: "${beaconSrc}",\n          defer: true,\n          "data-pid": "${projectId}",\n          "data-domain": "${domain}",\n        },\n      ],\n    },\n  },\n});`,
+        code: `export default defineNuxtConfig({\n  app: {\n    head: {\n      script: [\n        {\n          src: "${beaconSrc}",\n          defer: true,\n          "data-pid": "${projectId}",\n          "data-domain": "${domain}",\n          "data-beacon": "${beaconApi}",\n        },\n      ],\n    },\n  },\n});`,
       };
     case "vue":
       return {
         filename: "src/main.ts",
         language: "ts",
-        code: `// src/main.ts —beacon loads once, custom events anywhere\nconst s = document.createElement("script");\ns.defer = true;\ns.src = "${beaconSrc}";\ns.setAttribute("data-pid", "${projectId}");\ns.setAttribute("data-domain", "${domain}");\ndocument.head.appendChild(s);\n\n// window.route?.track("signup_completed", { plan: "pro" });`,
+        code: `// src/main.ts —beacon loads once, custom events anywhere\nconst s = document.createElement("script");\ns.defer = true;\ns.src = "${beaconSrc}";\ns.setAttribute("data-pid", "${projectId}");\ns.setAttribute("data-domain", "${domain}");\ns.setAttribute("data-beacon", "${beaconApi}");\ndocument.head.appendChild(s);\n\n// window.route?.track("signup_completed", { plan: "pro" });`,
       };
     case "svelte":
       return {
         filename: "src/routes/+layout.svelte",
         language: "svelte",
-        code: `<svelte:head>\n  <script\n    defer\n    src="${beaconSrc}"\n    data-pid="${projectId}"\n    data-domain="${domain}"\n  ></script>\n</svelte:head>\n\n<slot />`,
+        code: `<svelte:head>\n  <script\n    defer\n    src="${beaconSrc}"\n    data-pid="${projectId}"\n    data-domain="${domain}"\n    data-beacon="${beaconApi}"\n  ></script>\n</svelte:head>\n\n<slot />`,
       };
     case "angular":
       return {
@@ -77,7 +77,7 @@ export function getSnippet(
       return {
         filename: "functions.php",
         language: "php",
-        code: `// functions.php — loads beacon on every page\nadd_action('wp_head', function () { ?>\n  <script\n    defer\n    src="${beaconSrc}"\n    data-pid="${projectId}"\n    data-domain="${domain}"\n  ></script>\n<?php });`,
+        code: `// functions.php — loads beacon on every page\nadd_action('wp_head', function () { ?>\n  <script\n    defer\n    src="${beaconSrc}"\n    data-pid="${projectId}"\n    data-domain="${domain}"\n    data-beacon="${beaconApi}"\n  ></script>\n<?php });`,
       };
     case "react":
       return {

@@ -28,7 +28,8 @@ export default function InstallationGuideView({ projectId, domain, initialFramew
   const live = realtime?.live ?? own.live;
 
   const beaconSrc = typeof window !== "undefined" ? `${window.location.origin}/beacon.js` : "/beacon.js";
-  const snippet = useMemo(() => getSnippet(fw, { beaconSrc, projectId, domain }), [fw, beaconSrc, projectId, domain]);
+  const beaconApi = typeof window !== "undefined" ? `${window.location.origin}/api/collect` : "/api/collect";
+  const snippet = useMemo(() => getSnippet(fw, { beaconSrc, beaconApi, projectId, domain }), [fw, beaconSrc, beaconApi, projectId, domain]);
 
   const copy = async () => {
     try {
