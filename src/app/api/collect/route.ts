@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../lib/prisma";
 import { z } from "zod";
 import { CollectSchema } from "../../../../lib/zod/types";
+import { publishIngest } from "../../../../lib/ably";
 
 type CollectInput = z.infer<typeof CollectSchema>;
 
@@ -297,6 +298,23 @@ export async function POST(req: NextRequest) {
     if (rows.length > 0) {
       await prisma.event.createMany({ data: rows });
     }
+
+    // Best-effort realtime fan-out — never block or fail ingest.
+    const total =
+      data.events.length + data.measurements.length + data.vitals.length + data.errors.length;
+    void publishIngest(publicProjectId, {
+      projectId: publicProjectId,
+      at: new Date().toISOString(),
+      host: data.host || null,
+      page: data.page || null,
+      counts: {
+        events: data.events.length,
+        measurements: data.measurements.length,
+        vitals: data.vitals.length,
+        errors: data.errors.length,
+        total,
+      },
+    });
 
     return NextResponse.json(
       {

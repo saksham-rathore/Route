@@ -11,7 +11,7 @@ interface SessionsResp { success: boolean; sessions: { id: string; beaconSession
 export default function SessionsView({ projectId, range, onRangeChange }: Props) {
   const [page, setPage] = useState(1);
   const url = projectId ? `/api/analytics/sessions${buildQuery(projectId, range, { page: String(page), limit: "15" })}` : null;
-  const { data, loading } = useAnalytics<SessionsResp>(url);
+  const { data, loading } = useAnalytics<SessionsResp>(url, { live: true });
 
   const sessions = data?.sessions ?? [];
   const byDevice = sessions.reduce<Record<string, number>>((acc, s) => {

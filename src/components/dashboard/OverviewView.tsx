@@ -17,8 +17,8 @@ interface OverviewResp { success: boolean; stats: { pageviews: number; sessions:
 export default function OverviewView({ projectId, projectName, range, onRangeChange }: Props) {
   const tsUrl = projectId ? `/api/analytics/timeseries${buildQuery(projectId, range)}` : null;
   const ovUrl = projectId ? `/api/analytics/overview${buildQuery(projectId, range)}` : null;
-  const ts = useAnalytics<TimeseriesResp>(tsUrl);
-  const ov = useAnalytics<OverviewResp>(ovUrl);
+  const ts = useAnalytics<TimeseriesResp>(tsUrl, { live: true });
+  const ov = useAnalytics<OverviewResp>(ovUrl, { live: true });
 
   const loading = ts.loading || ov.loading;
   const s = ov.data?.stats;

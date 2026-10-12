@@ -37,6 +37,7 @@ export default function PagePerformanceDashboardView({
   const [search, setSearch] = useState("");
   const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
   const [loading, setLoading] = useState(false);
+  const [liveTick, setLiveTick] = useState(0);
 
   const [summary, setSummary] = useState({
     totalPages: 1,
@@ -84,7 +85,24 @@ export default function PagePerformanceDashboardView({
     }
 
     loadPages();
-  }, [project, activeRange]);
+  }, [project, activeRange, liveTick]);
+
+  // Realtime: refresh page stats (throttled) on new ingest
+  useEffect(() => {
+    let t: ReturnType<typeof setTimeout> | null = null;
+    const onIngest = () => {
+      if (t) return;
+      t = setTimeout(() => {
+        t = null;
+        setLiveTick((n) => n + 1);
+      }, 8000);
+    };
+    window.addEventListener("route:ingest", onIngest);
+    return () => {
+      window.removeEventListener("route:ingest", onIngest);
+      if (t) clearTimeout(t);
+    };
+  }, []);
 
   const filteredAndSortedRows = useMemo(() => {
     let rows = [...pageRows];

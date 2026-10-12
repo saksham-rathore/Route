@@ -33,6 +33,7 @@ import InstallationGuideView from "@/components/dashboard/InstallationGuideView"
 import WebVitalsDashboardView from "@/components/dashboard/WebVitalsDashboardView";
 import PagePerformanceDashboardView from "@/components/dashboard/PagePerformanceDashboardView";
 import type { RangeKey } from "@/components/dashboard/shared";
+import { useProjectRealtime } from "@/hooks/use-project-realtime";
 import { authClient } from "../../../lib/auth-client";
 
 interface ProjectData {
@@ -797,6 +798,7 @@ function DashboardAnalyticsView({
   }, []);
 
   const pid = project?.id || project?.projectId || null;
+  const { connected, live, lastIngest } = useProjectRealtime(pid);
 
   return (
     <div className="h-screen w-full bg-[#eef2f7] font-sans antialiased flex overflow-hidden">
@@ -822,13 +824,30 @@ function DashboardAnalyticsView({
             <span className="font-semibold text-slate-800 dark:text-white">
               {project?.name ?? "Select project"}
             </span>
-            <span className="flex items-center gap-1.5 font-medium text-emerald-600">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            {live ? (
+              <span className="flex items-center gap-1.5 font-medium text-emerald-600">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                </span>
+                Live
               </span>
-              Live
-            </span>
+            ) : connected ? (
+              <span className="flex items-center gap-1.5 font-medium text-amber-600">
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-500" />
+                Connected · idle
+              </span>
+            ) : (
+              <span className="flex items-center gap-1.5 font-medium text-slate-400">
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-slate-300" />
+                Waiting for script
+              </span>
+            )}
+            {lastIngest && live && (
+              <span className="hidden text-slate-400 md:inline">
+                +{lastIngest.counts.total} ev · {lastIngest.page ?? "/"}
+              </span>
+            )}
             <span className="text-slate-400">{range} range</span>
           </div>
           <button
@@ -885,6 +904,7 @@ function DashboardAnalyticsView({
             projectId={project?.projectId || project?.id || ""}
             domain={project?.domain || ""}
             initialFramework={project?.framework}
+            realtime={{ connected, live }}
           />
         )}
       </main>

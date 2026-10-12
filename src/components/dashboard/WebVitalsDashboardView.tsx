@@ -21,6 +21,7 @@ export default function WebVitalsDashboardView({
 }: WebVitalsDashboardViewProps) {
   const [activeRange, setActiveRange] = useState("24h");
   const [loading, setLoading] = useState(false);
+  const [liveTick, setLiveTick] = useState(0);
 
   // Default metric cards matching Image 1
   const [metrics, setMetrics] = useState({
@@ -205,7 +206,24 @@ export default function WebVitalsDashboardView({
     }
 
     loadVitals();
-  }, [project, activeRange]);
+  }, [project, activeRange, liveTick]);
+
+  // Realtime: refresh vitals (throttled) on new ingest
+  useEffect(() => {
+    let t: ReturnType<typeof setTimeout> | null = null;
+    const onIngest = () => {
+      if (t) return;
+      t = setTimeout(() => {
+        t = null;
+        setLiveTick((n) => n + 1);
+      }, 8000);
+    };
+    window.addEventListener("route:ingest", onIngest);
+    return () => {
+      window.removeEventListener("route:ingest", onIngest);
+      if (t) clearTimeout(t);
+    };
+  }, []);
 
   const handleExport = () => {
     const exportData = {

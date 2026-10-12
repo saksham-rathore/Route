@@ -12,7 +12,7 @@ const COLORS = ["#0284c7", "#0d9488", "#7c3aed", "#e11d48", "#ea580c", "#16a34a"
 
 export default function GlobalMapView({ projectId, range, onRangeChange }: Props) {
   const url = projectId ? `/api/analytics/map${buildQuery(projectId, range)}` : null;
-  const { data, loading } = useAnalytics<MapResp>(url);
+  const { data, loading } = useAnalytics<MapResp>(url, { live: true });
   const [tab, setTab] = useState<"countries" | "cities">("countries");
 
   const rows = tab === "countries" ? (data?.countries ?? []) : (data?.cities ?? []).map((c) => ({ ...c, country: `${c.city} (${c.country})` }));

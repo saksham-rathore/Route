@@ -14,7 +14,7 @@ export default function EndpointsView({ projectId, range, onRangeChange }: Props
   const [search, setSearch] = useState("");
   const [q, setQ] = useState("");
   const url = projectId ? `/api/analytics/endpoints${buildQuery(projectId, range, { ...(q ? { search: q } : {}) })}` : null;
-  const { data, loading } = useAnalytics<EndpointsResp>(url);
+  const { data, loading } = useAnalytics<EndpointsResp>(url, { live: true });
   const endpoints = data?.endpoints ?? [];
   const chartData = endpoints.slice(0, 10).map((e) => ({ name: e.url.length > 28 ? e.url.slice(0, 28) + "…" : e.url, p95: e.p95, requests: e.requests }));
 

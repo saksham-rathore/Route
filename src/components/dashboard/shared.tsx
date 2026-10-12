@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 
 export type RangeKey = "1h" | "24h" | "7d" | "30d" | "90d" | "1y";
 
-export function useAnalytics<T>(url: string | null) {
+export function useAnalytics<T>(url: string | null, opts?: { live?: boolean; liveDebounceMs?: number }) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -28,6 +28,25 @@ export function useAnalytics<T>(url: string | null) {
   useEffect(() => {
     refetch();
   }, [refetch]);
+
+  // Realtime: re-fetch (debounced) whenever an Ably ingest event lands.
+  useEffect(() => {
+    if (!opts?.live || !url) return;
+    const wait = opts.liveDebounceMs ?? 5000;
+    let t: ReturnType<typeof setTimeout> | null = null;
+    const onIngest = () => {
+      if (t) return; // trailing-edge throttle
+      t = setTimeout(() => {
+        t = null;
+        refetch();
+      }, wait);
+    };
+    window.addEventListener("route:ingest", onIngest);
+    return () => {
+      window.removeEventListener("route:ingest", onIngest);
+      if (t) clearTimeout(t);
+    };
+  }, [opts?.live, opts?.liveDebounceMs, url, refetch]);
 
   return { data, loading, error, refetch };
 }

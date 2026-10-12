@@ -13,7 +13,7 @@ export default function ErrorsView({ projectId, range, onRangeChange }: Props) {
   const [q, setQ] = useState("");
   const [query, setQuery] = useState("");
   const url = projectId ? `/api/errors${buildQuery(projectId, range, { page: String(page), limit: "15", ...(query ? { q: query } : {}) })}` : null;
-  const { data, loading } = useAnalytics<ErrorsResp>(url);
+  const { data, loading } = useAnalytics<ErrorsResp>(url, { live: true });
   const errors = data?.errors ?? [];
 
   const byPage = Object.entries(errors.reduce<Record<string, number>>((acc, e) => {

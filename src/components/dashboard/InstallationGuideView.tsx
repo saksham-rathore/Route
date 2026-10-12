@@ -4,21 +4,28 @@ import { useMemo, useState } from "react";
 import { Check, Copy, Terminal, Play, Zap } from "lucide-react";
 import { FRAMEWORKS, getSnippet, type FrameworkId } from "@/lib/stacks";
 
+import { useProjectRealtime } from "@/hooks/use-project-realtime";
+
 interface Props {
   projectId: string;
   domain: string;
   initialFramework?: string | null;
+  realtime?: { connected: boolean; live: boolean };
 }
 
 function validFw(v: string | null | undefined): FrameworkId {
   return (FRAMEWORKS.some((f) => f.id === v) ? v : "nextjs") as FrameworkId;
 }
 
-export default function InstallationGuideView({ projectId, domain, initialFramework }: Props) {
+export default function InstallationGuideView({ projectId, domain, initialFramework, realtime }: Props) {
   const [fw, setFw] = useState<FrameworkId>(validFw(initialFramework));
   const [copied, setCopied] = useState(false);
   const [verifying, setVerifying] = useState(false);
   const [log, setLog] = useState<string[] | null>(null);
+  // If parent already subscribed (dashboard header), reuse it; else subscribe here (standalone use).
+  const own = useProjectRealtime(realtime ? null : projectId || null);
+  const connected = realtime?.connected ?? own.connected;
+  const live = realtime?.live ?? own.live;
 
   const beaconSrc = typeof window !== "undefined" ? `${window.location.origin}/beacon.js` : "/beacon.js";
   const snippet = useMemo(() => getSnippet(fw, { beaconSrc, projectId, domain }), [fw, beaconSrc, projectId, domain]);
@@ -67,6 +74,17 @@ export default function InstallationGuideView({ projectId, domain, initialFramew
       <div className="flex items-center gap-2 pt-0.5">
         <h1 className="flex items-center gap-2 text-[15px] font-semibold text-slate-900 dark:text-white"><span className="h-2 w-2 rounded-full bg-[#0284c7]" />Installation</h1>
         <span className="rounded-md bg-sky-50 px-2 py-0.5 text-[10px] font-semibold text-sky-700 border border-sky-100">{"< 60 SEC SETUP"}</span>
+        {connected ? (
+          <span className="flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700">
+            <span className={`h-1.5 w-1.5 rounded-full ${live ? "animate-pulse bg-emerald-500" : "bg-emerald-500"}`} />
+            {live ? "Script connected · receiving live" : "Script connected"}
+          </span>
+        ) : (
+          <span className="flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-[11px] font-semibold text-amber-700">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-500" />
+            Waiting for script…
+          </span>
+        )}
       </div>
 
       <div className="rounded-xl border border-slate-200/80 bg-white p-4 sm:p-5 inside-shadow dark:border-[#1e2738] dark:bg-[#121927]">
