@@ -21,6 +21,67 @@ export default function SignInPage() {
 
   const [Message, setMessage] = useState("");
 
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState("");
+  const [forgotLoading, setForgotLoading] = useState(false);
+  const [forgotMessage, setForgotMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
+
+  const handleForgotPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setForgotMessage(null);
+    setForgotLoading(true);
+
+    try {
+      const emailToSend = forgotEmail.trim() || Form.email.trim();
+      if (!emailToSend) {
+        setForgotMessage({
+          type: "error",
+          text: "Please enter your email address.",
+        });
+        setForgotLoading(false);
+        return;
+      }
+
+      const response = await fetch("/api/forgot-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: emailToSend,
+          redirectTo: `${window.location.origin}/reset-password`,
+        }),
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (response.ok) {
+        setForgotMessage({
+          type: "success",
+          text: "Password reset link sent! Check your inbox and spam folder.",
+        });
+      } else {
+        setForgotMessage({
+          type: "error",
+          text:
+            data?.error ||
+            data?.message ||
+            "Failed to send reset link. Please try again.",
+        });
+      }
+    } catch {
+      setForgotMessage({
+        type: "error",
+        text: "Failed to send reset email. Please try again.",
+      });
+    } finally {
+      setForgotLoading(false);
+    }
+  };
+
   const handleSocialSign = async (provider: "google" | "github") => {
     await authClient.signIn.social({
       provider,
@@ -112,184 +173,290 @@ export default function SignInPage() {
               "inset 0 1.5px 3px 0 rgba(0, 0, 0, 0.08), inset 0 -1px 2px 0 rgba(255, 255, 255, 0.9), inset 0 0 0 1px rgba(226, 232, 240, 0.9), 0 14px 45px -10px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03)",
           }}
         >
-          {/* Category Header */}
-          <span className="text-[10.5px] font-bold text-[#8c9ba8] tracking-[0.14em] uppercase block font-instrument-sans">
-            WELCOME BACK
-          </span>
-          <h1 className="font-lastik mt-2 text-[30px] sm:text-[34px] font-normal tracking-[-0.03em] text-[#0f172a] leading-tight">
-            Sign in to your account
-          </h1>
-          <p className="mt-2 font-instrument-sans text-[13.5px] leading-[1.5] text-[#64748b]">
-            Start monitoring your app with the same clean workflow as
-            onboarding.
-          </p>
-
-          {/* OAuth Buttons with Inside Shadow Border */}
-          <div className="mt-6 space-y-2.5">
-            <button
-              onClick={() => handleSocialSign("github")}
-              type="button"
-              style={{
-                boxShadow:
-                  "inset 0 1.5px 3px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.03)",
-              }}
-              className="flex h-11 w-full items-center justify-center gap-2 rounded-[10px] border border-slate-200/90 bg-[#f1f4f8] text-[13.5px] font-medium text-[#1e293b] hover:bg-[#e8edf4] transition-colors cursor-pointer active:scale-[0.99] font-instrument-sans"
-            >
-              <img src="/GithubSign.svg" alt="Github" />
-              <span>Continue with GitHub</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleSocialSign("google")}
-              style={{
-                boxShadow:
-                  "inset 0 1.5px 3px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.03)",
-              }}
-              className="flex h-11 w-full items-center justify-center gap-2 rounded-[10px] border border-slate-200/90 bg-[#f1f4f8] text-[13.5px] font-medium text-[#1e293b] hover:bg-[#e8edf4] transition-colors cursor-pointer active:scale-[0.99] font-instrument-sans"
-            >
-              <img src="/Google.svg" alt="Google" />
-              <span>Continue with Google</span>
-            </button>
-          </div>
-
-          {/* Divider */}
-          <div className="relative my-6 flex items-center justify-center">
-            <div className="border-t border-slate-200/80 w-full" />
-            <span className="absolute bg-white px-3 text-[10px] font-bold text-[#8c9ba8] tracking-[0.14em] uppercase font-instrument-sans">
-              OR CONTINUE WITH EMAIL
-            </span>
-          </div>
-
-          {/* Input Form with Inside Shadow Border */}
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            {Message && (
-              <div
-                className={`p-3 rounded-[10px] text-[13px] font-medium ${
-                  Message.includes("successful")
-                    ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                    : "bg-red-50 text-red-700 border border-red-200"
-                }`}
-              >
-                {Message}
-              </div>
-            )}
+          {isForgotPassword ? (
             <div>
-              <label className="block text-[10.5px] font-bold text-[#64748b] tracking-[0.12em] uppercase mb-1.5 font-instrument-sans">
-                EMAIL
-              </label>
-              <div className="relative">
-                <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#94a3b8]">
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={1.5}
-                    viewBox="0 0 24 24"
+              {/* Category Header */}
+              <span className="text-[10.5px] font-bold text-[#8c9ba8] tracking-[0.14em] uppercase block font-instrument-sans">
+                PASSWORD RECOVERY
+              </span>
+              <h1 className="font-lastik mt-2 text-[30px] sm:text-[34px] font-normal tracking-[-0.03em] text-[#0f172a] leading-tight">
+                Forgot your password?
+              </h1>
+              <p className="mt-2 font-instrument-sans text-[13.5px] leading-[1.5] text-[#64748b]">
+                Enter the email associated with your account and we&apos;ll send
+                you a link to reset your password.
+              </p>
+
+              {/* Forgot Password Form */}
+              <form className="mt-6 space-y-4" onSubmit={handleForgotPassword}>
+                {forgotMessage && (
+                  <div
+                    className={`p-3 rounded-[10px] text-[13px] font-medium ${
+                      forgotMessage.type === "success"
+                        ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                        : "bg-red-50 text-red-700 border border-red-200"
+                    }`}
                   >
-                    <rect width="20" height="16" x="2" y="4" rx="2" />
-                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                  </svg>
-                </span>
-                <input
-                  type="email"
-                  name="email"
-                  value={Form.email}
-                  onChange={handleChange}
-                  placeholder="you@example.com"
-                  style={{
-                    boxShadow: "inset 0 1.5px 3px rgba(0, 0, 0, 0.05)",
-                  }}
-                  className="w-full rounded-[10px] border border-slate-200 bg-white pl-10 pr-3.5 py-2.5 text-[14px] text-[#0f172a] placeholder-[#94a3b8] outline-none transition-all focus:border-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/10 font-instrument-sans"
-                />
-              </div>
-            </div>
+                    {forgotMessage.text}
+                  </div>
+                )}
 
-            <div>
-              <div className="flex justify-between items-center mb-1.5">
-                <label className="block text-[10.5px] font-bold text-[#64748b] tracking-[0.12em] uppercase font-instrument-sans">
-                  PASSWORD
-                </label>
-                <a
-                  href="#"
-                  className="text-[12px] font-medium text-[#0284c7] hover:underline font-instrument-sans"
-                >
-                  Forgot password?
-                </a>
-              </div>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="Password"
-                  value={Form.Password}
-                  onChange={handleChange}
-                  placeholder="........"
+                <div>
+                  <label className="block text-[10.5px] font-bold text-[#64748b] tracking-[0.12em] uppercase mb-1.5 font-instrument-sans">
+                    EMAIL
+                  </label>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#94a3b8]">
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={1.5}
+                        viewBox="0 0 24 24"
+                      >
+                        <rect width="20" height="16" x="2" y="4" rx="2" />
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                      </svg>
+                    </span>
+                    <input
+                      type="email"
+                      required
+                      value={forgotEmail}
+                      onChange={(e) => setForgotEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      style={{
+                        boxShadow: "inset 0 1.5px 3px rgba(0, 0, 0, 0.05)",
+                      }}
+                      className="w-full rounded-[10px] border border-slate-200 bg-white pl-10 pr-3.5 py-2.5 text-[14px] text-[#0f172a] placeholder-[#94a3b8] outline-none transition-all focus:border-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/10 font-instrument-sans"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={forgotLoading}
                   style={{
-                    boxShadow: "inset 0 1.5px 3px rgba(0, 0, 0, 0.05)",
+                    background:
+                      "radial-gradient(circle, color(srgb 0.00784314 0.517647 0.780392 / 0.68) 0%, rgb(2, 132, 199) 64%)",
+                    boxShadow:
+                      "0 2px 10px rgba(2, 132, 199, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 -1px 2px rgba(0, 0, 0, 0.15)",
                   }}
-                  className="w-full rounded-[10px] border border-slate-200 bg-white pl-3.5 pr-10 py-2.5 text-[14px] text-[#0f172a] placeholder-[#94a3b8] outline-none transition-all focus:border-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/10 font-instrument-sans"
-                />
+                  className="group mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-[11px] text-[14px] font-semibold text-white transition-all duration-200 hover:brightness-105 active:scale-[0.99] cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed font-instrument-sans"
+                >
+                  <span>
+                    {forgotLoading ? "Sending link..." : "Send Reset Link"}
+                  </span>
+                  {!forgotLoading && (
+                    <span className="text-[15px] font-normal leading-none transition-transform duration-200 group-hover:translate-x-0.5">
+                      →
+                    </span>
+                  )}
+                </button>
+
+                <div className="pt-2 text-center">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsForgotPassword(false);
+                      setForgotMessage(null);
+                    }}
+                    className="text-[13px] font-medium text-[#64748b] hover:text-[#0f172a] transition-colors font-instrument-sans cursor-pointer"
+                  >
+                    ← Back to Sign In
+                  </button>
+                </div>
+              </form>
+            </div>
+          ) : (
+            <div>
+              {/* Category Header */}
+              <span className="text-[10.5px] font-bold text-[#8c9ba8] tracking-[0.14em] uppercase block font-instrument-sans">
+                WELCOME BACK
+              </span>
+              <h1 className="font-lastik mt-2 text-[30px] sm:text-[34px] font-normal tracking-[-0.03em] text-[#0f172a] leading-tight">
+                Sign in to your account
+              </h1>
+              <p className="mt-2 font-instrument-sans text-[13.5px] leading-[1.5] text-[#64748b]">
+                Start monitoring your app with the same clean workflow as
+                onboarding.
+              </p>
+
+              {/* OAuth Buttons with Inside Shadow Border */}
+              <div className="mt-6 space-y-2.5">
+                <button
+                  onClick={() => handleSocialSign("github")}
+                  type="button"
+                  style={{
+                    boxShadow:
+                      "inset 0 1.5px 3px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.03)",
+                  }}
+                  className="flex h-11 w-full items-center justify-center gap-2 rounded-[10px] border border-slate-200/90 bg-[#f1f4f8] text-[13.5px] font-medium text-[#1e293b] hover:bg-[#e8edf4] transition-colors cursor-pointer active:scale-[0.99] font-instrument-sans"
+                >
+                  <img src="/GithubSign.svg" alt="Github" />
+                  <span>Continue with GitHub</span>
+                </button>
+
                 <button
                   type="button"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3.5 cursor-pointer text-slate-500 hover:text-slate-800 transition-colors"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  onClick={() => handleSocialSign("google")}
+                  style={{
+                    boxShadow:
+                      "inset 0 1.5px 3px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.03)",
+                  }}
+                  className="flex h-11 w-full items-center justify-center gap-2 rounded-[10px] border border-slate-200/90 bg-[#f1f4f8] text-[13.5px] font-medium text-[#1e293b] hover:bg-[#e8edf4] transition-colors cursor-pointer active:scale-[0.99] font-instrument-sans"
                 >
-                  <img
-                    src={showPassword ? "/EyeClose.svg" : "/Eye.svg"}
-                    alt={showPassword ? "Hide password" : "Show password"}
-                    className="h-[18px] w-[18px] object-contain opacity-70 hover:opacity-100 transition-opacity"
-                  />
+                  <img src="/Google.svg" alt="Google" />
+                  <span>Continue with Google</span>
                 </button>
               </div>
-            </div>
 
-            {/* Checkbox */}
-            <div className="flex items-center gap-2.5 pt-1">
-              <input
-                type="checkbox"
-                id="remember"
-                className="h-4 w-4 rounded-[4px] border-slate-300 text-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/20 cursor-pointer"
-              />
-              <label
-                htmlFor="remember"
-                className="text-[12.5px] text-[#64748b] cursor-pointer select-none font-instrument-sans"
-              >
-                Remember this device
-              </label>
-            </div>
-
-            {/* Submit Button with user's signature button gradient & shadow border */}
-            <button
-              type="submit"
-              disabled={isLoading}
-              style={{
-                background:
-                  "radial-gradient(circle, color(srgb 0.00784314 0.517647 0.780392 / 0.68) 0%, rgb(2, 132, 199) 64%)",
-                boxShadow:
-                  "0 2px 10px rgba(2, 132, 199, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 -1px 2px rgba(0, 0, 0, 0.15)",
-              }}
-              className="group mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-[11px] text-[14px] font-semibold text-white transition-all duration-200 hover:brightness-105 active:scale-[0.99] cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed font-instrument-sans"
-            >
-              <span>{isLoading ? "Signing in..." : "Sign In"}</span>
-              {!isLoading && (
-                <span className="text-[15px] font-normal leading-none transition-transform duration-200 group-hover:translate-x-0.5">
-                  →
+              {/* Divider */}
+              <div className="relative my-6 flex items-center justify-center">
+                <div className="border-t border-slate-200/80 w-full" />
+                <span className="absolute bg-white px-3 text-[10px] font-bold text-[#8c9ba8] tracking-[0.14em] uppercase font-instrument-sans">
+                  OR CONTINUE WITH EMAIL
                 </span>
-              )}
-            </button>
-          </form>
+              </div>
 
-          {/* Footer Link */}
-          <p className="mt-6 text-center text-[13.5px] text-[#64748b] font-instrument-sans">
-            Don&apos;t have an account?{" "}
-            <Link
-              href="/sign-up"
-              className="font-medium text-[#0284c7] hover:underline"
-            >
-              Sign up
-            </Link>
-          </p>
+              {/* Input Form with Inside Shadow Border */}
+              <form className="space-y-4" onSubmit={handleSubmit}>
+                {Message && (
+                  <div
+                    className={`p-3 rounded-[10px] text-[13px] font-medium ${
+                      Message.includes("successful")
+                        ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                        : "bg-red-50 text-red-700 border border-red-200"
+                    }`}
+                  >
+                    {Message}
+                  </div>
+                )}
+                <div>
+                  <label className="block text-[10.5px] font-bold text-[#64748b] tracking-[0.12em] uppercase mb-1.5 font-instrument-sans">
+                    EMAIL
+                  </label>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#94a3b8]">
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={1.5}
+                        viewBox="0 0 24 24"
+                      >
+                        <rect width="20" height="16" x="2" y="4" rx="2" />
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                      </svg>
+                    </span>
+                    <input
+                      type="email"
+                      name="email"
+                      value={Form.email}
+                      onChange={handleChange}
+                      placeholder="you@example.com"
+                      style={{
+                        boxShadow: "inset 0 1.5px 3px rgba(0, 0, 0, 0.05)",
+                      }}
+                      className="w-full rounded-[10px] border border-slate-200 bg-white pl-10 pr-3.5 py-2.5 text-[14px] text-[#0f172a] placeholder-[#94a3b8] outline-none transition-all focus:border-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/10 font-instrument-sans"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between items-center mb-1.5">
+                    <label className="block text-[10.5px] font-bold text-[#64748b] tracking-[0.12em] uppercase font-instrument-sans">
+                      PASSWORD
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setForgotEmail(Form.email);
+                        setIsForgotPassword(true);
+                        setMessage("");
+                        setForgotMessage(null);
+                      }}
+                      className="text-[12px] font-medium text-[#0284c7] hover:underline font-instrument-sans cursor-pointer"
+                    >
+                      Forgot password?
+                    </button>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="Password"
+                      value={Form.Password}
+                      onChange={handleChange}
+                      placeholder="........"
+                      style={{
+                        boxShadow: "inset 0 1.5px 3px rgba(0, 0, 0, 0.05)",
+                      }}
+                      className="w-full rounded-[10px] border border-slate-200 bg-white pl-3.5 pr-10 py-2.5 text-[14px] text-[#0f172a] placeholder-[#94a3b8] outline-none transition-all focus:border-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/10 font-instrument-sans"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      className="absolute inset-y-0 right-0 flex items-center pr-3.5 cursor-pointer text-slate-500 hover:text-slate-800 transition-colors"
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
+                    >
+                      <img
+                        src={showPassword ? "/EyeClose.svg" : "/Eye.svg"}
+                        alt={showPassword ? "Hide password" : "Show password"}
+                        className="h-[18px] w-[18px] object-contain opacity-70 hover:opacity-100 transition-opacity"
+                      />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Checkbox */}
+                <div className="flex items-center gap-2.5 pt-1">
+                  <input
+                    type="checkbox"
+                    id="remember"
+                    className="h-4 w-4 rounded-[4px] border-slate-300 text-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/20 cursor-pointer"
+                  />
+                  <label
+                    htmlFor="remember"
+                    className="text-[12.5px] text-[#64748b] cursor-pointer select-none font-instrument-sans"
+                  >
+                    Remember this device
+                  </label>
+                </div>
+
+                {/* Submit Button with user's signature button gradient & shadow border */}
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  style={{
+                    background:
+                      "radial-gradient(circle, color(srgb 0.00784314 0.517647 0.780392 / 0.68) 0%, rgb(2, 132, 199) 64%)",
+                    boxShadow:
+                      "0 2px 10px rgba(2, 132, 199, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 -1px 2px rgba(0, 0, 0, 0.15)",
+                  }}
+                  className="group mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-[11px] text-[14px] font-semibold text-white transition-all duration-200 hover:brightness-105 active:scale-[0.99] cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed font-instrument-sans"
+                >
+                  <span>{isLoading ? "Signing in..." : "Sign In"}</span>
+                  {!isLoading && (
+                    <span className="text-[15px] font-normal leading-none transition-transform duration-200 group-hover:translate-x-0.5">
+                      →
+                    </span>
+                  )}
+                </button>
+              </form>
+
+              {/* Footer Link */}
+              <p className="mt-6 text-center text-[13.5px] text-[#64748b] font-instrument-sans">
+                Don&apos;t have an account?{" "}
+                <Link
+                  href="/sign-up"
+                  className="font-medium text-[#0284c7] hover:underline"
+                >
+                  Sign up
+                </Link>
+              </p>
+            </div>
+          )}
         </div>
       </main>
     </div>

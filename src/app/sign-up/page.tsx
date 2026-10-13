@@ -272,16 +272,30 @@ export default function SignUpPage() {
               <input
                 type="checkbox"
                 id="terms"
+                required
+                defaultChecked
                 className="h-4 w-4 rounded-[4px] border-slate-300 text-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/20 cursor-pointer"
               />
               <label
                 htmlFor="terms"
-                className="text-[12.5px] text-[#0284c7] cursor-pointer select-none font-instrument-sans"
+                className="text-[12.5px] text-[#64748b] cursor-pointer select-none font-instrument-sans"
               >
                 I agree to the{" "}
-                <a href="#" className="font-medium text-[#0284c7]">
-                  Terms and Conditions
-                </a>
+                <Link
+                  href="/terms"
+                  target="_blank"
+                  className="font-medium text-[#0284c7] hover:underline"
+                >
+                  Terms of Service
+                </Link>{" "}
+                and{" "}
+                <Link
+                  href="/privacy"
+                  target="_blank"
+                  className="font-medium text-[#0284c7] hover:underline"
+                >
+                  Privacy Policy
+                </Link>
               </label>
             </div>
 

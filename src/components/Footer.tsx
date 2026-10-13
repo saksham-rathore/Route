@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 export const Footer = () => {
   return (
@@ -127,13 +128,29 @@ export const Footer = () => {
               </ul>
             </div>
 
-            {/* 4. Company */}
+            {/* 4. Company & Legal */}
             <div>
               <h4 className="text-[14px] font-semibold text-[#0f172a] tracking-tight font-instrument-sans">
-                Company
+                Company & Legal
               </h4>
               <ul className="mt-4 space-y-3 font-instrument-sans">
-                {["About", "Contact", "Careers", "GitHub"].map((item) => (
+                <li>
+                  <Link
+                    href="/terms"
+                    className="text-[14px] text-[#64748b] hover:text-[#0f172a] transition-colors"
+                  >
+                    Terms of Service
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/privacy"
+                    className="text-[14px] text-[#64748b] hover:text-[#0f172a] transition-colors"
+                  >
+                    Privacy Policy
+                  </Link>
+                </li>
+                {["About", "Contact", "GitHub"].map((item) => (
                   <li key={item}>
                     <a
                       href="#"
@@ -152,6 +169,14 @@ export const Footer = () => {
         <div className="border-t border-[#edf2f7] pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-[#8695a8] font-instrument-sans">
           <div className="flex flex-wrap items-center gap-2">
             <span>© 2026 Route Analytics. All rights reserved.</span>
+            <span className="hidden sm:inline text-[#cbd5e1]">|</span>
+            <Link href="/terms" className="hover:text-[#0f172a] transition-colors">
+              Terms
+            </Link>
+            <span className="text-[#cbd5e1]">•</span>
+            <Link href="/privacy" className="hover:text-[#0f172a] transition-colors">
+              Privacy
+            </Link>
             <span className="hidden sm:inline text-[#cbd5e1]">|</span>
             <span className="flex items-center gap-1.5">
               Made with <span className="text-[#ef4444]">❤️</span> by Sam rathore
