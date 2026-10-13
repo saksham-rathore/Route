@@ -1,7 +1,18 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma";
-import { resend } from "./email";
+import { getResend } from "./email";
+
+// `next build` imports this module while collecting page data, before
+// deploy-time (e.g. Render) env vars may exist. better-auth throws when no
+// secret is configured, so use a placeholder ONLY for the production build
+// phase — at runtime a missing BETTER_AUTH_SECRET still fails loudly.
+const isBuildPhase = process.env.NEXT_PHASE === "phase-production-build";
+const secret =
+  process.env.BETTER_AUTH_SECRET ||
+  (isBuildPhase
+    ? "build-phase-placeholder-secret-not-for-runtime-use-00000000"
+    : undefined);
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: "postgresql" }),
@@ -14,7 +25,7 @@ export const auth = betterAuth({
 
     sendResetPassword: async ({ user, url }) => {
       const fromEmail = process.env.EMAIL_FROM || "Route <onboarding@resend.dev>";
-      const { error } = await resend.emails.send({
+      const { error } = await getResend().emails.send({
         from: fromEmail,
         to: user.email,
         subject: "Reset your Route account password",
@@ -71,16 +82,29 @@ export const auth = betterAuth({
     },
   },
 
-  baseURL: process.env.BETTER_AUTH_URL,
+  secret,
 
+  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+
+  // Only register providers whose credentials are configured; undefined
+  // clientId/clientSecret entries break better-auth init during builds
+  // where OAuth env vars aren't set yet.
   socialProviders: {
-    github: {
-      clientId: process.env.GITHUB_CLIENT_ID as string,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-    },
-    google: {
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    },
+    ...(process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET
+      ? {
+          github: {
+            clientId: process.env.GITHUB_CLIENT_ID,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET,
+          },
+        }
+      : {}),
+    ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
+      ? {
+          google: {
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+          },
+        }
+      : {}),
   },
 });
