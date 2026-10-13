@@ -22,6 +22,7 @@ import { HowItWorks } from "../HowItWorks";
 import { Footer } from "../Footer";
 import { PlatformSection } from "../Platform";
 import { FAQ } from "../FAQ";
+import { StaticDashboardMock } from "../dashboard/StaticDashboardMock";
 
 const trafficSources = [
   { name: "Google", value: 48, visitors: "12,842" },
@@ -40,152 +41,110 @@ const events = [
 
 function BrowserWindow() {
   return (
-    <div className="overflow-hidden rounded-[18px] border border-[#d5d0c5] bg-[#fbfaf7] shadow-[0_30px_80px_rgba(45,43,37,0.12)]">
-      {/* Browser bar */}
-      <div className="flex h-11 items-center gap-2 border-b border-[#ded9cf] px-4">
-        <div className="h-2.5 w-2.5 rounded-full bg-[#d2cec4]" />
-        <div className="h-2.5 w-2.5 rounded-full bg-[#d2cec4]" />
-        <div className="h-2.5 w-2.5 rounded-full bg-[#d2cec4]" />
+    <div className="relative mx-auto my-6 sm:my-10 w-full max-w-[1280px] px-2 sm:px-6 md:px-10">
+      {/* 1. EXTERIOR BORDER GRID LINES & ARCHITECTURAL BLUEPRINT ACCENTS     */}
 
-        <div className="mx-auto flex h-6 w-[42%] items-center justify-center rounded-md bg-[#f0ede6] text-[9px] text-[#969188]">
-          app.route.dev/overview
+      {/* Subtle blueprint grid pattern radiating outside the card */}
+      <div
+        className="pointer-events-none absolute -inset-x-8 sm:-inset-x-16 -inset-y-10 sm:-inset-y-16 -z-10"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(203, 213, 225, 0.28) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(203, 213, 225, 0.28) 1px, transparent 1px)
+          `,
+          backgroundSize: "44px 44px",
+          maskImage:
+            "radial-gradient(ellipse 65% 55% at 50% 50%, #000 35%, transparent 95%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 65% 55% at 50% 50%, #000 35%, transparent 95%)",
+        }}
+      />
+
+      {/* Soft ambient background glow matching Route palette */}
+      <div className="pointer-events-none absolute inset-x-8 inset-y-6 -z-10 rounded-[32px] bg-[radial-gradient(ellipse_at_center,rgba(224,236,255,0.7)_0%,rgba(241,245,249,0.35)_50%,transparent_75%)] blur-2xl opacity-75" />
+
+      {/* Extended Outer Guide Grid Lines */}
+      {/* Top horizontal extended border line */}
+      <div className="pointer-events-none absolute -top-px left-[-40px] right-[-40px] sm:left-[-100px] sm:right-[-100px] h-[1px] bg-gradient-to-r from-transparent via-[#cbd5e1] to-transparent" />
+      {/* Secondary Top guide line */}
+      <div className="pointer-events-none absolute -top-6 left-[-20px] right-[-20px] sm:left-[-60px] sm:right-[-60px] h-[1px] border-t border-dashed border-[#e2e8f0]" />
+
+      {/* Bottom horizontal extended border line */}
+      <div className="pointer-events-none absolute -bottom-px left-[-40px] right-[-40px] sm:left-[-100px] sm:right-[-100px] h-[1px] bg-gradient-to-r from-transparent via-[#cbd5e1] to-transparent" />
+      {/* Secondary Bottom guide line */}
+      <div className="pointer-events-none absolute -bottom-6 left-[-20px] right-[-20px] sm:left-[-60px] sm:right-[-60px] h-[1px] border-b border-dashed border-[#e2e8f0]" />
+
+      {/* Left vertical extended border line */}
+      <div className="pointer-events-none absolute -left-px top-[-30px] bottom-[-30px] sm:top-[-60px] sm:bottom-[-60px] w-[1px] bg-gradient-to-b from-transparent via-[#cbd5e1] to-transparent" />
+      {/* Secondary Left guide line */}
+      <div className="pointer-events-none absolute -left-6 top-[-20px] bottom-[-20px] sm:top-[-40px] sm:bottom-[-40px] w-[1px] border-l border-dashed border-[#e2e8f0]" />
+
+      {/* Right vertical extended border line */}
+      <div className="pointer-events-none absolute -right-px top-[-30px] bottom-[-30px] sm:top-[-60px] sm:bottom-[-60px] w-[1px] bg-gradient-to-b from-transparent via-[#cbd5e1] to-transparent" />
+      {/* Secondary Right guide line */}
+      <div className="pointer-events-none absolute -right-6 top-[-20px] bottom-[-20px] sm:top-[-40px] sm:bottom-[-40px] w-[1px] border-r border-dashed border-[#e2e8f0]" />
+
+      {/* Technical Corner Crosshairs (+) */}
+      <span className="pointer-events-none absolute -top-3 -left-3 z-20 font-mono text-[13px] font-light leading-none text-[#94a3b8] select-none">
+        +
+      </span>
+      <span className="pointer-events-none absolute -top-3 -right-3 z-20 font-mono text-[13px] font-light leading-none text-[#94a3b8] select-none">
+        +
+      </span>
+      <span className="pointer-events-none absolute -bottom-3 -left-3 z-20 font-mono text-[13px] font-light leading-none text-[#94a3b8] select-none">
+        +
+      </span>
+      <span className="pointer-events-none absolute -bottom-3 -right-3 z-20 font-mono text-[13px] font-light leading-none text-[#94a3b8] select-none">
+        +
+      </span>
+
+      {/* 2. OUTER PRESENTATION CARD (Exact previous colors, shadow & fonts) */}
+      <div
+        className="relative z-10 rounded-[20px] sm:rounded-[24px] border border-[#d6dde8] bg-white p-3.5 sm:p-5 lg:p-5.5 text-left"
+        style={{
+          boxShadow:
+            "rgba(255, 255, 255, 0.85) 0px 1px 0px 0px inset, rgba(15, 23, 42, 0.08) 0px 2px 8px 0px inset, rgba(15, 23, 42, 0.05) 0px -1px 0px 0px inset, rgba(15, 23, 42, 0.04) 0px 20px 50px -10px",
+        }}
+      >
+        {/* Card Eyebrow & Title matching screenshot */}
+        <div className="mb-3 sm:mb-3.5">
+          <p className="text-[10.5px] sm:text-[11.5px] font-bold uppercase tracking-[0.2em] text-[#0284C7] font-instrument-sans">
+            USER ANALYTICS
+          </p>
+          <h3 className="mt-1 text-[20px] sm:text-[24px] font-semibold tracking-[-0.03em] text-[#0f172a] font-lastik">
+            See how users actually use your product.
+          </h3>
         </div>
-      </div>
 
-      <div className="flex min-h-[520px]">
-        {/* Sidebar */}
-        <aside className="hidden w-[175px] border-r border-[#ded9cf] p-4 md:block">
-          <a
-            className="font-lastik text-[22px] leading-none tracking-[-0.02em] snip-4f4f-0"
-            style={{
-              color: "rgb(8, 8, 8)",
-              outlineOffset: "2px",
-              background:
-                "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
-              fontSize: "22px",
-              fontWeight: 400,
-              fontFamily:
-                '"Lastik Regular", Caslon, "EB Garamond", "Times New Roman", Times, serif',
-              lineHeight: "22px",
-              letterSpacing: "-0.44px",
-              textAlign: "start",
-              border: "0px solid rgb(8, 8, 8)",
-              borderTop: "0px solid rgb(8, 8, 8)",
-              borderRight: "0px solid rgb(8, 8, 8)",
-              borderBottom: "0px solid rgb(8, 8, 8)",
-              borderLeft: "0px solid rgb(8, 8, 8)",
-              borderColor: "rgb(8, 8, 8)",
-              opacity: 1,
-              zIndex: "auto",
-            }}
-            href=""
-          >
-            Route
-          </a>
-
-          <div className="space-y-1 text-[10px]">
-            {[
-              "Overview",
-              "Realtime",
-              "Acquisition",
-              "Behavior",
-              "Conversion",
-            ].map((item, i) => (
-              <div
-                key={item}
-                className={`rounded-md px-3 py-2 ${
-                  i === 0
-                    ? "bg-[#ebe7de] font-semibold text-[#24231f]"
-                    : "text-[#8c887f]"
-                }`}
-              >
-                {item}
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-10 border-t border-[#ded9cf] pt-4">
-            <p className="mb-3 px-3 text-[8px] uppercase tracking-[0.18em] text-[#aaa49a]">
-              Workspace
-            </p>
-
-            <div className="space-y-1 text-[10px] text-[#8c887f]">
-              <div className="px-3 py-2">Settings</div>
-              <div className="px-3 py-2">Tracking</div>
-            </div>
-          </div>
-        </aside>
-
-        {/* Dashboard */}
-        <div className="min-w-0 flex-1 p-5 md:p-7">
-          <div className="mb-7 flex items-end justify-between">
-            <div>
-              <p className="text-[9px] uppercase tracking-[0.18em] text-[#99948a]">
-                Website overview
-              </p>
-              <h3 className="mt-1 text-[22px] font-semibold tracking-[-0.04em]">
-                Good morning.
-              </h3>
+        {/* 3. INNER BROWSER MOCK FRAME (Clean neutral dots & previous styling)*/}
+        <div className="overflow-hidden rounded-[16px] border border-[#d8e0ea] bg-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.9),inset_0_2px_6px_0_rgba(15,23,42,0.04),0_12px_40px_-10px_rgba(15,23,42,0.06)]">
+          {/* Top Browser Bar */}
+          <div className="flex h-10 items-center justify-between border-b border-[#e2e8f0] bg-[#f8fafc] px-4 font-instrument-sans">
+            {/* 3 Neutral Dots matching screenshot */}
+            <div className="flex items-center gap-2">
+              <span className="h-2.5 w-2.5 rounded-full bg-[#cbd5e1]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#cbd5e1]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#cbd5e1]" />
             </div>
 
-            <div className="rounded-md border border-[#dcd7cd] px-3 py-1.5 text-[9px] text-[#77736c]">
-              Last 30 days
+            {/* Address bar pill */}
+            <div className="flex h-6 items-center rounded-md border border-[#e2e8f0] bg-white px-3 text-[10px] text-[#64748b]">
+              <span className="text-[#94a3b8] mr-1">https://</span>
+              app.route.dev/analytics/user-behavior
+            </div>
+
+            {/* DEMO DATA badge matching screenshot */}
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-0.5 text-[9.5px] font-semibold text-blue-700 font-instrument-sans">
+                <span className="h-1.5 w-1.5 rounded-full bg-blue-600 animate-pulse" />
+                DEMO DATA
+              </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-            {[
-              ["Visitors", "26,769", "+18.4%"],
-              ["Sessions", "34,218", "+12.7%"],
-              ["Bounce rate", "31.2%", "-4.2%"],
-              ["Conversions", "2,841", "+24.8%"],
-            ].map(([label, value, change]) => (
-              <div
-                key={label}
-                className="rounded-xl border border-[#ded9cf] bg-white/50 p-4"
-              >
-                <p className="text-[9px] text-[#99948a]">{label}</p>
-                <p className="mt-2 text-[18px] font-semibold tracking-[-0.04em]">
-                  {value}
-                </p>
-                <p className="mt-1 text-[8px] text-[#77736c]">{change}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Chart */}
-          <div className="mt-4 rounded-xl border border-[#ded9cf] p-4">
-            <div className="mb-5 flex justify-between">
-              <div>
-                <p className="text-[9px] text-[#99948a]">Visitors</p>
-                <p className="mt-1 text-[16px] font-semibold">26,769</p>
-              </div>
-
-              <div className="text-[9px] text-[#99948a]">May 01 — May 30</div>
-            </div>
-
-            <div className="relative h-[175px]">
-              {[0, 1, 2, 3, 4].map((line) => (
-                <div
-                  key={line}
-                  className="absolute left-0 right-0 border-t border-[#e9e5dc]"
-                  style={{ top: `${line * 25}%` }}
-                />
-              ))}
-
-              <svg
-                viewBox="0 0 700 170"
-                preserveAspectRatio="none"
-                className="absolute inset-0 h-full w-full"
-              >
-                <path
-                  d="M0 135 C45 128 60 105 105 112 S170 128 210 88 S275 94 315 73 S380 82 420 55 S485 74 525 48 S590 65 630 32 S670 38 700 20"
-                  fill="none"
-                  stroke="#24231f"
-                  strokeWidth="2.5"
-                />
-              </svg>
-            </div>
+          {/* 1st Component: Overview Dashboard (Rendered UI component without working backend) */}
+          <div className="relative w-full bg-white overflow-hidden">
+            <StaticDashboardMock initialTab="overview" />
           </div>
         </div>
       </div>
