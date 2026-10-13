@@ -15,6 +15,6 @@ export default defineConfig({
     // runtime/migrations still use the real DATABASE_URL.
     url:
       process.env.DATABASE_URL ??
-      "postgresql://user:password@localhost:5432/db?schema=public",
+      "postgresql://neondb_owner:npg_OFDEGj6S4dnp@ep-lucky-cake-ax7m4iqn-pooler.c-4.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require",
   },
 });
