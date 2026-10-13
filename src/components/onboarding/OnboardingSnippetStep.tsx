@@ -40,11 +40,46 @@ export default function OnboardingSnippetStep({
     }
   }
 
+  const checkConnection = React.useCallback(
+    async (manual = false) => {
+      if (!projectId) return;
+      if (manual) setConnectionStatus("checking");
+      try {
+        const start = Date.now();
+        const res = await fetch(`/api/projects/${encodeURIComponent(projectId)}/live`);
+        const data = await res.json().catch(() => null);
+        if (data?.success && data?.connected) {
+          setConnectionStatus("connected");
+          return;
+        }
+        if (manual) {
+          const elapsed = Date.now() - start;
+          if (elapsed < 600) {
+            await new Promise((r) => setTimeout(r, 600 - elapsed));
+          }
+        }
+      } catch {
+        /* network/offline error */
+      } finally {
+        if (manual) {
+          setConnectionStatus((prev) => (prev === "connected" ? "connected" : "idle"));
+        }
+      }
+    },
+    [projectId]
+  );
+
+  React.useEffect(() => {
+    if (connectionStatus === "connected") return;
+    checkConnection(false);
+    const interval = setInterval(() => {
+      checkConnection(false);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [connectionStatus, checkConnection]);
+
   function handleCheckConnection() {
-    setConnectionStatus("checking");
-    setTimeout(() => {
-      setConnectionStatus("connected");
-    }, 1200);
+    checkConnection(true);
   }
 
   return (

@@ -1,12 +1,13 @@
 "use client";
 
-import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { ChevronDown, Check, ArrowRight, Loader2, Copy } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { authClient } from "../../../lib/auth-client";
 import { FRAMEWORKS, getFramework, getSnippet, isFrameworkId, type FrameworkId } from "@/lib/stacks";
+import { useProjectRealtime } from "@/hooks/use-project-realtime";
 
 export default function OnboardingPage() {
   const { data: session } = authClient.useSession();
@@ -286,10 +287,60 @@ function OnboardingScriptContent() {
   const fwParam = searchParams.get("framework");
   const [fw, setFw] = useState<FrameworkId>(isFrameworkId(fwParam) ? fwParam : "nextjs");
   const [copied, setCopied] = useState(false);
+  const [connected, setConnected] = useState(false);
+  const [checking, setChecking] = useState(false);
+
+  const validPid = pid && pid !== "your-project-id" ? pid : null;
+  const realtime = useProjectRealtime(validPid);
 
   useEffect(() => {
     if (isFrameworkId(fwParam)) setFw(fwParam);
   }, [fwParam]);
+
+  useEffect(() => {
+    if (realtime.connected) {
+      setConnected(true);
+    }
+  }, [realtime.connected]);
+
+  const checkConnection = useCallback(
+    async (manual = false) => {
+      if (!validPid) return;
+      if (manual) setChecking(true);
+      try {
+        const start = Date.now();
+        const res = await fetch(`/api/projects/${encodeURIComponent(validPid)}/live`);
+        const data = await res.json().catch(() => null);
+        if (data?.success && data?.connected) {
+          setConnected(true);
+          return;
+        }
+        if (manual) {
+          const elapsed = Date.now() - start;
+          if (elapsed < 600) {
+            await new Promise((r) => setTimeout(r, 600 - elapsed));
+          }
+        }
+      } catch {
+        /* network/offline error */
+      } finally {
+        if (manual) setChecking(false);
+      }
+    },
+    [validPid]
+  );
+
+  useEffect(() => {
+    if (connected || !validPid) return;
+
+    checkConnection(false);
+
+    const interval = setInterval(() => {
+      checkConnection(false);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [connected, validPid, checkConnection]);
 
   const HandleClick = async () => {
     router.push("/dashboard");
@@ -406,6 +457,36 @@ function OnboardingScriptContent() {
 
           {/* Actions */}
           <div className="space-y-3">
+            {/* Check connection / Connected */}
+            {connected ? (
+              <div className="flex h-[42px] w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 text-[14.5px] font-semibold text-white shadow-[0_2px_10px_rgba(16,185,129,0.35)] transition cursor-default">
+                <Check className="h-4 w-4 stroke-[2.5]" />
+                <span>Connected</span>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => checkConnection(true)}
+                disabled={checking}
+                style={{
+                  background:
+                    "radial-gradient(circle, color(srgb 0.00784314 0.517647 0.780392 / 0.68) 0%, rgb(2, 132, 199) 64%)",
+                  boxShadow:
+                    "0 2px 10px rgba(2, 132, 199, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3)",
+                }}
+                className="flex h-[42px] w-full cursor-pointer items-center justify-center gap-2 rounded-lg text-[14.5px] font-semibold text-white transition hover:brightness-105 active:scale-[0.99] disabled:opacity-75 disabled:cursor-not-allowed"
+              >
+                {checking ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span>Checking connection...</span>
+                  </>
+                ) : (
+                  <span>Check connection</span>
+                )}
+              </button>
+            )}
+
             {/* Go to dashboard */}
             <div
               onClick={HandleClick}

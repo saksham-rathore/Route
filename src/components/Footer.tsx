@@ -44,7 +44,7 @@ export const Footer = () => {
 
             {/* Button with signature button gradient & shadow border */}
             <a
-              href="/auth/sign-up"
+              href="/sign-up"
               style={{
                 background:
                   "radial-gradient(circle, color(srgb 0.00784314 0.517647 0.780392 / 0.68) 0%, rgb(2, 132, 199) 64%)",

@@ -24,17 +24,37 @@ function mapRating(r: string | null | undefined): "good" | "needs_improvement" |
   return null;
 }
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
+const corsBase = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
-export async function OPTIONS() {
-  return NextResponse.json({}, { headers: corsHeaders });
+// Browsers reject `Access-Control-Allow-Origin: *` on credentialed requests
+// (the beacon sends with credentials mode include), so echo the caller.
+function corsHeadersFor(req: NextRequest) {
+  const origin = req.headers.get("origin");
+  const reqHeaders = req.headers.get("access-control-request-headers") || "Content-Type, Authorization";
+  const base = {
+    ...corsBase,
+    "Access-Control-Allow-Headers": reqHeaders,
+    "Access-Control-Max-Age": "86400",
+  };
+  return origin
+    ? {
+        ...base,
+        "Access-Control-Allow-Origin": origin,
+        "Access-Control-Allow-Credentials": "true",
+        Vary: "Origin",
+      }
+    : { ...base, "Access-Control-Allow-Origin": "*" };
+}
+
+export async function OPTIONS(req: NextRequest) {
+  return NextResponse.json({}, { headers: corsHeadersFor(req) });
 }
 
 export async function POST(req: NextRequest) {
+  const corsHeaders = corsHeadersFor(req);
   try {
     let raw: unknown;
     try {

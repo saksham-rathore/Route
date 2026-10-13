@@ -2,7 +2,18 @@
 
 import React from "react";
 import Link from "next/link";
-import { ChevronLeft, Gauge, MessageSquare, Code2 } from "lucide-react";
+import {
+  ChevronLeft,
+  Gauge,
+  MessageSquare,
+  Code2,
+  Home,
+  Globe,
+  Network,
+  AlertTriangle,
+  FileText,
+  Zap,
+} from "lucide-react";
 
 export type DashboardTab =
   | "overview"
@@ -14,20 +25,28 @@ export type DashboardTab =
   | "sessions"
   | "installation";
 
-const portfolio: { id: DashboardTab; label: string; icon: string }[] = [
-  { id: "overview", label: "Overview", icon: "/Home.svg" },
+interface NavItem {
+  id: DashboardTab;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
+const portfolio: NavItem[] = [
+  { id: "overview", label: "Overview", icon: Home },
 ];
 
-const analytics: { id: DashboardTab; label: string; icon?: string; lucide?: boolean }[] = [
-  { id: "map", label: "Global Map", icon: "/GlobalMap.svg" },
-  { id: "endpoints", label: "Endpoints", icon: "/Endpoints.svg" },
-  { id: "errors", label: "Errors", icon: "/Error.svg" },
-  { id: "pages", label: "Pages", icon: "/Pages.svg" },
-  { id: "vitals", label: "Web Vitals", lucide: true },
-  { id: "sessions", label: "Sessions", icon: "/Power.svg" },
+const analytics: NavItem[] = [
+  { id: "map", label: "Global Map", icon: Globe },
+  { id: "endpoints", label: "Endpoints", icon: Network },
+  { id: "errors", label: "Errors", icon: AlertTriangle },
+  { id: "pages", label: "Pages", icon: FileText },
+  { id: "vitals", label: "Web Vitals", icon: Gauge },
+  { id: "sessions", label: "Sessions", icon: Zap },
 ];
 
-const setup: { id: DashboardTab; label: string }[] = [{ id: "installation", label: "Installation" }];
+const setup: NavItem[] = [
+  { id: "installation", label: "Installation", icon: Code2 },
+];
 
 interface Props {
   activeTab?: string;
@@ -36,19 +55,43 @@ interface Props {
   onAddProject?: () => void;
 }
 
-export default function DashboardSidebar({ activeTab = "overview", onTabChange, onBackToProjects, onAddProject }: Props) {
-  const getTabClass = (tabId: string) => {
-    const isActive = activeTab === tabId;
-    return isActive
-      ? "flex cursor-pointer items-center gap-2 rounded-lg bg-slate-100/90 border border-slate-200/70 px-2.5 py-1.5 text-[11.5px] font-medium text-slate-900 inside-shadow"
-      : "flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1 text-[11.5px] text-slate-600 transition hover:bg-slate-100 hover:text-slate-900";
+export default function DashboardSidebar({
+  activeTab = "overview",
+  onTabChange,
+  onBackToProjects,
+  onAddProject,
+}: Props) {
+  const renderNavItem = (t: NavItem) => {
+    const isActive = activeTab === t.id;
+    const Icon = t.icon;
+    return (
+      <button
+        key={t.id}
+        type="button"
+        onClick={() => onTabChange?.(t.id)}
+        className={`group flex w-full cursor-pointer items-center gap-2 rounded-lg px-2.5 text-[11.5px] transition text-left ${
+          isActive
+            ? "bg-slate-100/90 border border-slate-200/70 py-1.5 font-medium text-slate-900 inside-shadow dark:border-slate-800 dark:bg-[#141d2e] dark:text-white"
+            : "py-1 text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-[#141d2e]/60 dark:hover:text-slate-200"
+        }`}
+      >
+        <Icon
+          className={`h-3.5 w-3.5 shrink-0 transition-colors ${
+            isActive
+              ? "text-[#0284c7] dark:text-sky-400"
+              : "text-slate-400 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-300"
+          }`}
+        />
+        <span className="truncate">{t.label}</span>
+      </button>
+    );
   };
 
   return (
     <aside className="flex w-full shrink-0 flex-col gap-2.5 lg:w-[195px] xl:w-[205px] h-full overflow-y-auto no-scrollbar">
       <Link href="/" className="flex items-center gap-2 px-1 py-0.5">
         <img src="/logo.svg" alt="Route" className="h-[22px] w-[22px] shrink-0 object-contain" />
-        <span className="font-sans text-[17.5px] font-bold leading-none tracking-tight text-slate-900">Route</span>
+        <span className="font-sans text-[17.5px] font-bold leading-none tracking-tight text-slate-900 dark:text-white">Route</span>
       </Link>
 
       <button
@@ -65,42 +108,23 @@ export default function DashboardSidebar({ activeTab = "overview", onTabChange, 
       </button>
 
       <div>
-        <p className="px-1 text-[9px] font-bold tracking-[0.08em] text-slate-400">PORTFOLIO</p>
+        <p className="px-1 text-[9px] font-bold tracking-[0.08em] text-slate-400 dark:text-slate-500">PORTFOLIO</p>
         <nav className="mt-1 flex flex-col gap-0.5">
-          {portfolio.map((t) => (
-            <span key={t.id} onClick={() => onTabChange?.(t.id)} className={getTabClass(t.id)}>
-              <img src={t.icon} className="h-4 w-4 shrink-0 object-contain" alt={t.label} />
-              <span>{t.label}</span>
-            </span>
-          ))}
+          {portfolio.map(renderNavItem)}
         </nav>
       </div>
 
       <div>
-        <p className="px-1 text-[9px] font-bold tracking-[0.08em] text-slate-400">ANALYTICS</p>
+        <p className="px-1 text-[9px] font-bold tracking-[0.08em] text-slate-400 dark:text-slate-500">ANALYTICS</p>
         <nav className="mt-1 flex flex-col gap-0.5">
-          {analytics.map((t) => (
-            <span key={t.id} onClick={() => onTabChange?.(t.id)} className={getTabClass(t.id)}>
-              {t.lucide ? (
-                <Gauge className="h-3.5 w-3.5 shrink-0 text-slate-400" />
-              ) : (
-                <img src={t.icon} className="h-3.5 w-3.5 shrink-0 object-contain" alt={t.label} />
-              )}
-              <span>{t.label}</span>
-            </span>
-          ))}
+          {analytics.map(renderNavItem)}
         </nav>
       </div>
 
       <div>
-        <p className="px-1 text-[9px] font-bold tracking-[0.08em] text-slate-400">SETUP</p>
+        <p className="px-1 text-[9px] font-bold tracking-[0.08em] text-slate-400 dark:text-slate-500">SETUP</p>
         <nav className="mt-1 flex flex-col gap-0.5">
-          {setup.map((t) => (
-            <span key={t.id} onClick={() => onTabChange?.(t.id)} className={getTabClass(t.id)}>
-              <Code2 className="h-3.5 w-3.5 shrink-0 text-slate-400" />
-              <span>{t.label}</span>
-            </span>
-          ))}
+          {setup.map(renderNavItem)}
         </nav>
       </div>
 
@@ -116,7 +140,11 @@ export default function DashboardSidebar({ activeTab = "overview", onTabChange, 
           <MessageSquare className="h-3.5 w-3.5" />
           <span>Share feedback</span>
         </button>
-        <button type="button" onClick={onBackToProjects} className="flex items-center gap-1.5 rounded-lg border border-slate-200/80 bg-white px-3 py-1.5 text-[11.5px] font-medium text-slate-600 inside-shadow transition hover:bg-slate-50 cursor-pointer">
+        <button
+          type="button"
+          onClick={onBackToProjects}
+          className="flex items-center gap-1.5 rounded-lg border border-slate-200/80 bg-white px-3 py-1.5 text-[11.5px] font-medium text-slate-600 inside-shadow transition hover:bg-slate-50 cursor-pointer dark:border-slate-800 dark:bg-[#121927] dark:text-slate-300 dark:hover:bg-slate-800"
+        >
           <ChevronLeft className="h-3.5 w-3.5 text-slate-400" />
           <span>Back</span>
         </button>

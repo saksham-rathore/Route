@@ -1,7 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
-import { Copy, Check, Radio, MessageSquare, Moon, Maximize2 } from "lucide-react";
+import {
+  Copy,
+  Check,
+  Radio,
+  MessageSquare,
+  Moon,
+  Maximize2,
+  Link2,
+  Network,
+  AlertTriangle,
+  Globe,
+  Zap,
+  Code2,
+} from "lucide-react";
 
 export const RANGES = ["1h", "24h", "7d", "30d", "90d", "1y"] as const;
 export type RangeKey = (typeof RANGES)[number];
@@ -161,8 +174,8 @@ export default function DashboardRightPanel({ project, user, onNavigateTab }: Da
       <section className="rounded-xl border border-slate-200/80 bg-white p-4 inside-shadow dark:border-[#1e2738] dark:bg-[#121927]">
         <div className="mb-2 flex items-center justify-between">
           <h3 className="flex items-center gap-2 text-[13px] font-semibold text-slate-900 dark:text-white">
-            <span className="flex h-4.5 w-4.5 items-center justify-center rounded-md bg-blue-50/80 p-0.5">
-              <img src="/Power.svg" className="h-full w-full object-contain" alt="Installation" />
+            <span className="flex h-4.5 w-4.5 items-center justify-center rounded-md bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400">
+              <Code2 className="h-3 w-3" />
             </span>
             Installation
           </h3>
@@ -186,26 +199,26 @@ export default function DashboardRightPanel({ project, user, onNavigateTab }: Da
 
       <section className="rounded-xl border border-slate-200/80 bg-white p-4 inside-shadow dark:border-[#1e2738] dark:bg-[#121927]">
         <h3 className="mb-2 flex items-center gap-2 text-[13px] font-semibold text-slate-900 dark:text-white">
-          <span className="flex h-4.5 w-4.5 items-center justify-center rounded-md bg-blue-50/80 p-0.5">
-            <img src="/Link.svg" className="h-full w-full object-contain" alt="Links" />
+          <span className="flex h-4.5 w-4.5 items-center justify-center rounded-md bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400">
+            <Link2 className="h-3 w-3" />
           </span>
           Quick Links
         </h3>
         <ul className="flex flex-col text-[12px] text-slate-600 dark:text-slate-300">
-          <li onClick={() => onNavigateTab?.("endpoints")} className="flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 transition hover:bg-slate-50 hover:text-slate-900 dark:hover:bg-slate-800">
-            <img src="/Endpoints.svg" className="h-3.5 w-3.5 shrink-0 object-contain" alt="Endpoints" />
+          <li onClick={() => onNavigateTab?.("endpoints")} className="group flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 transition hover:bg-slate-50 hover:text-slate-900 dark:hover:bg-slate-800">
+            <Network className="h-3.5 w-3.5 shrink-0 text-slate-400 group-hover:text-slate-700 dark:text-slate-500 dark:group-hover:text-slate-300" />
             <span>View Endpoints</span>
           </li>
-          <li onClick={() => onNavigateTab?.("errors")} className="flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 transition hover:bg-slate-50 hover:text-slate-900 dark:hover:bg-slate-800">
-            <img src="/Error.svg" className="h-3.5 w-3.5 shrink-0 object-contain" alt="Errors" />
+          <li onClick={() => onNavigateTab?.("errors")} className="group flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 transition hover:bg-slate-50 hover:text-slate-900 dark:hover:bg-slate-800">
+            <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-slate-400 group-hover:text-rose-500 dark:text-slate-500 dark:group-hover:text-rose-400" />
             <span>View Errors</span>
           </li>
-          <li onClick={() => onNavigateTab?.("map")} className="flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 transition hover:bg-slate-50 hover:text-slate-900 dark:hover:bg-slate-800">
-            <img src="/GlobalMap.svg" className="h-3.5 w-3.5 shrink-0 object-contain" alt="Global Map" />
+          <li onClick={() => onNavigateTab?.("map")} className="group flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 transition hover:bg-slate-50 hover:text-slate-900 dark:hover:bg-slate-800">
+            <Globe className="h-3.5 w-3.5 shrink-0 text-slate-400 group-hover:text-slate-700 dark:text-slate-500 dark:group-hover:text-slate-300" />
             <span>Global Map</span>
           </li>
-          <li onClick={() => onNavigateTab?.("sessions")} className="flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 transition hover:bg-slate-50 hover:text-slate-900 dark:hover:bg-slate-800">
-            <img src="/Power.svg" className="h-3.5 w-3.5 shrink-0 object-contain" alt="Sessions" />
+          <li onClick={() => onNavigateTab?.("sessions")} className="group flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 transition hover:bg-slate-50 hover:text-slate-900 dark:hover:bg-slate-800">
+            <Zap className="h-3.5 w-3.5 shrink-0 text-slate-400 group-hover:text-slate-700 dark:text-slate-500 dark:group-hover:text-slate-300" />
             <span>Sessions</span>
           </li>
         </ul>
