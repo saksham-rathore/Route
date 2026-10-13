@@ -240,7 +240,7 @@
 //                     Live telemetry aggregated from real end-user connections
 //                   </p>
 //                 </div>
-//                 <span className="text-[10.5px] font-medium text-[#2563eb]">
+//                 <span className="text-[10.5px] font-medium text-[#0284C7]">
 //                   Click to inspect
 //                 </span>
 //               </div>
@@ -254,12 +254,12 @@
 //                       onClick={() => setSelectedCarrier(carrier)}
 //                       className={`flex items-center justify-between p-2.5 rounded-lg border transition-all cursor-pointer ${
 //                         isSelected
-//                           ? "border-[#2563eb] bg-[#eff6ff]/70 shadow-xs"
+//                           ? "border-[#0284C7] bg-[#eff6ff]/70 shadow-xs"
 //                           : "border-[#e2e8f0] bg-[#fafbfc] hover:border-[#cbd5e1] hover:bg-slate-50"
 //                       }`}
 //                     >
 //                       <div className="flex items-center gap-3">
-//                         <div className="flex h-7 w-7 items-center justify-center rounded-md bg-white border border-[#e2e8f0] text-[#2563eb]">
+//                         <div className="flex h-7 w-7 items-center justify-center rounded-md bg-white border border-[#e2e8f0] text-[#0284C7]">
 //                           <Wifi size={13} />
 //                         </div>
 //                         <div>
@@ -323,7 +323,7 @@
 //                   <span className="text-[10px] uppercase font-bold tracking-wider text-[#8695a8]">
 //                     CARRIER ROUTING TELEMETRY
 //                   </span>
-//                   <span className="font-mono text-[10px] text-[#2563eb] font-semibold">
+//                   <span className="font-mono text-[10px] text-[#0284C7] font-semibold">
 //                     {selectedCarrier.asn}
 //                   </span>
 //                 </div>

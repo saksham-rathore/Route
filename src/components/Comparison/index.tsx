@@ -136,7 +136,7 @@ function BrowserWindow() {
             {/* DEMO DATA badge matching screenshot */}
             <div className="flex items-center gap-2">
               <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-0.5 text-[9.5px] font-semibold text-blue-700 font-instrument-sans">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-600 animate-pulse" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#0284C7] animate-pulse" />
                 DEMO DATA
               </span>
             </div>

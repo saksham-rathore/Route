@@ -200,7 +200,7 @@ export const InstallationView = () => {
               <span className="text-[11px] font-medium text-[#64748b]">
                 Project Key:
               </span>
-              <code className="rounded-lg border border-[#e2e8f0] bg-[#f8fafc] px-2.5 py-1 text-[11px] font-mono text-[#2563eb] font-semibold">
+              <code className="rounded-lg border border-[#e2e8f0] bg-[#f8fafc] px-2.5 py-1 text-[11px] font-mono text-[#0284C7] font-semibold">
                 rt_live_948f2a1b
               </code>
             </div>
@@ -215,7 +215,7 @@ export const InstallationView = () => {
                 onClick={() => setActiveFw(fw)}
                 className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-[12px] font-semibold transition-all border ${
                   activeFw.id === fw.id
-                    ? "border-[#2563eb] bg-[#eff6ff] text-[#2563eb] shadow-xs"
+                    ? "border-[#0284C7] bg-[#eff6ff] text-[#0284C7] shadow-xs"
                     : "border-[#e2e8f0] bg-white text-[#64748b] hover:border-[#cbd5e1] hover:text-[#0f172a]"
                 }`}
               >
@@ -223,7 +223,7 @@ export const InstallationView = () => {
                 <span
                   className={`text-[9.5px] px-1.5 py-0.2 rounded font-medium ${
                     activeFw.id === fw.id
-                      ? "bg-[#2563eb] text-white"
+                      ? "bg-[#0284C7] text-white"
                       : "bg-slate-100 text-[#64748b]"
                   }`}
                 >
@@ -283,7 +283,7 @@ export const InstallationView = () => {
             <div className="rounded-xl border border-[#e2e8f0] bg-[#fafbfc] p-4 shadow-xs">
               <div className="flex items-center justify-between pb-2 border-b border-[#e2e8f0]">
                 <div className="flex items-center gap-2">
-                  <Terminal size={13} className="text-[#2563eb]" />
+                  <Terminal size={13} className="text-[#0284C7]" />
                   <span className="text-[12px] font-bold text-[#0f172a]">
                     Live Telemetry Ingestion Simulator
                   </span>
@@ -292,7 +292,7 @@ export const InstallationView = () => {
                   type="button"
                   disabled={isVerifying}
                   onClick={runTestBeacon}
-                  className="flex items-center gap-1.5 rounded-lg bg-[#2563eb] px-3 py-1 text-[11px] font-medium text-white shadow-xs hover:bg-[#1d4ed8] transition-colors disabled:opacity-50"
+                  className="flex items-center gap-1.5 rounded-lg bg-[#0284C7] px-3 py-1 text-[11px] font-medium text-white shadow-xs hover:bg-[#1d4ed8] transition-colors disabled:opacity-50"
                 >
                   <Play size={11} fill="currentColor" />
                   <span>
@@ -367,7 +367,7 @@ export const InstallationView = () => {
                     >
                       <div className="flex items-center justify-between">
                         <span className="flex items-center gap-1.5 text-[11.5px] font-bold text-[#0f172a]">
-                          <Icon size={12} className="text-[#2563eb]" />
+                          <Icon size={12} className="text-[#0284C7]" />
                           {feat.title}
                         </span>
                         <span className="rounded bg-sky-50 px-1.5 py-0.2 text-[9px] font-bold text-sky-700 border border-sky-100">

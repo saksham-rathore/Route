@@ -76,7 +76,7 @@ const traceSpans: SpanItem[] = [
     durationMs: 14.8,
     offsetPct: 22,
     widthPct: 35,
-    color: "#2563eb",
+    color: "#0284C7",
     status: "200",
     details: {
       region: "iad1-compute",
@@ -288,7 +288,7 @@ export const ObservabilityView = () => {
               </div>
               <div className="flex items-center gap-3 text-[11px] font-medium text-[#64748b]">
                 <span>Total Duration:</span>
-                <span className="font-bold text-[#2563eb] text-[13px]">42.2ms</span>
+                <span className="font-bold text-[#0284C7] text-[13px]">42.2ms</span>
               </div>
             </div>
 
@@ -302,7 +302,7 @@ export const ObservabilityView = () => {
                     onClick={() => setSelectedSpan(span)}
                     className={`group relative flex flex-col sm:flex-row sm:items-center justify-between rounded-lg p-2.5 transition-all cursor-pointer border ${
                       isSelected
-                        ? "border-[#2563eb] bg-[#eff6ff]/60 shadow-xs"
+                        ? "border-[#0284C7] bg-[#eff6ff]/60 shadow-xs"
                         : "border-transparent bg-[#f8fafc] hover:bg-slate-100"
                     }`}
                   >
@@ -346,12 +346,12 @@ export const ObservabilityView = () => {
               <div className="mt-4 rounded-lg border border-[#cbd5e1] bg-[#f8fafc] p-3.5 text-[11px]">
                 <div className="flex items-center justify-between pb-2 border-b border-[#e2e8f0]">
                   <div className="flex items-center gap-2">
-                    <Layers size={13} className="text-[#2563eb]" />
+                    <Layers size={13} className="text-[#0284C7]" />
                     <span className="font-semibold text-[#0f172a]">
                       Span Details: {selectedSpan.name}
                     </span>
                   </div>
-                  <span className="font-mono text-[#2563eb] font-bold">
+                  <span className="font-mono text-[#0284C7] font-bold">
                     {selectedSpan.durationMs}ms duration
                   </span>
                 </div>
@@ -408,7 +408,7 @@ export const ObservabilityView = () => {
                     onClick={() => setLogFilter(filter)}
                     className={`rounded px-2 py-0.5 uppercase tracking-wider font-semibold transition-colors ${
                       logFilter === filter
-                        ? "bg-[#2563eb] text-white"
+                        ? "bg-[#0284C7] text-white"
                         : "bg-white text-[#64748b] hover:text-[#0f172a] border border-[#e2e8f0]"
                     }`}
                   >
@@ -440,7 +440,7 @@ export const ObservabilityView = () => {
                     <span className="hidden sm:inline text-sky-700 bg-sky-50 px-1.5 py-0.5 rounded text-[9.5px]">
                       {log.pop} · {log.isp}
                     </span>
-                    <span className="font-semibold text-[#2563eb]">{log.time}</span>
+                    <span className="font-semibold text-[#0284C7]">{log.time}</span>
                     <span className="text-[9.5px] text-[#94a3b8]">{log.timeAgo}</span>
                   </div>
                 </div>

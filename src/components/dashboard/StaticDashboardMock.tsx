@@ -25,9 +25,13 @@ export type MockTab = "overview" | "map" | "vitals";
 
 interface Props {
   initialTab?: MockTab;
+  hideRightSidebar?: boolean;
 }
 
-export function StaticDashboardMock({ initialTab = "overview" }: Props) {
+export function StaticDashboardMock({
+  initialTab = "overview",
+  hideRightSidebar = false,
+}: Props) {
   const [activeTab, setActiveTab] = useState<MockTab>(initialTab);
   const [range, setRange] = useState<string>("24h");
   const [copiedSnippet, setCopiedSnippet] = useState(false);
@@ -80,7 +84,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             type="button"
-            className="rounded-lg bg-[#2563eb] px-2.5 py-1 text-[11px] font-semibold text-white shadow-xs transition-colors hover:bg-[#1d4ed8] cursor-pointer"
+            className="rounded-lg bg-[#0284C7] px-2.5 py-1 text-[11px] font-semibold text-white shadow-xs transition-colors hover:bg-[#1d4ed8] cursor-pointer"
           >
             Get Started
           </button>
@@ -113,7 +117,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
           <div>
             {/* Logo */}
             <div className="flex items-center gap-2 px-1 pb-3">
-              <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[#2563eb] text-white">
+              <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[#0284C7] text-white">
                 <Sparkles size={13} strokeWidth={2.5} />
               </div>
               <span className="font-bold text-[14.5px] tracking-tight text-[#0f172a]">
@@ -124,7 +128,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
             {/* Add Project Button */}
             <button
               type="button"
-              className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-[#2563eb] py-1.5 text-[11px] font-semibold text-white shadow-xs transition-colors hover:bg-[#1d4ed8] cursor-pointer"
+              className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-[#0284C7] py-1.5 text-[11px] font-semibold text-white shadow-xs transition-colors hover:bg-[#1d4ed8] cursor-pointer"
             >
               <span className="text-sm font-bold leading-none">+</span>
               <span>Add Project</span>
@@ -141,7 +145,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
                   onClick={() => setActiveTab("overview")}
                   className={`flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 font-medium transition-colors text-left cursor-pointer ${
                     activeTab === "overview"
-                      ? "bg-[#eff6ff] font-semibold text-[#2563eb] border border-[#dbeafe]"
+                      ? "bg-[#eff6ff] font-semibold text-[#0284C7] border border-[#dbeafe]"
                       : "text-[#64748b] hover:bg-[#f1f5f9] hover:text-[#0f172a]"
                   }`}
                 >
@@ -178,7 +182,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
                       }}
                       className={`flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 font-medium transition-colors text-left cursor-pointer ${
                         isActive
-                          ? "bg-[#eff6ff] font-semibold text-[#2563eb] border border-[#dbeafe]"
+                          ? "bg-[#eff6ff] font-semibold text-[#0284C7] border border-[#dbeafe]"
                           : "text-[#64748b] hover:bg-[#f1f5f9] hover:text-[#0f172a]"
                       }`}
                     >
@@ -211,7 +215,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
           <div className="border-t border-[#e2e8f0] pt-2.5 space-y-1.5">
             <button
               type="button"
-              className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-[#2563eb] py-1.5 text-[11px] font-semibold text-white shadow-xs transition-colors hover:bg-[#1d4ed8] cursor-pointer"
+              className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-[#0284C7] py-1.5 text-[11px] font-semibold text-white shadow-xs transition-colors hover:bg-[#1d4ed8] cursor-pointer"
             >
               <MessageSquare size={12} />
               <span>Share feedback</span>
@@ -236,7 +240,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
               {/* Header Title + Range Buttons */}
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between pb-1">
                 <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-[#2563eb]" />
+                  <span className="h-2 w-2 rounded-full bg-[#0284C7]" />
                   <h2 className="text-[16px] font-bold tracking-tight text-[#0f172a]">
                     test-route Overview
                   </h2>
@@ -251,7 +255,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
                       onClick={() => setRange(r)}
                       className={`rounded-md px-2 py-0.5 transition-all ${
                         range === r
-                          ? "bg-white font-semibold text-[#2563eb] shadow-xs"
+                          ? "bg-white font-semibold text-[#0284C7] shadow-xs"
                           : "hover:text-[#0f172a]"
                       }`}
                     >
@@ -293,7 +297,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
                   <p className="text-[9.5px] font-semibold uppercase tracking-[0.08em] text-[#8695a8]">
                     P95 LATENCY
                   </p>
-                  <p className="mt-1 text-[22px] font-bold tracking-tight text-[#2563eb]">
+                  <p className="mt-1 text-[22px] font-bold tracking-tight text-[#0284C7]">
                     0ms
                   </p>
                   <p className="mt-1 text-[10px] text-[#94a3b8]">p95 over selected range</p>
@@ -327,7 +331,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
                       <span className="h-1.5 w-1.5 rounded-full bg-[#0f172a]" /> p50
                     </span>
                     <span className="flex items-center gap-1">
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#2563eb]" /> p95
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#0284C7]" /> p95
                     </span>
                     <span className="flex items-center gap-1">
                       <span className="h-1.5 w-1.5 rounded-full bg-[#e11d48]" /> p99
@@ -337,7 +341,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
 
                 <div className="mt-2">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-[20px] font-bold text-[#2563eb]">0ms</span>
+                    <span className="text-[20px] font-bold text-[#0284C7]">0ms</span>
                     <span className="text-[10px] text-[#94a3b8]">p95 over selected range</span>
                   </div>
 
@@ -384,7 +388,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
                   >
                     <defs>
                       <linearGradient id="trafficGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#2563eb" stopOpacity="0.28" />
+                        <stop offset="0%" stopColor="#0284C7" stopOpacity="0.28" />
                         <stop offset="70%" stopColor="#38bdf8" stopOpacity="0.10" />
                         <stop offset="100%" stopColor="#ffffff" stopOpacity="0.0" />
                       </linearGradient>
@@ -443,14 +447,14 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
                       </p>
                       <p className="text-[9.5px] text-[#94a3b8]">15 total</p>
                     </div>
-                    <span className="text-[17px] font-bold text-[#2563eb]">15</span>
+                    <span className="text-[17px] font-bold text-[#0284C7]">15</span>
                   </div>
                   <div className="mt-2 h-7 w-full">
                     <svg viewBox="0 0 260 25" preserveAspectRatio="none" className="h-full w-full">
                       <path
                         d="M 0 22 L 200 22 Q 220 22 230 4 L 260 4"
                         fill="none"
-                        stroke="#2563eb"
+                        stroke="#0284C7"
                         strokeWidth="2"
                       />
                     </svg>
@@ -488,7 +492,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
               {/* Header Title + Range Buttons */}
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between pb-1">
                 <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-[#2563eb]" />
+                  <span className="h-2 w-2 rounded-full bg-[#0284C7]" />
                   <h2 className="text-[16px] font-bold tracking-tight text-[#0f172a]">
                     Global Map
                   </h2>
@@ -503,7 +507,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
                       onClick={() => setRange(r)}
                       className={`rounded-md px-2 py-0.5 transition-all ${
                         range === r
-                          ? "bg-white font-semibold text-[#2563eb] shadow-xs"
+                          ? "bg-white font-semibold text-[#0284C7] shadow-xs"
                           : "hover:text-[#0f172a]"
                       }`}
                     >
@@ -683,7 +687,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
                         onClick={() => setRange(r)}
                         className={`rounded-md px-2 py-0.5 transition-all ${
                           range === r
-                            ? "bg-white font-semibold text-[#2563eb] shadow-xs"
+                            ? "bg-white font-semibold text-[#0284C7] shadow-xs"
                             : "hover:text-[#0f172a]"
                         }`}
                       >
@@ -896,18 +900,19 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
         {/* ============================================================== */}
         {/* 3. RIGHT SIDEBAR PANELS (Installation, Quick Links, Project)   */}
         {/* ============================================================== */}
-        <aside className="hidden w-[210px] shrink-0 border-l border-[#e2e8f0] bg-[#fafbfc] p-3 xl:flex xl:flex-col xl:gap-3 text-left">
+        {!hideRightSidebar && (
+          <aside className="hidden w-[210px] shrink-0 border-l border-[#e2e8f0] bg-[#fafbfc] p-3 xl:flex xl:flex-col xl:gap-3 text-left">
           {/* Card 1: Installation */}
           <div className="rounded-xl border border-[#e2e8f0] bg-white p-3 shadow-xs">
             <div className="flex items-center justify-between pb-1.5">
               <span className="flex items-center gap-1 text-[11px] font-bold text-[#0f172a]">
-                <Code2 size={12} className="text-[#2563eb]" />
+                <Code2 size={12} className="text-[#0284C7]" />
                 Installation
               </span>
               <button
                 type="button"
                 onClick={handleCopySnippet}
-                className="text-[#94a3b8] hover:text-[#2563eb] transition-colors cursor-pointer"
+                className="text-[#94a3b8] hover:text-[#0284C7] transition-colors cursor-pointer"
                 title="Copy snippet"
               >
                 {copiedSnippet ? <Check size={12} className="text-[#059669]" /> : <Copy size={12} />}
@@ -915,7 +920,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
             </div>
             <p className="text-[9.5px] text-[#64748b]">
               Add this snippet inside your website&apos;s{" "}
-              <code className="text-[#2563eb] font-mono bg-blue-50 px-1 py-0.2 rounded-xs">
+              <code className="text-[#0284C7] font-mono bg-blue-50 px-1 py-0.2 rounded-xs">
                 &lt;head&gt;
               </code>
               .
@@ -933,7 +938,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
 
             <div className="mt-2 flex items-center justify-between text-[9px]">
               <span className="text-[#94a3b8]">One script, no package install</span>
-              <button type="button" className="font-semibold text-[#2563eb] hover:underline cursor-pointer">
+              <button type="button" className="font-semibold text-[#0284C7] hover:underline cursor-pointer">
                 Configure &gt;
               </button>
             </div>
@@ -947,14 +952,14 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
             <div className="space-y-1.5 text-[10.5px]">
               <button
                 type="button"
-                className="flex items-center gap-2 text-[#64748b] hover:text-[#2563eb] transition-colors w-full text-left cursor-pointer"
+                className="flex items-center gap-2 text-[#64748b] hover:text-[#0284C7] transition-colors w-full text-left cursor-pointer"
               >
                 <Network size={11} className="text-[#94a3b8]" />
                 <span>View Endpoints</span>
               </button>
               <button
                 type="button"
-                className="flex items-center gap-2 text-[#64748b] hover:text-[#2563eb] transition-colors w-full text-left cursor-pointer"
+                className="flex items-center gap-2 text-[#64748b] hover:text-[#0284C7] transition-colors w-full text-left cursor-pointer"
               >
                 <AlertTriangle size={11} className="text-[#94a3b8]" />
                 <span>View Errors</span>
@@ -962,14 +967,14 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
               <button
                 type="button"
                 onClick={() => setActiveTab("map")}
-                className="flex items-center gap-2 text-[#64748b] hover:text-[#2563eb] transition-colors w-full text-left cursor-pointer"
+                className="flex items-center gap-2 text-[#64748b] hover:text-[#0284C7] transition-colors w-full text-left cursor-pointer"
               >
                 <Globe size={11} className="text-[#94a3b8]" />
                 <span>Global Map</span>
               </button>
               <button
                 type="button"
-                className="flex items-center gap-2 text-[#64748b] hover:text-[#2563eb] transition-colors w-full text-left cursor-pointer"
+                className="flex items-center gap-2 text-[#64748b] hover:text-[#0284C7] transition-colors w-full text-left cursor-pointer"
               >
                 <Zap size={11} className="text-[#94a3b8]" />
                 <span>Sessions</span>
@@ -995,7 +1000,7 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
                 <button
                   type="button"
                   onClick={handleCopyProjectId}
-                  className="text-[#94a3b8] hover:text-[#2563eb] ml-1 cursor-pointer"
+                  className="text-[#94a3b8] hover:text-[#0284C7] ml-1 cursor-pointer"
                   title="Copy project id"
                 >
                   {copiedProjectId ? <Check size={11} className="text-[#059669]" /> : <Copy size={11} />}
@@ -1024,7 +1029,8 @@ export function StaticDashboardMock({ initialTab = "overview" }: Props) {
             </div>
           </div>
         </aside>
-      </div>
+      )}
+    </div>
     </div>
   );
 }

@@ -94,12 +94,12 @@ export default function InstallationGuideView({ projectId, domain, initialFramew
             <h3 className="text-[16px] font-semibold text-slate-900 dark:text-white">Install for your stack</h3>
             <p className="text-[12px] text-slate-500">Same beacon, framework-specific snippet. Project key is baked in.</p>
           </div>
-          <code className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono text-[11px] font-semibold text-[#2563eb]">{projectId || "—"}</code>
+          <code className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono text-[11px] font-semibold text-[#0284C7]">{projectId || "—"}</code>
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
           {FRAMEWORKS.map((f) => (
-            <button key={f.id} onClick={() => setFw(f.id)} className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[12px] font-semibold border transition ${fw === f.id ? "border-[#2563eb] bg-[#eff6ff] text-[#2563eb]" : "border-slate-200 bg-white text-slate-500 hover:text-slate-900"}`}>
+            <button key={f.id} onClick={() => setFw(f.id)} className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[12px] font-semibold border transition ${fw === f.id ? "border-[#0284C7] bg-[#eff6ff] text-[#0284C7]" : "border-slate-200 bg-white text-slate-500 hover:text-slate-900"}`}>
               <span className={`flex h-4 w-4 items-center justify-center rounded-full text-[8px] font-bold text-white ${f.badgeBg}`}>{f.letter}</span>
               {f.name}
             </button>
@@ -119,8 +119,8 @@ export default function InstallationGuideView({ projectId, domain, initialFramew
         <div className="mt-4 grid gap-4 lg:grid-cols-2">
           <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
             <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-              <span className="flex items-center gap-2 text-[12px] font-bold text-slate-900"><Terminal size={13} className="text-[#2563eb]" />Live verification</span>
-              <button disabled={verifying} onClick={verify} className="flex items-center gap-1.5 rounded-lg bg-[#2563eb] px-3 py-1 text-[11px] font-medium text-white disabled:opacity-50">
+              <span className="flex items-center gap-2 text-[12px] font-bold text-slate-900"><Terminal size={13} className="text-[#0284C7]" />Live verification</span>
+              <button disabled={verifying} onClick={verify} className="flex items-center gap-1.5 rounded-lg bg-[#0284C7] px-3 py-1 text-[11px] font-medium text-white disabled:opacity-50">
                 <Play size={11} fill="currentColor" /><span>{verifying ? "Sending..." : "Send Test Ping"}</span>
               </button>
             </div>

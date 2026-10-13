@@ -148,7 +148,7 @@ export const EdgeFlowStep = () => {
               }}
             >
               <div className="font-semibold text-[#0f172a]">{activePoint.date}</div>
-              <div className="flex items-center gap-2 text-[#2563eb] font-medium">
+              <div className="flex items-center gap-2 text-[#0284C7] font-medium">
                 <span>Current:</span>
                 <span className="font-bold">{activePoint.current.toLocaleString()}</span>
               </div>
@@ -176,7 +176,7 @@ export const EdgeFlowStep = () => {
 
                 {/* Subtle sheen or gradient for top band */}
                 <linearGradient id="edgeTopBandGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#2563eb" stopOpacity="0.13" />
+                  <stop offset="0%" stopColor="#0284C7" stopOpacity="0.13" />
                   <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.08" />
                 </linearGradient>
               </defs>
@@ -225,7 +225,7 @@ export const EdgeFlowStep = () => {
               <path
                 d={topSpline}
                 fill="none"
-                stroke="#2563eb"
+                stroke="#0284C7"
                 strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -255,7 +255,7 @@ export const EdgeFlowStep = () => {
                     cx={activePoint.x}
                     cy={activePoint.yTop}
                     r="4.5"
-                    fill="#2563eb"
+                    fill="#0284C7"
                     stroke="#ffffff"
                     strokeWidth="2"
                   />

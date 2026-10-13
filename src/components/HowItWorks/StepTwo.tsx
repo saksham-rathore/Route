@@ -63,7 +63,7 @@ export const StepTwo = () => {
           </div>
 
           {/* 2nd Component (Global Map Dashboard) */}
-          <StaticDashboardMock initialTab="map" />
+          <StaticDashboardMock initialTab="map" hideRightSidebar />
         </div>
       </div>
     </div>

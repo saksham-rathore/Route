@@ -63,7 +63,7 @@ export const StepThree = () => {
           </div>
 
           {/* 3rd Component (Web Vitals Dashboard) */}
-          <StaticDashboardMock initialTab="vitals" />
+          <StaticDashboardMock initialTab="vitals" hideRightSidebar />
         </div>
       </div>
     </div>

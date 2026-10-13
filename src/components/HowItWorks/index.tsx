@@ -11,7 +11,8 @@ export const HowItWorks = () => {
       id="how-it-works"
       className="w-full bg-[#edf0f5] py-20 px-4 sm:px-6 lg:px-8 font-instrument-sans"
     >
-      <div className="mx-auto max-w-[880px]">
+      {/* Unified container: Step 1, Step 2, and Step 3 aligned at max-w-[1140px] */}
+      <div className="mx-auto max-w-[1140px]">
         {/* Main Section Header */}
         <div className="text-center">
           <h2 className="text-[32px] sm:text-[38px] font-bold text-[#0f172a] font-lastik ml-1 gap-2 leading-none tracking-[-0.04em]">

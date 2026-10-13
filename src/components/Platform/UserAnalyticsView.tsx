@@ -94,7 +94,7 @@ export const UserAnalyticsView = () => {
               {/* Logo */}
               <div className="flex items-center justify-between px-1.5 pb-2.5">
                 <div className="flex items-center gap-2">
-                  <div className="flex h-5.5 w-5.5 items-center justify-center rounded-md bg-[#2563eb] text-white">
+                  <div className="flex h-5.5 w-5.5 items-center justify-center rounded-md bg-[#0284C7] text-white">
                     <BarChart3 size={12} strokeWidth={2.5} />
                   </div>
                   <span className="font-semibold text-[13.5px] tracking-tight text-[#0f172a]">
@@ -109,7 +109,7 @@ export const UserAnalyticsView = () => {
                 className="mt-0.5 flex w-full items-center justify-between rounded-lg border border-[#e2e8f0] bg-white px-2.5 py-1 text-[10.5px] font-medium text-[#334155] shadow-xs transition-colors hover:border-[#cbd5e1] hover:bg-[#f8fafc]"
               >
                 <span className="flex items-center gap-1.5">
-                  <Plus size={11} className="text-[#2563eb]" />
+                  <Plus size={11} className="text-[#0284C7]" />
                   <span>Add Project</span>
                 </span>
                 <span className="text-[9.5px] text-[#94a3b8]">⌘N</span>
@@ -149,7 +149,7 @@ export const UserAnalyticsView = () => {
                         key={item.label}
                         className={`flex items-center gap-2 rounded-md px-2 py-1 font-medium transition-colors cursor-pointer ${
                           item.active
-                            ? "bg-[#eff6ff] font-semibold text-[#2563eb]"
+                            ? "bg-[#eff6ff] font-semibold text-[#0284C7]"
                             : "text-[#64748b] hover:bg-[#f1f5f9] hover:text-[#0f172a]"
                         }`}
                       >
@@ -228,7 +228,7 @@ export const UserAnalyticsView = () => {
                       onClick={() => setTimeframe(t)}
                       className={`rounded-md px-2 py-0.8 transition-all ${
                         timeframe === t
-                          ? "bg-white font-semibold text-[#2563eb] shadow-xs"
+                          ? "bg-white font-semibold text-[#0284C7] shadow-xs"
                           : "hover:text-[#0f172a]"
                       }`}
                     >
@@ -249,7 +249,7 @@ export const UserAnalyticsView = () => {
                 {/* Get started button */}
                 <button
                   type="button"
-                  className="rounded-lg bg-[#2563eb] px-2.5 py-0.8 text-[10.5px] font-medium text-white shadow-xs hover:bg-[#1d4ed8] transition-colors"
+                  className="rounded-lg bg-[#0284C7] px-2.5 py-0.8 text-[10.5px] font-medium text-white shadow-xs hover:bg-[#1d4ed8] transition-colors"
                 >
                   Get Started
                 </button>
@@ -353,7 +353,7 @@ export const UserAnalyticsView = () => {
 
                 <div className="flex items-center gap-3 text-[10px]">
                   <div className="flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-full bg-[#2563eb]" />
+                    <span className="h-2 w-2 rounded-full bg-[#0284C7]" />
                     <span className="font-medium text-[#475569]">Current</span>
                   </div>
                   <div className="flex items-center gap-1.5">
@@ -382,8 +382,8 @@ export const UserAnalyticsView = () => {
                 >
                   <defs>
                     <linearGradient id="userAnalyticsGlow" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#2563eb" stopOpacity="0.22" />
-                      <stop offset="100%" stopColor="#2563eb" stopOpacity="0.00" />
+                      <stop offset="0%" stopColor="#0284C7" stopOpacity="0.22" />
+                      <stop offset="100%" stopColor="#0284C7" stopOpacity="0.00" />
                     </linearGradient>
                   </defs>
 
@@ -406,7 +406,7 @@ export const UserAnalyticsView = () => {
                   <path
                     d="M 40 54 C 80 49, 100 46, 120 45 C 160 44, 180 51, 200 50 C 240 49, 260 40, 280 39 C 320 38, 340 36, 360 35 C 400 34, 420 42, 440 41 C 480 40, 500 30, 520 29 C 560 28, 580 34, 600 33 C 640 32, 660 25, 680 24"
                     fill="none"
-                    stroke="#2563eb"
+                    stroke="#0284C7"
                     strokeWidth="2.5"
                     strokeLinecap="round"
                   />
@@ -419,7 +419,7 @@ export const UserAnalyticsView = () => {
                         cy={pt.yTop}
                         r={hoveredIdx === i ? 5.5 : 3.5}
                         fill="#ffffff"
-                        stroke="#2563eb"
+                        stroke="#0284C7"
                         strokeWidth={hoveredIdx === i ? 3 : 2}
                         className="cursor-pointer transition-all duration-150"
                         onMouseEnter={() => setHoveredIdx(i)}
@@ -439,7 +439,7 @@ export const UserAnalyticsView = () => {
                     }}
                   >
                     <div className="font-semibold text-[#0f172a]">{activePoint.date}</div>
-                    <div className="flex items-center gap-2 text-[#2563eb] font-semibold">
+                    <div className="flex items-center gap-2 text-[#0284C7] font-semibold">
                       <span>Current:</span>
                       <span>{activePoint.current.toLocaleString()}</span>
                     </div>
@@ -457,7 +457,7 @@ export const UserAnalyticsView = () => {
                   <span
                     key={pt.date}
                     className={`cursor-pointer transition-colors ${
-                      hoveredIdx === i ? "font-bold text-[#2563eb]" : "hover:text-[#475569]"
+                      hoveredIdx === i ? "font-bold text-[#0284C7]" : "hover:text-[#475569]"
                     }`}
                     onMouseEnter={() => setHoveredIdx(i)}
                     onMouseLeave={() => setHoveredIdx(null)}
@@ -477,7 +477,7 @@ export const UserAnalyticsView = () => {
                   onClick={() => setActiveBottomTab("pages")}
                   className={`pb-0.5 font-semibold transition-colors border-b-2 ${
                     activeBottomTab === "pages"
-                      ? "border-[#2563eb] text-[#2563eb]"
+                      ? "border-[#0284C7] text-[#0284C7]"
                       : "border-transparent text-[#64748b] hover:text-[#0f172a]"
                   }`}
                 >
@@ -488,7 +488,7 @@ export const UserAnalyticsView = () => {
                   onClick={() => setActiveBottomTab("acquisition")}
                   className={`pb-0.5 font-semibold transition-colors border-b-2 ${
                     activeBottomTab === "acquisition"
-                      ? "border-[#2563eb] text-[#2563eb]"
+                      ? "border-[#0284C7] text-[#0284C7]"
                       : "border-transparent text-[#64748b] hover:text-[#0f172a]"
                   }`}
                 >
@@ -500,7 +500,7 @@ export const UserAnalyticsView = () => {
               <button
                 type="button"
                 onClick={handleCopyApi}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-[#2563eb] px-3 py-1 text-[10.5px] font-medium text-white shadow-xs hover:bg-[#1d4ed8] transition-colors"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-[#0284C7] px-3 py-1 text-[10.5px] font-medium text-white shadow-xs hover:bg-[#1d4ed8] transition-colors"
               >
                 {apiReportCopied ? (
                   <>
@@ -531,7 +531,7 @@ export const UserAnalyticsView = () => {
                       className="flex items-center justify-between rounded-md bg-white px-2.5 py-1.5 border border-[#e2e8f0] shadow-2xs hover:border-[#cbd5e1]"
                     >
                       <div className="flex items-center gap-2">
-                        <span className="font-mono font-medium text-[#2563eb]">{row.path}</span>
+                        <span className="font-mono font-medium text-[#0284C7]">{row.path}</span>
                       </div>
                       <div className="flex items-center gap-4 text-[10.5px] text-[#64748b]">
                         <span>{row.views} views</span>
@@ -559,7 +559,7 @@ export const UserAnalyticsView = () => {
                           <span>{src.icon}</span>
                           <span>{src.source}</span>
                         </span>
-                        <span className="text-[#2563eb]">{src.visitors}</span>
+                        <span className="text-[#0284C7]">{src.visitors}</span>
                       </div>
                       <p className="mt-1 text-[10px] text-[#94a3b8] font-mono">
                         {src.count} visitors

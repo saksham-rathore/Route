@@ -168,12 +168,12 @@ export const WebVitalsView = () => {
                   onClick={() => setSelectedVital(vital)}
                   className={`rounded-xl border p-3.5 transition-all cursor-pointer ${
                     isSelected
-                      ? "border-[#2563eb] bg-[#eff6ff]/70 shadow-xs ring-1 ring-[#2563eb]/20"
+                      ? "border-[#0284C7] bg-[#eff6ff]/70 shadow-xs ring-1 ring-[#0284C7]/20"
                       : "border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-slate-50"
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold text-[#2563eb]">
+                    <span className="text-[11px] font-bold text-[#0284C7]">
                       {vital.acronym}
                     </span>
                     <span className="rounded bg-emerald-50 px-1.5 py-0.2 text-[9px] font-bold text-emerald-700">
@@ -230,7 +230,7 @@ export const WebVitalsView = () => {
                     {selectedVital.description}
                   </p>
                 </div>
-                <span className="rounded-md bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-[#2563eb]">
+                <span className="rounded-md bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-[#0284C7]">
                   Field Aggregated
                 </span>
               </div>
@@ -308,7 +308,7 @@ export const WebVitalsView = () => {
                     >
                       <div className="flex items-center justify-between text-[11px] font-medium text-[#1e293b]">
                         <span className="flex items-center gap-1.5">
-                          <Icon size={12} className="text-[#2563eb]" />
+                          <Icon size={12} className="text-[#0284C7]" />
                           <span>{item.device}</span>
                         </span>
                         <span className="text-emerald-700 font-bold">{item.pass}</span>

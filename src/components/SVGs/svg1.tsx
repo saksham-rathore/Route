@@ -90,7 +90,7 @@ const Svg1 = (props: React.SVGProps<SVGSVGElement>) => {
         </animateMotion>
         <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.85;1" dur="2.8s" begin="0.5s" repeatCount="indefinite" />
       </circle>
-      <circle r="3" fill="#2563eb">
+      <circle r="3" fill="#0284C7">
         <animateMotion dur="3.0s" begin="1.0s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear">
           <mpath href="#p2" />
         </animateMotion>
@@ -148,7 +148,7 @@ const Svg1 = (props: React.SVGProps<SVGSVGElement>) => {
         <g className="float" style={{ animationDelay: "-1.6s" }}>
           <rect x="-50.0" y="-19" width="100" height="38" rx="11" fill="#fff" filter="url(#shadow)" />
           <rect x="-41.0" y="-11" width="22" height="22" rx="7" fill="#dbeafe" />
-          <g transform="translate(-36.5,-6.5) scale(.5)" fill="none" stroke="#2563eb" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+          <g transform="translate(-36.5,-6.5) scale(.5)" fill="none" stroke="#0284C7" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10" />
             <polyline points="12 6 12 12 16 14" />
           </g>
